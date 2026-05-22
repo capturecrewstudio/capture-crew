@@ -7,3 +7,5 @@ coverage
 *.log
 *.tsbuildinfo
 capture-crew-smoke.png
+/logo/
+/media/

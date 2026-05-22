@@ -3,9 +3,13 @@ import express from 'express';
 import helmet from 'helmet';
 import { env } from './config/env.js';
 import { authRouter } from './routes/auth.js';
+import { blogRouter } from './routes/blog.js';
+import { categoriesRouter } from './routes/categories.js';
 import { leadsRouter } from './routes/leads.js';
 import { mediaRouter } from './routes/media.js';
 import { projectsRouter } from './routes/projects.js';
+import { seoRouter } from './routes/seo.js';
+import { testimonialsRouter } from './routes/testimonials.js';
 
 const app = express();
 
@@ -18,9 +22,13 @@ app.get('/api/health', (_req, res) => {
 });
 
 app.use('/api/auth', authRouter);
+app.use('/api/blog', blogRouter);
+app.use('/api/categories', categoriesRouter);
 app.use('/api/leads', leadsRouter);
 app.use('/api/media', mediaRouter);
 app.use('/api/projects', projectsRouter);
+app.use('/api/seo', seoRouter);
+app.use('/api/testimonials', testimonialsRouter);
 
 app.use((error: unknown, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   console.error(error);
