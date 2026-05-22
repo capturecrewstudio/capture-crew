@@ -1,0 +1,500 @@
+:root {
+  --bg: #0d0d0d;
+  --surface: #161616;
+  --gold: #c8a96b;
+  --ivory: #f5f1e8;
+  --stone: #9a9488;
+  --line: rgba(245, 241, 232, 0.14);
+  color: var(--ivory);
+  background: var(--bg);
+  font-family: Satoshi, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.site-header {
+  align-items: center;
+  background: rgba(13, 13, 13, 0.72);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  height: 72px;
+  justify-content: space-between;
+  left: 0;
+  padding: 0 clamp(20px, 4vw, 64px);
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(18px);
+}
+
+.brand,
+.nav-link,
+.icon-button,
+.text-link,
+.category-band button,
+.filter-row button,
+.portfolio-tile {
+  background: none;
+  border: 0;
+  color: var(--ivory);
+}
+
+.brand {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.desktop-nav {
+  display: flex;
+  gap: 28px;
+}
+
+.nav-link {
+  color: var(--stone);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.nav-link.is-active,
+.nav-link:hover {
+  color: var(--ivory);
+}
+
+.mobile-only {
+  display: none;
+}
+
+.hero {
+  min-height: 100vh;
+  position: relative;
+  display: grid;
+  align-items: end;
+  overflow: hidden;
+}
+
+.hero-media,
+.project-hero {
+  height: 100%;
+  inset: 0;
+  object-fit: cover;
+  position: absolute;
+  width: 100%;
+}
+
+.hero-scrim {
+  background: linear-gradient(90deg, rgba(13, 13, 13, 0.88), rgba(13, 13, 13, 0.2) 64%, rgba(13, 13, 13, 0.72));
+  inset: 0;
+  position: absolute;
+}
+
+.hero-content {
+  max-width: 980px;
+  padding: 0 clamp(20px, 6vw, 96px) 12vh;
+  position: relative;
+}
+
+.eyebrow {
+  color: var(--gold);
+  font-family: "Space Grotesk", Inter, sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  margin: 0 0 18px;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-weight: 500;
+  letter-spacing: 0;
+  margin: 0;
+}
+
+.hero h1 {
+  font-size: clamp(4rem, 10vw, 9rem);
+  line-height: 0.92;
+  max-width: 900px;
+}
+
+.hero-actions,
+.admin-topline,
+.text-link,
+.primary-button {
+  align-items: center;
+  display: flex;
+}
+
+.hero-actions {
+  gap: 14px;
+  margin-top: 42px;
+  flex-wrap: wrap;
+}
+
+.primary-button,
+.ghost-button {
+  align-items: center;
+  border-radius: 999px;
+  display: inline-flex;
+  gap: 10px;
+  min-height: 46px;
+  padding: 0 22px;
+}
+
+.primary-button {
+  background: var(--gold);
+  border: 1px solid var(--gold);
+  color: #12100c;
+}
+
+.ghost-button {
+  background: rgba(245, 241, 232, 0.04);
+  border: 1px solid var(--line);
+  color: var(--ivory);
+}
+
+.category-band {
+  border-bottom: 1px solid var(--line);
+  border-top: 1px solid var(--line);
+  display: flex;
+  gap: 1px;
+  overflow-x: auto;
+}
+
+.category-band button {
+  border-right: 1px solid var(--line);
+  color: var(--stone);
+  min-width: 190px;
+  padding: 28px 24px;
+  text-align: left;
+}
+
+.feature-section,
+.capabilities,
+.testimonials,
+.portfolio-intro,
+.masonry-grid,
+.standard-page,
+.project-copy {
+  padding: clamp(72px, 9vw, 140px) clamp(20px, 6vw, 96px);
+}
+
+.section-heading {
+  display: grid;
+  gap: 26px;
+  grid-template-columns: 0.52fr 1fr;
+  margin-bottom: 46px;
+}
+
+.section-heading h2,
+.standard-page h1,
+.portfolio-intro h1,
+.project-copy h1 {
+  font-size: clamp(2.5rem, 5vw, 6rem);
+  line-height: 1;
+  max-width: 980px;
+}
+
+.project-grid,
+.capabilities,
+.service-grid,
+.admin-stats {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.project-card,
+.service-card,
+.capabilities article,
+.admin-stats article,
+.upload-zone {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.project-card {
+  overflow: hidden;
+}
+
+.project-card img {
+  aspect-ratio: 4 / 5;
+  display: block;
+  object-fit: cover;
+  width: 100%;
+}
+
+.project-card div,
+.capabilities article,
+.service-card,
+.admin-stats article,
+.upload-zone {
+  padding: 24px;
+}
+
+.project-card p,
+.project-card span,
+.capabilities p,
+.standard-page p,
+.upload-zone p,
+.admin-stats span {
+  color: var(--stone);
+}
+
+.testimonials {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+blockquote {
+  border-left: 1px solid var(--gold);
+  margin: 0;
+  padding-left: 28px;
+}
+
+blockquote p {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(1.8rem, 3vw, 3rem);
+  line-height: 1.12;
+}
+
+cite {
+  color: var(--stone);
+  font-style: normal;
+}
+
+.site-footer {
+  align-items: end;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  padding: 80px clamp(20px, 6vw, 96px);
+}
+
+.site-footer h2 {
+  font-size: clamp(2rem, 4vw, 4rem);
+  max-width: 760px;
+}
+
+.text-link {
+  gap: 8px;
+}
+
+.standard-page,
+.portfolio-page,
+.admin-shell,
+.project-detail {
+  min-height: 100vh;
+  padding-top: 140px;
+}
+
+.contact-layout {
+  display: grid;
+  gap: 42px;
+  grid-template-columns: 0.8fr 1fr;
+}
+
+.lead-form {
+  display: grid;
+  gap: 14px;
+}
+
+.lead-form input,
+.lead-form select,
+.lead-form textarea {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--ivory);
+  padding: 15px 16px;
+}
+
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 36px;
+}
+
+.filter-row button {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--stone);
+  padding: 10px 15px;
+}
+
+.masonry-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding-top: 0;
+}
+
+.portfolio-tile {
+  display: grid;
+  min-height: 420px;
+  overflow: hidden;
+  position: relative;
+  text-align: left;
+}
+
+.portfolio-tile:nth-child(2n) {
+  min-height: 560px;
+}
+
+.portfolio-tile img {
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  width: 100%;
+}
+
+.portfolio-tile span {
+  align-items: center;
+  align-self: end;
+  background: linear-gradient(0deg, rgba(13, 13, 13, 0.86), transparent);
+  display: flex;
+  gap: 8px;
+  min-height: 130px;
+  padding: 28px;
+  position: relative;
+}
+
+.project-detail {
+  padding-top: 0;
+  position: relative;
+}
+
+.project-hero {
+  height: 74vh;
+  position: relative;
+}
+
+.project-copy {
+  background: var(--bg);
+  position: relative;
+}
+
+.admin-shell {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  padding-top: 72px;
+}
+
+.admin-sidebar {
+  border-right: 1px solid var(--line);
+  min-height: calc(100vh - 72px);
+  padding: 28px;
+}
+
+.admin-sidebar h1 {
+  font-size: 1.5rem;
+  margin-bottom: 28px;
+}
+
+.admin-sidebar nav {
+  display: grid;
+  gap: 8px;
+}
+
+.admin-sidebar button {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  color: var(--stone);
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+  text-align: left;
+}
+
+.admin-sidebar button:hover {
+  background: var(--surface);
+  color: var(--ivory);
+}
+
+.admin-panel {
+  padding: 36px;
+}
+
+.admin-topline {
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.admin-topline h2 {
+  font-size: 2.5rem;
+}
+
+.admin-stats strong {
+  display: block;
+  font-size: 2.8rem;
+  margin-top: 12px;
+}
+
+.upload-zone {
+  margin-top: 18px;
+  text-align: center;
+}
+
+@media (max-width: 860px) {
+  .desktop-nav {
+    display: none;
+  }
+
+  .mobile-only {
+    display: inline-flex;
+  }
+
+  .section-heading,
+  .project-grid,
+  .capabilities,
+  .testimonials,
+  .contact-layout,
+  .masonry-grid,
+  .admin-shell,
+  .service-grid,
+  .admin-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .hero h1 {
+    font-size: clamp(3.6rem, 17vw, 6rem);
+  }
+
+  .site-footer {
+    align-items: start;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .admin-sidebar {
+    min-height: auto;
+  }
+}
