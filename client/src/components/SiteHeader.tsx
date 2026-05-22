@@ -1,4 +1,4 @@
-import { Aperture, Menu } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { useState } from 'react';
 import type { RouteName } from '../App';
 
@@ -28,8 +28,7 @@ export function SiteHeader({ activeRoute, onNavigate }: Props) {
   return (
     <header className="site-header">
       <button className="brand" onClick={() => navigate('home')} type="button">
-        <Aperture size={20} aria-hidden="true" />
-        <span>Capture Crew</span>
+        <img className="brand-logo" src="/assets/logo/capture-crew-logo-wide.jpeg" alt="Capture Crew" />
       </button>
       <nav className="desktop-nav" aria-label="Primary navigation">
         {navItems.map((item) => (

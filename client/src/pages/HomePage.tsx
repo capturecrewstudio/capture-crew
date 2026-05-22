@@ -95,14 +95,10 @@ export function HomePage({ activeRoute, onNavigate, onSelectCategory, onSelectPr
   return (
     <main>
       <section className="hero">
-        <video
+        <img
           className="hero-media"
-          src="https://cdn.coverr.co/videos/coverr-modern-house-in-the-evening-6444/1080p.mp4"
-          poster="/assets/media/architecture-hero.jpeg"
-          autoPlay
-          muted
-          loop
-          playsInline
+          src="/assets/media/architecture-hero.jpeg"
+          alt="Capture Crew luxury interior hero"
         />
         <div className="hero-scrim" />
         <div className="hero-content">

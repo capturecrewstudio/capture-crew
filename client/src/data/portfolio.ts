@@ -29,7 +29,19 @@ const media = {
   product: '/assets/media/product-hero.jpeg',
   food: '/assets/media/food-hero.jpeg',
   wedding: '/assets/media/wedding-hero.jpeg',
-  detail: '/assets/media/gallery-detail.jpeg'
+  detail: '/assets/media/gallery-detail.jpeg',
+  architectureDetail1: '/assets/media/architecture-detail-1.jpeg',
+  architectureDetail2: '/assets/media/architecture-detail-2.jpeg',
+  interiorsDetail1: '/assets/media/interiors-detail-1.jpeg',
+  interiorsDetail2: '/assets/media/interiors-detail-2.jpeg',
+  fashionDetail1: '/assets/media/fashion-detail-1.jpeg',
+  fashionDetail2: '/assets/media/fashion-detail-2.jpeg',
+  foodDetail1: '/assets/media/food-detail-1.jpeg',
+  productDetail1: '/assets/media/product-detail-1.jpeg',
+  productDetail2: '/assets/media/product-detail-2.jpeg',
+  weddingDetail1: '/assets/media/wedding-detail-1.jpeg',
+  weddingDetail2: '/assets/media/wedding-detail-2.jpeg',
+  blogHero: '/assets/media/blog-hero.jpeg'
 };
 
 export const categories: Category[] = [
@@ -89,9 +101,10 @@ export const projects: Project[] = [
     services: ['Architecture photography', 'Launch film', 'Website image library'],
     image: media.architecture,
     gallery: [
+      media.architectureDetail1,
+      media.architectureDetail2,
       media.interiors,
-      media.commercial,
-      media.detail
+      media.commercial
     ],
     summary: 'A restrained residential story told through stone, shadow, glass, and late-afternoon light.',
     narrative:
@@ -109,8 +122,9 @@ export const projects: Project[] = [
     services: ['Interior photography', 'Brand imagery', 'Social cutdowns'],
     image: media.interiors,
     gallery: [
+      media.interiorsDetail1,
+      media.interiorsDetail2,
       media.architecture,
-      media.commercial,
       media.product
     ],
     summary: 'Editorial interiors crafted for a private hospitality concept and its launch campaign.',
@@ -129,9 +143,10 @@ export const projects: Project[] = [
     services: ['Campaign photography', 'Motion portraits', 'Lookbook'],
     image: media.fashion,
     gallery: [
+      media.fashionDetail1,
+      media.fashionDetail2,
       media.detail,
-      media.product,
-      media.commercial
+      media.product
     ],
     summary: 'A campaign system balancing cinematic portraiture, movement, and sculptural negative space.',
     narrative:
@@ -149,9 +164,10 @@ export const projects: Project[] = [
     services: ['Restaurant photography', 'Menu films', 'Founder portraits'],
     image: media.food,
     gallery: [
-      'https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1800&q=85',
-      'https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&w=1800&q=85',
-      'https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1800&q=85'
+      media.foodDetail1,
+      media.blogHero,
+      media.productDetail1,
+      media.interiorsDetail2
     ],
     summary: 'A coastal dining story built around flame, ceramic texture, produce, and a slower evening rhythm.',
     narrative:
@@ -169,9 +185,10 @@ export const projects: Project[] = [
     services: ['Product photography', 'Packaging imagery', 'Web assets'],
     image: media.product,
     gallery: [
-      'https://images.unsplash.com/photo-1511556820780-d912e42b4980?auto=format&fit=crop&w=1800&q=85',
-      'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1800&q=85',
-      'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1800&q=85'
+      media.productDetail1,
+      media.productDetail2,
+      media.food,
+      media.detail
     ],
     summary: 'A tactile product system for objects that needed to feel collectible, minimal, and rare.',
     narrative:
@@ -189,9 +206,10 @@ export const projects: Project[] = [
     services: ['Wedding film', 'Editorial photography', 'Family archive'],
     image: media.wedding,
     gallery: [
-      'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1800&q=85',
-      'https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1800&q=85',
-      'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1800&q=85'
+      media.weddingDetail1,
+      media.weddingDetail2,
+      media.blogHero,
+      media.detail
     ],
     summary: 'An intimate destination wedding photographed like a private editorial commission.',
     narrative:
@@ -205,19 +223,19 @@ export const testimonials = [
     name: 'Aarav Mehta',
     designation: 'Principal Architect, AM Studio',
     message: 'Capture Crew understood the silence of the building. Every image felt deliberate, premium, and deeply human.',
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=85'
+    image: media.architectureDetail1
   },
   {
     name: 'Ira Kapoor',
     designation: 'Brand Director, Solenne',
     message: 'The team turned our campaign into a visual world. We used the assets across web, print, press, and investor presentations.',
-    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=85'
+    image: media.fashionDetail1
   },
   {
     name: 'Rohan Sethi',
     designation: 'Founder, Atlas Table',
     message: 'The launch film gave our restaurant an identity before guests had even stepped through the door.',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=85'
+    image: media.foodDetail1
   }
 ];
 
@@ -249,18 +267,18 @@ export const posts = [
     title: 'How Luxury Architecture Brands Should Plan a Visual Launch',
     date: 'May 12, 2026',
     excerpt: 'A practical field guide for architects and developers preparing a project for press, web, and sales.',
-    image: 'https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1400&q=85'
+    image: media.architecture
   },
   {
     title: 'Why Image Libraries Matter More Than One Hero Film',
     date: 'April 28, 2026',
     excerpt: 'Premium brands need a visual system: hero assets, detail imagery, portraits, social crops, and story-led motion.',
-    image: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1400&q=85'
+    image: media.commercial
   },
   {
     title: 'The Editorial Difference in Wedding Films',
     date: 'April 08, 2026',
     excerpt: 'The difference between documenting an event and shaping a cinematic family archive.',
-    image: 'https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1400&q=85'
+    image: media.wedding
   }
 ];

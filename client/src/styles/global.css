@@ -83,6 +83,15 @@ video {
   white-space: nowrap;
 }
 
+.brand-logo {
+  background: #f5f1e8;
+  border-radius: 6px;
+  height: 38px;
+  object-fit: contain;
+  padding: 4px 8px;
+  width: 164px;
+}
+
 .desktop-nav {
   display: flex;
   gap: clamp(12px, 2vw, 28px);
@@ -441,6 +450,17 @@ cite {
 .site-footer h2 {
   font-size: clamp(2rem, 4vw, 4rem);
   max-width: 760px;
+}
+
+.footer-logo {
+  background: #f5f1e8;
+  border-radius: 8px;
+  display: block;
+  height: 96px;
+  margin-bottom: 26px;
+  object-fit: contain;
+  padding: 10px;
+  width: 300px;
 }
 
 .footer-links {

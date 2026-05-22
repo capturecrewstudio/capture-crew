@@ -9,6 +9,7 @@ export function SiteFooter({ onNavigate }: Props) {
   return (
     <footer className="site-footer">
       <div>
+        <img className="footer-logo" src="/assets/logo/capture-crew-logo-wide.jpeg" alt="Capture Crew logo" />
         <p className="eyebrow">Capture Crew</p>
         <h2>Luxury visual stories for brands, spaces, and people with presence.</h2>
         <div className="footer-links">
