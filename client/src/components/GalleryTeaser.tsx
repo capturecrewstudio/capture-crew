@@ -18,7 +18,7 @@ export function GalleryTeaser({ onSeeAll }: Props) {
     <section className="relative z-10 px-4 sm:px-6 max-w-7xl mx-auto">
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-10">
         <div className="max-w-xl">
-          <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#C8A96B]">
+          <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#E8192C]">
             Recent Frames
           </span>
           <h2
@@ -30,7 +30,7 @@ export function GalleryTeaser({ onSeeAll }: Props) {
         </div>
         <button
           onClick={onSeeAll}
-          className="self-start sm:self-end inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-semibold text-ivory/70 hover:text-ivory border border-linemid hover:border-[#C8A96B]/40 rounded-full px-5 py-3 transition-all duration-300 hover:-translate-y-0.5"
+          className="self-start sm:self-end inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-semibold text-ivory/70 hover:text-ivory border border-linemid hover:border-[#E8192C]/40 rounded-full px-5 py-3 transition-all duration-300 hover:-translate-y-0.5"
         >
           See full portfolio
           <ArrowUpRight size={14} />

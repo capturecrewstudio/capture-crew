@@ -181,7 +181,7 @@ export function FeatureTimeline() {
                 <div
                   className="absolute -inset-x-4 -inset-y-2 rounded-xl pointer-events-none transition-opacity duration-1000 -z-10"
                   style={{
-                    background: 'var(--gold-glow)',
+                    background: 'var(--accent-glow)',
                     opacity: isActive ? 0.3 : 0
                   }}
                 />
@@ -189,7 +189,7 @@ export function FeatureTimeline() {
                 <h3
                   className={`text-lg sm:text-xl font-bold transition-all duration-500 uppercase tracking-wider ${
                     isActive
-                      ? 'text-[#C8A96B]'
+                      ? 'text-[#E8192C]'
                       : 'text-stone/70 group-hover:text-ivory/80'
                   }`}
                 >
@@ -208,7 +208,7 @@ export function FeatureTimeline() {
                     <p className="text-sm text-ivory/70 mt-2 max-w-lg leading-relaxed">
                       {item.description}
                     </p>
-                    <span className="inline-block text-xs font-mono text-[#C8A96B] mt-1">
+                    <span className="inline-block text-xs font-mono text-[#E8192C] mt-1">
                       {item.location}
                     </span>
                   </div>

@@ -16,8 +16,8 @@ export function ThemeToggle({ isDark, onToggle }: Props) {
       <span
         className="absolute inset-0 rounded-full transition-colors duration-300"
         style={{
-          background: isDark ? 'rgba(200,169,107,0.2)' : 'rgba(184,150,42,0.15)',
-          border: `1px solid ${isDark ? 'rgba(200,169,107,0.35)' : 'rgba(184,150,42,0.4)'}`,
+          background: isDark ? 'rgba(232,25,44,0.2)' : 'rgba(204,21,37,0.15)',
+          border: `1px solid ${isDark ? 'rgba(232,25,44,0.35)' : 'rgba(204,21,37,0.4)'}`,
         }}
       />
       {/* Thumb */}
@@ -27,7 +27,7 @@ export function ThemeToggle({ isDark, onToggle }: Props) {
           width: 16,
           height: 16,
           left: isDark ? 20 : 3,
-          background: isDark ? '#C8A96B' : '#B8962A',
+          background: isDark ? '#E8192C' : '#CC1525',
         }}
       >
         {isDark ? (

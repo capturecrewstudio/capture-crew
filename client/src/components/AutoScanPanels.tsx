@@ -123,7 +123,7 @@ export function AutoScanPanels() {
             >
               <div
                 className={`h-[2px] transition-all duration-300 ${
-                  index === idx ? 'w-16 bg-[#C8A96B]' : 'w-8 bg-ivory/20 group-hover:bg-ivory/40'
+                  index === idx ? 'w-16 bg-[#E8192C]' : 'w-8 bg-ivory/20 group-hover:bg-ivory/40'
                 }`}
               />
               <span

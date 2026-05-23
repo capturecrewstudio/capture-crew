@@ -12,7 +12,7 @@ const packages = [
     longDesc: 'Establish your brand presence with consistent high-quality assets. Perfect for social feeds and basic online engagement.',
     features: ['10 Product Photos', '2 Reels (30-45s)', '8 Social Graphics', 'Basic SMM (1 Platform)'],
     tags: { topLeft: '10 Photos', topRight: '2 Reels', bottomLeft: '8 Posts', bottomRight: '1 Platform' },
-    color: '#C8A96B'
+    color: '#E8192C'
   },
   {
     title: 'Growth Package',
@@ -23,7 +23,7 @@ const packages = [
     longDesc: 'Boost your customer acquisitions with professional-grade content and direct advertising. High-definition media that converts.',
     features: ['25 Edited Photos', '5 HD Reels', '12 Custom Graphics', 'SMM (2 Platforms)', '2 Paid Campaigns'],
     tags: { topLeft: '25 Photos', topRight: '5 Reels', bottomLeft: '12 Graphics', bottomRight: '2 Paid Ads' },
-    color: '#C8A96B'
+    color: '#E8192C'
   },
   {
     title: 'Premium Brand',
@@ -34,7 +34,7 @@ const packages = [
     longDesc: 'A complete creative and strategic takeover. We handle everything from full-day shoots to paid meta/google ad campaigns and SMM.',
     features: ['Full-Day Shoot', '50 Edited Photos', '8 Reels + 1 Film', 'All-Platform SMM', 'Google/Meta Ads', 'Monthly Reports'],
     tags: { topLeft: 'Full Day', topRight: '50 Photos', bottomLeft: '8 Reels', bottomRight: 'Brand Film' },
-    color: '#C8A96B'
+    color: '#E8192C'
   },
   {
     title: 'Custom Retainer',
@@ -64,7 +64,7 @@ export function FeatureGrid() {
   return (
     <section className="my-20 xl:my-28 relative z-10 px-4 sm:px-6">
       <div className="text-center max-w-2xl mx-auto mb-16">
-        <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#C8A96B]">
+        <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#E8192C]">
           Flexible Pricing
         </span>
         <h2
@@ -100,7 +100,7 @@ export function FeatureGrid() {
                     : ''
                 } ${
                   enableHover
-                    ? 'border-[#C8A96B]/60 shadow-[0_8px_24px_-12px_rgba(200,169,107,0.35)] bg-[#181818] z-20 py-10 scale-[1.02]'
+                    ? 'border-[#E8192C]/60 shadow-[0_8px_24px_-12px_rgba(232,25,44,0.35)] bg-[#181818] z-20 py-10 scale-[1.02]'
                     : 'border-line shadow-[0_4px_18px_-8px_rgba(0,0,0,0.5)]'
                 }`}
                 style={isXl ? { minHeight: enableHover ? '380px' : '340px' } : undefined}
@@ -180,7 +180,7 @@ export function FeatureGrid() {
                   <ul className="mt-4 space-y-2 border-t border-line pt-4">
                     {pkg.features.slice(0, enableHover ? 6 : 4).map((feat) => (
                       <li key={feat} className="text-xs text-ivory/70 flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#C8A96B] shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#E8192C] shrink-0" />
                         {feat}
                       </li>
                     ))}

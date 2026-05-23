@@ -17,7 +17,7 @@ export function FluidCursor({
   curl = 20,
   splatRadius = 0.0018,
   splatForce = 1800,
-  color = '#C8A96B'
+  color = '#E8192C'
 }: FluidProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 

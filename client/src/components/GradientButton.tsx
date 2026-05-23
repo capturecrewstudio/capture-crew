@@ -56,7 +56,7 @@ export function GradientButton({
       disabled={disabled}
       className={`relative inline-flex items-center justify-between font-medium tracking-widest uppercase text-ink transition-transform duration-300 ease-out active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none group overflow-hidden ${heightClass} ${className}`}
       style={{
-        background: '#C8A96B',
+        background: '#E8192C',
         borderRadius: '6px',
         willChange: 'transform'
       }}

@@ -6,28 +6,28 @@ const steps = [
     label: 'Brief',
     title: 'Discovery call',
     desc: 'We dive into your brand goals, audience, references, and KPIs. You leave with a clear shot list and mood direction.',
-    accent: '#C8A96B'
+    accent: '#E8192C'
   },
   {
     icon: Lightbulb,
     label: 'Pre-Prod',
     title: 'Storyboard & lock',
     desc: 'Locations scouted, talent locked, lighting boards finalised. Every frame planned before the camera rolls.',
-    accent: '#C8A96B'
+    accent: '#E8192C'
   },
   {
     icon: Clapperboard,
     label: 'Shoot',
     title: 'Set day',
     desc: 'On-set crew, gimbals, drones, and live preview. Tightly directed so we capture stills + motion in one go.',
-    accent: '#C8A96B'
+    accent: '#E8192C'
   },
   {
     icon: Sparkles,
     label: 'Delivery',
     title: 'Retouch & ship',
     desc: 'Color graded, retouched, AVIF/WebP optimized. Delivered in 7–14 days with rollout-ready assets.',
-    accent: '#C8A96B'
+    accent: '#E8192C'
   }
 ];
 
@@ -35,7 +35,7 @@ export function ProcessTimeline() {
   return (
     <section className="relative z-10 px-4 sm:px-6 max-w-7xl mx-auto">
       <div className="text-center max-w-2xl mx-auto mb-14">
-        <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#C8A96B]">
+        <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#E8192C]">
           The Workflow
         </span>
         <h2

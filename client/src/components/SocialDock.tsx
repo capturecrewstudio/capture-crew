@@ -52,7 +52,7 @@ const LINKS: SocialLink[] = [
     ),
   },
   {
-    id: 'threads', label: 'Threads', href: 'https://threads.net/@capturecrew', color: '#c8a96b',
+    id: 'threads', label: 'Threads', href: 'https://threads.net/@capturecrew', color: '#E8192C',
     Icon: () => (
       <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
         <path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.028-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.964-.065-1.19.408-2.285 1.33-3.082.88-.76 2.119-1.207 3.583-1.291a13.853 13.853 0 011.57.044c-.051-.277-.094-.546-.13-.806-.138-.959-.171-1.888.146-2.675.322-.8 1.002-1.387 2.014-1.745 1.966-.695 3.443.414 4.072 1.197l-1.584 1.26c-.186-.234-.808-.853-1.737-.531-.425.15-.695.41-.803.774-.155.523-.1 1.26.055 2.274.053.345.117.703.19 1.067.337.046.67.103.995.172 2.748.581 4.726 1.98 5.573 3.934.983 2.27.672 5.239-1.733 7.59-1.874 1.832-4.226 2.729-7.204 2.749zm-3.052-8.36c.059 1.071.92 1.714 2.435 1.633.988-.054 1.764-.422 2.308-1.094.572-.708.92-1.746 1.037-3.09a12.697 12.697 0 00-1.33-.09c-1.108.063-1.974.37-2.517.888-.511.488-.77 1.136-.733 1.754h-.2z"/>
@@ -60,7 +60,7 @@ const LINKS: SocialLink[] = [
     ),
   },
   {
-    id: 'mail', label: 'Email', href: 'mailto:hello@capturecrew.com', color: '#C8A96B',
+    id: 'mail', label: 'Email', href: 'mailto:hello@capturecrew.com', color: '#E8192C',
     Icon: () => (
       <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
         <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
@@ -263,7 +263,7 @@ export function SocialDock() {
         {/* Glow halo */}
         <div className="absolute rounded-full pointer-events-none" style={{
           inset: open ? -10 : -4,
-          background: 'radial-gradient(ellipse at center, rgba(200,169,107,0.5) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse at center, rgba(232,25,44,0.5) 0%, transparent 70%)',
           filter: `blur(${open ? 16 : 8}px)`,
           opacity: open ? 0.6 : 0.25,
           transition: 'inset 0.4s ease, opacity 0.4s ease, filter 0.4s ease',
@@ -272,9 +272,9 @@ export function SocialDock() {
         {/* Face */}
         <div className="relative flex items-center justify-center rounded-full w-full h-full" style={{
           background: 'linear-gradient(135deg, #1a1a1a 0%, #242424 100%)',
-          border: '1px solid rgba(200,169,107,0.35)',
+          border: '1px solid rgba(232,25,44,0.35)',
           boxShadow: open
-            ? '0 0 0 3px rgba(200,169,107,0.15), 0 10px 32px rgba(0,0,0,0.6)'
+            ? '0 0 0 3px rgba(232,25,44,0.15), 0 10px 32px rgba(0,0,0,0.6)'
             : '0 4px 18px rgba(0,0,0,0.5)',
           transition: 'transform 0.38s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.38s ease',
           transform: open ? 'scale(1.08)' : 'scale(1)',
@@ -285,9 +285,9 @@ export function SocialDock() {
             display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>
             {open
-              ? <X size={22} style={{ color: '#C8A96B' }} strokeWidth={2.5} />
+              ? <X size={22} style={{ color: '#E8192C' }} strokeWidth={2.5} />
               : (
-                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C8A96B" strokeWidth="2.2" strokeLinecap="round">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#E8192C" strokeWidth="2.2" strokeLinecap="round">
                   <line x1="5" y1="7"  x2="19" y2="7"/>
                   <line x1="5" y1="12" x2="19" y2="12"/>
                   <line x1="5" y1="17" x2="19" y2="17"/>
@@ -300,9 +300,9 @@ export function SocialDock() {
 
       <style>{`
         @keyframes sdPulse {
-          0%   { box-shadow: 0 0 0 0   rgba(200,169,107,0.3); }
-          70%  { box-shadow: 0 0 0 12px rgba(200,169,107,0);  }
-          100% { box-shadow: 0 0 0 0   rgba(200,169,107,0);   }
+          0%   { box-shadow: 0 0 0 0   rgba(232,25,44,0.3); }
+          70%  { box-shadow: 0 0 0 12px rgba(232,25,44,0);  }
+          100% { box-shadow: 0 0 0 0   rgba(232,25,44,0);   }
         }
       `}</style>
     </>

@@ -9,7 +9,8 @@
   --color-ivory:    var(--ivory);
   --color-stone:    var(--stone);
   --color-ink:      var(--ink);
-  --color-gold:     var(--gold);
+  --color-accent:   var(--accent);
+  --color-gold:     var(--accent);
   --color-line:     var(--line);
   --color-linemid:  var(--line-mid);
 
@@ -55,14 +56,14 @@
 }
 
 :root {
-  --brand-gradient: linear-gradient(135deg, #C8A96B 0%, #E8C98A 50%, #C8A96B 100%);
-  --gold-glow: radial-gradient(ellipse at center, rgba(200,169,107,0.35) 0%, transparent 70%);
+  --brand-gradient: linear-gradient(135deg, #E8192C 0%, #FF4D5E 50%, #E8192C 100%);
+  --accent-glow: radial-gradient(ellipse at center, rgba(232,25,44,0.35) 0%, transparent 70%);
   /* Dark mode tokens (default) */
   --bg:        #0A0A0A;
   --surface:   #141414;
   --surface-2: #1C1C1C;
-  --gold:      #C8A96B;
-  --gold-dim:  rgba(200, 169, 107, 0.15);
+  --accent:      #E8192C;
+  --accent-dim:  rgba(232, 25, 44, 0.15);
   --ivory:     #F5F1E8;
   --stone:     #7A7468;
   --ink:       #0A0A0A;
@@ -79,15 +80,15 @@
   --bg:        #FAF8F4;
   --surface:   #F2EFE9;
   --surface-2: #E8E4DC;
-  --gold:      #B8962A;
-  --gold-dim:  rgba(184, 150, 42, 0.12);
+  --accent:      #CC1525;
+  --accent-dim:  rgba(204, 21, 37, 0.12);
   --ivory:     #1A1714;
   --stone:     #6B6560;
   --ink:       #FAF8F4;
   --line:      rgba(26, 23, 20, 0.08);
   --line-mid:  rgba(26, 23, 20, 0.14);
   --shadow:    0 32px 80px rgba(0, 0, 0, 0.12);
-  --gold-glow: radial-gradient(ellipse at center, rgba(184,150,42,0.2) 0%, transparent 70%);
+  --accent-glow: radial-gradient(ellipse at center, rgba(204,21,37,0.2) 0%, transparent 70%);
 }
 
 * {
@@ -246,7 +247,7 @@ video {
 }
 
 .eyebrow {
-  color: var(--gold);
+  color: var(--accent);
   font-family: 'DM Mono', monospace;
   font-size: 0.68rem;
   font-weight: 300;
@@ -308,8 +309,8 @@ p {
 }
 
 .primary-button {
-  background: var(--gold);
-  border: 1px solid var(--gold);
+  background: var(--accent);
+  border: 1px solid var(--accent);
   border-radius: 6px;
   color: var(--ink);
   font-family: 'DM Sans', sans-serif;
@@ -514,7 +515,7 @@ p {
 }
 
 blockquote {
-  border-left: 1px solid var(--gold);
+  border-left: 1px solid var(--accent);
   margin: 0;
   padding-left: 28px;
 }
@@ -599,7 +600,7 @@ cite {
 }
 
 .form-message {
-  color: var(--gold);
+  color: var(--accent);
   margin: 0;
 }
 
@@ -644,7 +645,7 @@ cite {
 }
 
 .process-grid span {
-  color: var(--gold);
+  color: var(--accent);
   display: block;
   margin-bottom: 36px;
 }
@@ -664,7 +665,7 @@ cite {
 
 .filter-row button.is-active,
 .filter-row button:hover {
-  border-color: var(--gold);
+  border-color: var(--accent);
   color: var(--ivory);
 }
 
@@ -738,7 +739,7 @@ cite {
 }
 
 .project-meta span {
-  color: var(--gold);
+  color: var(--accent);
   font-size: 0.75rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -811,7 +812,7 @@ cite {
 
 .blog-grid span {
   align-items: center;
-  color: var(--gold);
+  color: var(--accent);
   display: flex;
   gap: 8px;
 }

@@ -42,7 +42,7 @@ export function FaqAccordion() {
   return (
     <section className="my-20 xl:my-28 relative z-10 px-4 sm:px-6 max-w-4xl mx-auto">
       <div className="text-center mb-12">
-        <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#C8A96B]">
+        <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#E8192C]">
           Got Questions?
         </span>
         <h2
@@ -61,7 +61,7 @@ export function FaqAccordion() {
             <div
               key={idx}
               className={`rounded-xl bg-surface border transition-all duration-300 overflow-hidden relative ${
-                isOpen ? 'border-[#C8A96B] shadow-lg' : 'border-line'
+                isOpen ? 'border-[#E8192C] shadow-lg' : 'border-line'
               }`}
             >
               {/* Active Item: 4px top gradient accent bar */}
@@ -84,7 +84,7 @@ export function FaqAccordion() {
                 <ChevronDown
                   size={18}
                   className={`text-stone/70 shrink-0 transition-transform duration-300 ${
-                    isOpen ? 'rotate-180 text-[#C8A96B]' : ''
+                    isOpen ? 'rotate-180 text-[#E8192C]' : ''
                   }`}
                 />
               </button>

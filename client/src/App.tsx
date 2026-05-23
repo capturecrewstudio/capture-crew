@@ -183,7 +183,7 @@ export function App() {
     <>
       {route !== 'admin' && (
         <FluidCursor
-          color="#C8A96B"
+          color="#E8192C"
           splatRadius={0.0018}
           splatForce={1800}
         />

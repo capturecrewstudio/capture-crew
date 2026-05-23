@@ -101,7 +101,7 @@ export function TestimonialCarousel() {
   return (
     <section className="my-20 xl:my-28 relative z-10 px-4 overflow-hidden">
       <div className="text-center max-w-2xl mx-auto mb-16">
-        <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#C8A96B]">
+        <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#E8192C]">
           Client Feedback
         </span>
         <h2
@@ -134,7 +134,7 @@ export function TestimonialCarousel() {
                   key={`${item.name}-${idx}`}
                   className={`w-[290px] sm:w-[380px] md:w-[450px] shrink-0 rounded-2xl bg-surface p-6 sm:p-8 flex flex-col justify-between border transition-all duration-500 relative ${
                     isActive
-                      ? 'border-[#C8A96B]/50 bg-[#1a1a1a] scale-100 shadow-[0_6px_20px_-10px_rgba(200,169,107,0.35)]'
+                      ? 'border-[#E8192C]/50 bg-[#1a1a1a] scale-100 shadow-[0_6px_20px_-10px_rgba(232,25,44,0.35)]'
                       : 'border-line opacity-40 scale-95'
                   }`}
                 >
@@ -142,7 +142,7 @@ export function TestimonialCarousel() {
                   {isActive && (
                     <div
                       className="absolute -inset-px rounded-2xl pointer-events-none opacity-40 -z-10"
-                      style={{ background: 'var(--gold-glow)' }}
+                      style={{ background: 'var(--accent-glow)' }}
                     />
                   )}
 
@@ -159,7 +159,7 @@ export function TestimonialCarousel() {
                           <span className="text-xs text-stone">{item.designation}</span>
                         </div>
                       </div>
-                      <Sparkles size={16} className="text-[#C8A96B]" />
+                      <Sparkles size={16} className="text-[#E8192C]" />
                     </div>
                     <p className="text-sm sm:text-base text-ivory/80 italic leading-relaxed">
                       "{item.message}"
@@ -175,7 +175,7 @@ export function TestimonialCarousel() {
         <div className="flex justify-center items-center gap-6 mt-10">
           <button
             onClick={handlePrev}
-            className="p-3 rounded-full border border-line bg-ivory/5 text-stone hover:text-ivory hover:border-[#C8A96B] hover:scale-105 active:scale-95 transition-all duration-300"
+            className="p-3 rounded-full border border-line bg-ivory/5 text-stone hover:text-ivory hover:border-[#E8192C] hover:scale-105 active:scale-95 transition-all duration-300"
             aria-label="Previous testimonial"
           >
             <ArrowLeft size={16} />
@@ -193,7 +193,7 @@ export function TestimonialCarousel() {
                     setTrackIndex(idx + 1);
                   }}
                   className={`h-2 rounded-full transition-all duration-300 focus:outline-none ${
-                    active ? 'w-6 bg-[#C8A96B]' : 'w-2 bg-ivory/20 hover:bg-ivory/40'
+                    active ? 'w-6 bg-[#E8192C]' : 'w-2 bg-ivory/20 hover:bg-ivory/40'
                   }`}
                   aria-label={`Go to testimonial ${idx + 1}`}
                 />
@@ -203,7 +203,7 @@ export function TestimonialCarousel() {
 
           <button
             onClick={handleNext}
-            className="p-3 rounded-full border border-line bg-ivory/5 text-stone hover:text-ivory hover:border-[#C8A96B] hover:scale-105 active:scale-95 transition-all duration-300"
+            className="p-3 rounded-full border border-line bg-ivory/5 text-stone hover:text-ivory hover:border-[#E8192C] hover:scale-105 active:scale-95 transition-all duration-300"
             aria-label="Next testimonial"
           >
             <ArrowRight size={16} />

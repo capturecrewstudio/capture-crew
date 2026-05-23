@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import { Camera, Building2, Award, Users } from 'lucide-react';
 
 const stats = [
-  { icon: Camera,    value: 500, suffix: '+',      label: 'Shoots Delivered',   color: '#C8A96B' },
-  { icon: Building2, value: 160, suffix: '+',      label: 'Architects Trusted', color: '#C8A96B' },
-  { icon: Award,     value: 68,  suffix: '+',      label: 'Premium Brands',     color: '#C8A96B' },
-  { icon: Users,     value: 8,   suffix: '+ yrs',  label: 'Studio Heritage',    color: '#C8A96B' }
+  { icon: Camera,    value: 500, suffix: '+',      label: 'Shoots Delivered',   color: '#E8192C' },
+  { icon: Building2, value: 160, suffix: '+',      label: 'Architects Trusted', color: '#E8192C' },
+  { icon: Award,     value: 68,  suffix: '+',      label: 'Premium Brands',     color: '#E8192C' },
+  { icon: Users,     value: 8,   suffix: '+ yrs',  label: 'Studio Heritage',    color: '#E8192C' }
 ];
 
 function useCountUp(target: number, start: boolean, durationMs = 1400) {
@@ -94,7 +94,7 @@ export function StatsCounter() {
       className="relative z-10 px-4 sm:px-6 max-w-7xl mx-auto"
     >
       <div className="text-center max-w-2xl mx-auto mb-12">
-        <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#C8A96B]">
+        <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#E8192C]">
           By the Numbers
         </span>
         <h2

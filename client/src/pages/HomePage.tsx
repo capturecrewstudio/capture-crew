@@ -49,7 +49,7 @@ export function HomePage({ onNavigate }: Props) {
         {/* Blue Radial Glow behind heading (floats) */}
         <div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[650px] aspect-square rounded-full pointer-events-none -z-10 opacity-30 blur-[80px]"
-          style={{ background: 'var(--gold-glow)', animation: 'float 8s ease-in-out infinite' }}
+          style={{ background: 'var(--accent-glow)', animation: 'float 8s ease-in-out infinite' }}
         />
 
         {/* Hero Content */}
@@ -57,8 +57,8 @@ export function HomePage({ onNavigate }: Props) {
           {/* Pill Badge */}
           <Reveal direction="up">
             <div className="inline-flex items-center gap-3 mb-8">
-              <span className="block w-8 h-px bg-[#C8A96B] opacity-70" />
-              <span style={{ fontFamily: "'DM Mono', monospace" }} className="text-[0.65rem] font-light tracking-[0.26em] uppercase text-[#C8A96B]">
+              <span className="block w-8 h-px bg-[#E8192C] opacity-70" />
+              <span style={{ fontFamily: "'DM Mono', monospace" }} className="text-[0.65rem] font-light tracking-[0.26em] uppercase text-[#E8192C]">
                 Nat Geo Award · Mumbai · London
               </span>
             </div>
@@ -77,7 +77,7 @@ export function HomePage({ onNavigate }: Props) {
             >
               Where Light
               <br />
-              <em style={{ fontStyle: 'italic', color: '#C8A96B' }}>Meets</em> Legacy.
+              <em style={{ fontStyle: 'italic', color: '#E8192C' }}>Meets</em> Legacy.
             </h1>
           </Reveal>
 
@@ -162,8 +162,8 @@ export function HomePage({ onNavigate }: Props) {
             <div
               className="w-full py-12 px-8 sm:px-16 rounded-2xl border border-line flex flex-col md:flex-row items-center justify-between gap-6"
               style={{
-                background: 'linear-gradient(135deg, rgba(200,169,107,0.08) 0%, rgba(200,169,107,0.03) 100%)',
-                border: '1px solid rgba(200,169,107,0.15)'
+                background: 'linear-gradient(135deg, rgba(232,25,44,0.08) 0%, rgba(232,25,44,0.03) 100%)',
+                border: '1px solid rgba(232,25,44,0.15)'
               }}
             >
               <div>
@@ -184,7 +184,7 @@ export function HomePage({ onNavigate }: Props) {
       <LazySection height="350px">
         <section className="mt-[60px] sm:mt-[80px] md:mt-[100px] lg:mt-[120px] xl:mt-[150px] px-4 max-w-5xl mx-auto text-center">
           <Reveal>
-            <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#C8A96B]">
+            <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#E8192C]">
               Strategic Storytelling
             </span>
             <h2
@@ -192,7 +192,7 @@ export function HomePage({ onNavigate }: Props) {
               style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300, fontSize: 'clamp(2.4rem, 5vw, 5rem)' }}
             >
               We don't just shoot.<br />
-              We <em style={{ fontStyle: 'italic', color: '#C8A96B' }}>elevate</em> your vision.
+              We <em style={{ fontStyle: 'italic', color: '#E8192C' }}>elevate</em> your vision.
             </h2>
             <p className="text-sm sm:text-base text-stone max-w-2xl mx-auto mt-6 leading-relaxed">
               At Capture Crew, we combine our distinguished UK National Geographic background with local elegance. Our visual systems are engineered to build immediate trust. We deliver retouched, AVIF/WebP ready libraries and cinematic films optimized for conversions.
@@ -201,9 +201,9 @@ export function HomePage({ onNavigate }: Props) {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
             {[
-              { Icon: Award, color: '#C8A96B', title: 'Nat Geo Standard', body: 'Working with elite photographers who bring National Geographic experience from the UK.' },
-              { Icon: Users, color: '#C8A96B', title: 'Massive Network', body: 'Connecting 160+ architects and 68+ premium brands globally, building long-term assets.' },
-              { Icon: ShieldCheck, color: '#C8A96B', title: 'Luxury Heritage', body: 'Partnering with names like Prada, Raymond, Bluestone, Ori, and luxury realty groups.' }
+              { Icon: Award, color: '#E8192C', title: 'Nat Geo Standard', body: 'Working with elite photographers who bring National Geographic experience from the UK.' },
+              { Icon: Users, color: '#E8192C', title: 'Massive Network', body: 'Connecting 160+ architects and 68+ premium brands globally, building long-term assets.' },
+              { Icon: ShieldCheck, color: '#E8192C', title: 'Luxury Heritage', body: 'Partnering with names like Prada, Raymond, Bluestone, Ori, and luxury realty groups.' }
             ].map(({ Icon, color, title, body }, idx) => (
               <Reveal key={title} delay={idx * 120}>
                 <div className="p-6 rounded-2xl border border-line bg-surface/50 hover:border-linemid hover:-translate-y-1 transition-all duration-500 h-full">
@@ -222,14 +222,14 @@ export function HomePage({ onNavigate }: Props) {
         <div id="portfolio-section" className="mt-[60px] sm:mt-[80px] md:mt-[100px] lg:mt-[120px] xl:mt-[150px] px-4 max-w-7xl mx-auto">
           <Reveal>
             <div className="text-center max-w-2xl mx-auto mb-10">
-              <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#C8A96B]">
+              <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#E8192C]">
                 Visual Catalogues
               </span>
               <h2
                 className="text-ivory mt-3"
                 style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300, fontSize: 'clamp(2.4rem, 5vw, 5rem)', lineHeight: 1.05 }}
               >
-                Explore Our <em style={{ fontStyle: 'italic', color: '#C8A96B' }}>Albums</em>
+                Explore Our <em style={{ fontStyle: 'italic', color: '#E8192C' }}>Albums</em>
               </h2>
               <p className="text-stone mt-4 leading-relaxed text-sm">
                 We shoot and package files across key niches. Click any domain below to preview.
@@ -258,14 +258,14 @@ export function HomePage({ onNavigate }: Props) {
           {/* Text Left (grid span 7) */}
           <Reveal direction="left" className="lg:col-span-7">
             <div className="flex flex-col items-start gap-4">
-              <div style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#C8A96B]">
+              <div style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#E8192C]">
                 Social Media Management (SMM)
               </div>
               <h2
                 className="text-ivory leading-[1.05] mt-3"
                 style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300, fontSize: 'clamp(2.4rem, 5vw, 5rem)' }}
               >
-                Social Reels and Shorts That <em style={{ fontStyle: 'italic', color: '#C8A96B' }}>Dominate Feeds</em>
+                Social Reels and Shorts That <em style={{ fontStyle: 'italic', color: '#E8192C' }}>Dominate Feeds</em>
               </h2>
               <p className="text-sm sm:text-base text-stone leading-relaxed mt-2">
                 We specialize in scroll-stopping, high-retention vertical films. We script, produce, direct, color-grade, and publish reels designed for modern attention spans, driving immediate customer conversions.
@@ -276,7 +276,7 @@ export function HomePage({ onNavigate }: Props) {
                   ['Hook-First', 'We write high-retention hooks that capture users in the first 2 seconds.'],
                   ['End-to-End', 'From conceptual scripts and color grading to publication and paid ad runs.']
                 ].map(([title, desc]) => (
-                  <li key={title} className="flex gap-4 items-start border-l-2 border-[#C8A96B] pl-4">
+                  <li key={title} className="flex gap-4 items-start border-l-2 border-[#E8192C] pl-4">
                     <div>
                       <h4 className="text-sm sm:text-base font-medium text-ivory" style={{ fontFamily: "'Cormorant Garant', serif" }}>{title}</h4>
                       <p className="text-xs text-stone mt-0.5">{desc}</p>
@@ -317,7 +317,7 @@ export function HomePage({ onNavigate }: Props) {
                         <span className="text-[8px] text-stone">Cinematic Stories</span>
                       </div>
                     </div>
-                    <button className="text-[9px] font-bold bg-[#C8A96B] text-black px-2.5 py-1 rounded-full">Follow</button>
+                    <button className="text-[9px] font-bold bg-[#E8192C] text-black px-2.5 py-1 rounded-full">Follow</button>
                   </div>
 
                   {/* Simulated Analytics Overlay inside the card */}
@@ -384,8 +384,8 @@ export function HomePage({ onNavigate }: Props) {
             <div
               className="w-full py-12 px-8 sm:px-16 rounded-2xl border border-line flex flex-col md:flex-row items-center justify-between gap-6"
               style={{
-                background: 'linear-gradient(135deg, rgba(200,169,107,0.06) 0%, rgba(200,169,107,0.02) 100%)',
-                border: '1px solid rgba(200,169,107,0.12)'
+                background: 'linear-gradient(135deg, rgba(232,25,44,0.06) 0%, rgba(232,25,44,0.02) 100%)',
+                border: '1px solid rgba(232,25,44,0.12)'
               }}
             >
               <div>
@@ -432,14 +432,14 @@ export function HomePage({ onNavigate }: Props) {
             <Reveal direction="left">
               <div className="flex flex-col gap-6">
                 <div>
-                  <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#C8A96B]">
+                  <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#E8192C]">
                     Get In Touch
                   </span>
                   <h2
                     className="text-ivory mt-3"
                     style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300, fontSize: 'clamp(2.4rem, 5vw, 5rem)', lineHeight: 1.05 }}
                   >
-                    Let's <em style={{ fontStyle: 'italic', color: '#C8A96B' }}>Capture</em> Your Vision.
+                    Let's <em style={{ fontStyle: 'italic', color: '#E8192C' }}>Capture</em> Your Vision.
                   </h2>
                   <p className="text-stone text-sm sm:text-base mt-4 leading-relaxed">
                     We bridge the gap between architectural elegance, commercial brilliance, and business growth. Contact founder Kartik Kanda to plan your campaign shoots.
@@ -448,7 +448,7 @@ export function HomePage({ onNavigate }: Props) {
 
                 <div className="flex flex-col gap-4 mt-6">
                   <div className="flex items-center gap-4 text-ivory/70 hover:text-ivory transition-colors duration-300">
-                    <span className="p-3 bg-ivory/5 border border-line rounded-full text-[#C8A96B]">
+                    <span className="p-3 bg-ivory/5 border border-line rounded-full text-[#E8192C]">
                       <Phone size={18} />
                     </span>
                     <div>
@@ -458,7 +458,7 @@ export function HomePage({ onNavigate }: Props) {
                   </div>
 
                   <div className="flex items-center gap-4 text-ivory/70 hover:text-ivory transition-colors duration-300">
-                    <span className="p-3 bg-ivory/5 border border-line rounded-full text-[#C8A96B]">
+                    <span className="p-3 bg-ivory/5 border border-line rounded-full text-[#E8192C]">
                       <Mail size={18} />
                     </span>
                     <div>
@@ -468,7 +468,7 @@ export function HomePage({ onNavigate }: Props) {
                   </div>
 
                   <div className="flex items-center gap-4 text-ivory/70 hover:text-ivory transition-colors duration-300">
-                    <span className="p-3 bg-ivory/5 border border-line rounded-full text-[#C8A96B]">
+                    <span className="p-3 bg-ivory/5 border border-line rounded-full text-[#E8192C]">
                       <MapPin size={18} />
                     </span>
                     <div>
@@ -485,7 +485,7 @@ export function HomePage({ onNavigate }: Props) {
                     href="https://instagram.com/officialcapturecrewstudios"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2.5 rounded-full border border-line bg-ivory/5 text-stone hover:text-ivory hover:border-[#C8A96B] transition-all duration-300"
+                    className="p-2.5 rounded-full border border-line bg-ivory/5 text-stone hover:text-ivory hover:border-[#E8192C] transition-all duration-300"
                     aria-label="Instagram Profile"
                   >
                     <Instagram size={18} />
@@ -494,7 +494,7 @@ export function HomePage({ onNavigate }: Props) {
                     href="https://youtube.com/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2.5 rounded-full border border-line bg-ivory/5 text-stone hover:text-ivory hover:border-[#C8A96B] transition-all duration-300"
+                    className="p-2.5 rounded-full border border-line bg-ivory/5 text-stone hover:text-ivory hover:border-[#E8192C] transition-all duration-300"
                     aria-label="YouTube Channel"
                   >
                     <Youtube size={18} />
@@ -503,7 +503,7 @@ export function HomePage({ onNavigate }: Props) {
                     href="https://linkedin.com/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2.5 rounded-full border border-line bg-ivory/5 text-stone hover:text-ivory hover:border-[#C8A96B] transition-all duration-300"
+                    className="p-2.5 rounded-full border border-line bg-ivory/5 text-stone hover:text-ivory hover:border-[#E8192C] transition-all duration-300"
                     aria-label="LinkedIn Page"
                   >
                     <Linkedin size={18} />
@@ -517,7 +517,7 @@ export function HomePage({ onNavigate }: Props) {
               <div className="bg-surface border border-line p-6 sm:p-10 rounded-3xl shadow-2xl relative">
                 <div
                   className="absolute -inset-px rounded-3xl pointer-events-none opacity-20 -z-10"
-                  style={{ background: 'var(--gold-glow)' }}
+                  style={{ background: 'var(--accent-glow)' }}
                 />
                 <h3 className="text-xl sm:text-2xl text-ivory mb-6" style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300 }}>Commission a Visual Campaign</h3>
                 <LeadForm />

@@ -161,7 +161,7 @@ export function SiteHeader({ activeRoute, onNavigate, isDark, onToggleTheme }: P
           <button
             className="text-xs uppercase tracking-widest font-light transition-colors duration-300 whitespace-nowrap"
             style={{
-              color: activeRoute === item.route ? 'var(--gold)' : 'var(--stone)',
+              color: activeRoute === item.route ? 'var(--accent)' : 'var(--stone)',
             }}
             onMouseEnter={e => { if (activeRoute !== item.route) (e.currentTarget as HTMLElement).style.color = 'var(--ivory)'; }}
             onMouseLeave={e => { if (activeRoute !== item.route) (e.currentTarget as HTMLElement).style.color = 'var(--stone)'; }}
@@ -239,8 +239,8 @@ export function SiteHeader({ activeRoute, onNavigate, isDark, onToggleTheme }: P
                 <button
                   className="w-full py-3 text-left px-4 rounded-xl text-sm font-light transition-colors"
                   style={{
-                    color: activeRoute === item.route ? 'var(--gold)' : 'var(--stone)',
-                    background: activeRoute === item.route ? 'var(--gold-dim)' : 'transparent',
+                    color: activeRoute === item.route ? 'var(--accent)' : 'var(--stone)',
+                    background: activeRoute === item.route ? 'var(--accent-dim)' : 'transparent',
                   }}
                   key={item.route}
                   onClick={() => navigate(item.route)}
