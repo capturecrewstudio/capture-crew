@@ -1,5 +1,51 @@
+@import "tailwindcss";
+
+@theme {
+  --animate-marquee: marquee 25s linear infinite;
+  --animate-progress-flow: progressFlow 2.5s linear infinite;
+  --animate-gradient-shift: gradientShift 8s ease-in-out infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-shimmer: shimmer 2.5s linear infinite;
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(var(--marquee-offset, -50%)); }
+  }
+  @keyframes progressFlow {
+    0% { transform: scaleX(0); }
+    100% { transform: scaleX(1); }
+  }
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+}
+
+.gradient-text-anim {
+  background-image: var(--brand-gradient);
+  background-size: 200% 200%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gradientShift 8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gradient-text-anim { animation: none; }
+}
+
 :root {
-  --bg: #0d0d0d;
+  --brand-gradient: linear-gradient(92.51deg, #5433FF 17.31%, #20BDFF 103.26%, #CA6672 115.38%);
+  --blue-glow: radial-gradient(ellipse at center, rgba(0,64,255,0.45) 0%, transparent 70%);
+  --bg: #131313; /* Changed to #131313 to match brand visual requirements */
   --surface: #161616;
   --surface-2: #202020;
   --gold: #c8a96b;
