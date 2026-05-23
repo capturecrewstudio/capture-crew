@@ -1,3 +1,4 @@
+
 import { ArrowRight, Award, Users, ShieldCheck, Phone, Mail, MapPin, Instagram, Youtube, Linkedin } from 'lucide-react';
 import type { RouteName } from '../App';
 import { LeadForm } from '../components/LeadForm';
@@ -166,7 +167,7 @@ export function HomePage({ onNavigate }: Props) {
               }}
             >
               <div>
-                <h3 className="text-xl sm:text-2xl text-white" style={{ fontFamily: "’Cormorant Garant’, serif", fontWeight: 300 }}>Let’s shoot something unforgettable.</h3>
+                <h3 className="text-xl sm:text-2xl text-white" style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300 }}>Let's shoot something unforgettable.</h3>
                 <p className="text-xs sm:text-sm text-white/60 mt-2">Bring your spaces, products, and brand story to life with world-class production.</p>
               </div>
               <GradientButton
@@ -183,15 +184,15 @@ export function HomePage({ onNavigate }: Props) {
       <LazySection height="350px">
         <section className="mt-[60px] sm:mt-[80px] md:mt-[100px] lg:mt-[120px] xl:mt-[150px] px-4 max-w-5xl mx-auto text-center">
           <Reveal>
-            <span style={{ fontFamily: "’DM Mono’, monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#C8A96B]">
+            <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#C8A96B]">
               Strategic Storytelling
             </span>
             <h2
               className="text-white mt-4 leading-[1.05]"
-              style={{ fontFamily: "’Cormorant Garant’, serif", fontWeight: 300, fontSize: ‘clamp(2.4rem, 5vw, 5rem)’ }}
+              style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300, fontSize: 'clamp(2.4rem, 5vw, 5rem)' }}
             >
-              We don’t just shoot.<br />
-              We <em style={{ fontStyle: ‘italic’, color: ‘#C8A96B’ }}>elevate</em> your vision.
+              We don't just shoot.<br />
+              We <em style={{ fontStyle: 'italic', color: '#C8A96B' }}>elevate</em> your vision.
             </h2>
             <p className="text-sm sm:text-base text-white/60 max-w-2xl mx-auto mt-6 leading-relaxed">
               At Capture Crew, we combine our distinguished UK National Geographic background with local elegance. Our visual systems are engineered to build immediate trust. We deliver retouched, AVIF/WebP ready libraries and cinematic films optimized for conversions.
@@ -316,7 +317,7 @@ export function HomePage({ onNavigate }: Props) {
                         <span className="text-[8px] text-white/60">Cinematic Stories</span>
                       </div>
                     </div>
-                    <button className="text-[9px] font-bold bg-[#58A4FF] text-black px-2.5 py-1 rounded-full">Follow</button>
+                    <button className="text-[9px] font-bold bg-[#C8A96B] text-black px-2.5 py-1 rounded-full">Follow</button>
                   </div>
 
                   {/* Simulated Analytics Overlay inside the card */}
@@ -431,14 +432,14 @@ export function HomePage({ onNavigate }: Props) {
             <Reveal direction="left">
               <div className="flex flex-col gap-6">
                 <div>
-                  <span style={{ fontFamily: "’DM Mono’, monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#C8A96B]">
+                  <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#C8A96B]">
                     Get In Touch
                   </span>
                   <h2
                     className="text-white mt-3"
-                    style={{ fontFamily: "’Cormorant Garant’, serif", fontWeight: 300, fontSize: ‘clamp(2.4rem, 5vw, 5rem)’, lineHeight: 1.05 }}
+                    style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300, fontSize: 'clamp(2.4rem, 5vw, 5rem)', lineHeight: 1.05 }}
                   >
-                    Let’s <em style={{ fontStyle: ‘italic’, color: ‘#C8A96B’ }}>Capture</em> Your Vision.
+                    Let's <em style={{ fontStyle: 'italic', color: '#C8A96B' }}>Capture</em> Your Vision.
                   </h2>
                   <p className="text-white/60 text-sm sm:text-base mt-4 leading-relaxed">
                     We bridge the gap between architectural elegance, commercial brilliance, and business growth. Contact founder Kartik Kanda to plan your campaign shoots.

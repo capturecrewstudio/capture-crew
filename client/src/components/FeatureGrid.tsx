@@ -74,7 +74,7 @@ export function FeatureGrid() {
           Our Creative Packages
         </h2>
         <p className="text-white/60 mt-4 leading-relaxed">
-          Choose a curated service bundle or request a bespoke quote tailored to your brand’s commercial goals.
+          Choose a curated service bundle or request a bespoke quote tailored to your brand's commercial goals.
         </p>
       </div>
 
@@ -100,7 +100,7 @@ export function FeatureGrid() {
                     : ''
                 } ${
                   enableHover
-                    ? 'border-[#5433FF]/60 shadow-[0_8px_24px_-12px_rgba(84,51,255,0.35)] bg-[#181818] z-20 py-10 scale-[1.02]'
+                    ? 'border-[#C8A96B]/60 shadow-[0_8px_24px_-12px_rgba(200,169,107,0.35)] bg-[#181818] z-20 py-10 scale-[1.02]'
                     : 'border-white/10 shadow-[0_4px_18px_-8px_rgba(0,0,0,0.5)]'
                 }`}
                 style={isXl ? { minHeight: enableHover ? '380px' : '340px' } : undefined}

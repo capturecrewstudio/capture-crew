@@ -134,7 +134,7 @@ export function TestimonialCarousel() {
                   key={`${item.name}-${idx}`}
                   className={`w-[290px] sm:w-[380px] md:w-[450px] shrink-0 rounded-2xl bg-[#161616] p-6 sm:p-8 flex flex-col justify-between border transition-all duration-500 relative ${
                     isActive
-                      ? 'border-[#5433FF]/50 bg-[#1a1a1a] scale-100 shadow-[0_6px_20px_-10px_rgba(88,164,255,0.35)]'
+                      ? 'border-[#C8A96B]/50 bg-[#1a1a1a] scale-100 shadow-[0_6px_20px_-10px_rgba(200,169,107,0.35)]'
                       : 'border-white/5 opacity-40 scale-95'
                   }`}
                 >
@@ -162,7 +162,7 @@ export function TestimonialCarousel() {
                       <Sparkles size={16} className="text-[#C8A96B]" />
                     </div>
                     <p className="text-sm sm:text-base text-white/80 italic leading-relaxed">
-                      “{item.message}”
+                      "{item.message}"
                     </p>
                   </div>
                 </div>

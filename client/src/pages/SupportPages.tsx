@@ -11,7 +11,7 @@ export function TestimonialsPage() {
           <article key={testimonial.name}>
             <img src={testimonial.image} alt={testimonial.name} />
             <Star size={18} />
-            <p>“{testimonial.message}”</p>
+            <p>"{testimonial.message}"</p>
             <strong>{testimonial.name}</strong>
             <span>{testimonial.designation}</span>
           </article>

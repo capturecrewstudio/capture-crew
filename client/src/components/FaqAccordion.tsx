@@ -28,7 +28,7 @@ const faqs = [
   },
   {
     question: 'How do we book a shoot and collaborate?',
-    answer: 'You can submit your details via our consultation form below or contact Kartik directly at +91-8898400022. We’ll schedule a discovery call, align on mood boards, organize shot lists, and execute the production planning.'
+    answer: "You can submit your details via our consultation form below or contact Kartik directly at +91-8898400022. We'll schedule a discovery call, align on mood boards, organize shot lists, and execute the production planning."
   }
 ];
 
@@ -61,7 +61,7 @@ export function FaqAccordion() {
             <div
               key={idx}
               className={`rounded-xl bg-[#161616] border transition-all duration-300 overflow-hidden relative ${
-                isOpen ? 'border-[#5433FF] shadow-lg' : 'border-white/5'
+                isOpen ? 'border-[#C8A96B] shadow-lg' : 'border-white/5'
               }`}
             >
               {/* Active Item: 4px top gradient accent bar */}

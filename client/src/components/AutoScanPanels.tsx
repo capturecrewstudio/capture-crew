@@ -22,7 +22,7 @@ const panels = [
     title: 'Digital Marketing',
     icon: TrendingUp,
     subtitle: 'Strategic brand amplification',
-    description: 'We don’t just capture visuals — we make sure they perform. End-to-end Social Media Management (SMM), hyper-targeted Google/Meta Ads campaigns, SEO, and monthly ROI reports.',
+    description: "We don't just capture visuals — we make sure they perform. End-to-end Social Media Management (SMM), hyper-targeted Google/Meta Ads campaigns, SEO, and monthly ROI reports.",
     image: '/assets/media/interiors-hero.jpeg',
     tags: ['SMM Strategy', 'Ad Campaigns', 'SEO', 'Influencers']
   }
