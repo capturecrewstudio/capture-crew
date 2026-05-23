@@ -46,10 +46,20 @@ export function App() {
     return saved ? saved === 'dark' : true;
   });
 
+  const [accent, setAccent] = useState<'red' | 'gold' | 'blue'>(() => {
+    const saved = localStorage.getItem('cc-accent');
+    return (saved as 'red' | 'gold' | 'blue') ?? 'red';
+  });
+
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
     localStorage.setItem('cc-theme', isDark ? 'dark' : 'light');
   }, [isDark]);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-accent', accent);
+    localStorage.setItem('cc-accent', accent);
+  }, [accent]);
 
   const [route, setRoute] = useState<RouteName>(() => {
     const path = window.location.pathname;
@@ -183,12 +193,12 @@ export function App() {
     <>
       {route !== 'admin' && (
         <FluidCursor
-          color="#E8192C"
+          color={accent === 'red' ? '#E8192C' : accent === 'gold' ? '#C8A96B' : '#4D9EFF'}
           splatRadius={0.0018}
           splatForce={1800}
         />
       )}
-      {route !== 'admin' && <SiteHeader activeRoute={route} onNavigate={handleNavigate} isDark={isDark} onToggleTheme={() => setIsDark(d => !d)} />}
+      {route !== 'admin' && <SiteHeader activeRoute={route} onNavigate={handleNavigate} isDark={isDark} onToggleTheme={() => setIsDark(d => !d)} accent={accent} onAccentChange={setAccent} />}
       {content}
       {route !== 'admin' && <SiteFooter onNavigate={handleNavigate} />}
       {route !== 'admin' && <SocialDock />}

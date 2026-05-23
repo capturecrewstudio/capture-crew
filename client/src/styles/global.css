@@ -91,6 +91,47 @@
   --accent-glow: radial-gradient(ellipse at center, rgba(204,21,37,0.2) 0%, transparent 70%);
 }
 
+/* ── Accent colour variants ───────────────────────────────────────────────── */
+
+/* RED (default — matches logo) */
+[data-accent="red"] {
+  --accent:         #E8192C;
+  --accent-dim:     rgba(232, 25, 44, 0.15);
+  --accent-glow:    radial-gradient(ellipse at center, rgba(232,25,44,0.35) 0%, transparent 70%);
+  --brand-gradient: linear-gradient(135deg, #E8192C 0%, #FF4D5E 50%, #E8192C 100%);
+}
+[data-theme="light"][data-accent="red"] {
+  --accent:         #CC1525;
+  --accent-dim:     rgba(204, 21, 37, 0.12);
+  --accent-glow:    radial-gradient(ellipse at center, rgba(204,21,37,0.2) 0%, transparent 70%);
+}
+
+/* GOLD (warm luxury) */
+[data-accent="gold"] {
+  --accent:         #C8A96B;
+  --accent-dim:     rgba(200, 169, 107, 0.15);
+  --accent-glow:    radial-gradient(ellipse at center, rgba(200,169,107,0.35) 0%, transparent 70%);
+  --brand-gradient: linear-gradient(135deg, #C8A96B 0%, #E8C98A 50%, #C8A96B 100%);
+}
+[data-theme="light"][data-accent="gold"] {
+  --accent:         #B8962A;
+  --accent-dim:     rgba(184, 150, 42, 0.12);
+  --accent-glow:    radial-gradient(ellipse at center, rgba(184,150,42,0.2) 0%, transparent 70%);
+}
+
+/* BLUE (original cinematic) */
+[data-accent="blue"] {
+  --accent:         #4D9EFF;
+  --accent-dim:     rgba(77, 158, 255, 0.15);
+  --accent-glow:    radial-gradient(ellipse at center, rgba(77,158,255,0.35) 0%, transparent 70%);
+  --brand-gradient: linear-gradient(135deg, #5433FF 0%, #20BDFF 60%, #5433FF 100%);
+}
+[data-theme="light"][data-accent="blue"] {
+  --accent:         #1A6FD4;
+  --accent-dim:     rgba(26, 111, 212, 0.12);
+  --accent-glow:    radial-gradient(ellipse at center, rgba(26,111,212,0.2) 0%, transparent 70%);
+}
+
 * {
   box-sizing: border-box;
 }

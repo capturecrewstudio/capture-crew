@@ -18,9 +18,11 @@ type Props = {
   onNavigate: (route: RouteName) => void;
   isDark: boolean;
   onToggleTheme: () => void;
+  accent: 'red' | 'gold' | 'blue';
+  onAccentChange: (a: 'red' | 'gold' | 'blue') => void;
 };
 
-export function SiteHeader({ activeRoute, onNavigate, isDark, onToggleTheme }: Props) {
+export function SiteHeader({ activeRoute, onNavigate, isDark, onToggleTheme, accent, onAccentChange }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [useGlass, setUseGlass] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -175,7 +177,7 @@ export function SiteHeader({ activeRoute, onNavigate, isDark, onToggleTheme }: P
       </nav>
 
       {/* Theme toggle */}
-      <ThemeToggle isDark={isDark} onToggle={onToggleTheme} />
+      <ThemeToggle isDark={isDark} onToggle={onToggleTheme} accent={accent} onAccentChange={onAccentChange} />
 
       {/* Mobile toggle */}
       <button
