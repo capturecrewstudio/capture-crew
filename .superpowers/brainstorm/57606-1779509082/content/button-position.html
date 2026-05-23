@@ -1,0 +1,43 @@
+<h2>Where should the draggable social button live?</h2>
+<p class="subtitle">The button floats on-screen and can be dragged. Pick the default starting position.</p>
+
+<div class="cards">
+  <div class="card" data-choice="right-middle" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#1a1a1a;border-radius:8px;padding:16px;min-height:160px;position:relative;border:1px solid #333;">
+      <div style="position:absolute;right:8px;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#5433FF,#20BDFF);display:flex;align-items:center;justify-content:center;font-size:18px;">⚡</div>
+      <div style="background:#222;border-radius:4px;height:20px;width:60%;margin-bottom:8px;"></div>
+      <div style="background:#222;border-radius:4px;height:12px;width:80%;margin-bottom:6px;"></div>
+      <div style="background:#222;border-radius:4px;height:12px;width:55%;"></div>
+    </div>
+    <div class="card-body">
+      <h3>Right Middle</h3>
+      <p>Vertically centred on the right edge — easy thumb reach on mobile, non-intrusive on desktop</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="right-bottom" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#1a1a1a;border-radius:8px;padding:16px;min-height:160px;position:relative;border:1px solid #333;">
+      <div style="position:absolute;right:8px;bottom:12px;width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#5433FF,#20BDFF);display:flex;align-items:center;justify-content:center;font-size:18px;">⚡</div>
+      <div style="background:#222;border-radius:4px;height:20px;width:60%;margin-bottom:8px;"></div>
+      <div style="background:#222;border-radius:4px;height:12px;width:80%;margin-bottom:6px;"></div>
+      <div style="background:#222;border-radius:4px;height:12px;width:55%;"></div>
+    </div>
+    <div class="card-body">
+      <h3>Right Bottom</h3>
+      <p>Bottom-right corner — familiar placement (like chat widgets), stays out of content flow</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="left-middle" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#1a1a1a;border-radius:8px;padding:16px;min-height:160px;position:relative;border:1px solid #333;">
+      <div style="position:absolute;left:8px;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#5433FF,#20BDFF);display:flex;align-items:center;justify-content:center;font-size:18px;">⚡</div>
+      <div style="background:#222;border-radius:4px;height:20px;width:60%;margin-left:48px;margin-bottom:8px;"></div>
+      <div style="background:#222;border-radius:4px;height:12px;width:80%;margin-left:48px;margin-bottom:6px;"></div>
+      <div style="background:#222;border-radius:4px;height:12px;width:55%;margin-left:48px;"></div>
+    </div>
+    <div class="card-body">
+      <h3>Left Middle</h3>
+      <p>Vertically centred on the left edge — good for left-handed users and contrasts with right-side nav</p>
+    </div>
+  </div>
+</div>

@@ -105,7 +105,7 @@ export function TestimonialCarousel() {
           Client Feedback
         </span>
         <h2
-          className="text-white mt-3"
+          className="text-ivory mt-3"
           style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300, fontSize: 'clamp(2.4rem, 5vw, 5rem)', lineHeight: 1.05 }}
         >
           Trusted by Industry Leaders
@@ -114,8 +114,8 @@ export function TestimonialCarousel() {
 
       <div className="relative w-full max-w-6xl mx-auto">
         {/* Left/Right Fade Masking (lg+ only) */}
-        <div className="absolute inset-y-0 left-0 w-16 sm:w-32 bg-gradient-to-r from-[#131313] to-transparent z-10 pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-16 sm:w-32 bg-gradient-to-l from-[#131313] to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-y-0 left-0 w-16 sm:w-32 bg-gradient-to-r from-bg to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-16 sm:w-32 bg-gradient-to-l from-bg to-transparent z-10 pointer-events-none" />
 
         {/* Carousel Window */}
         <div className="w-full overflow-hidden">
@@ -132,10 +132,10 @@ export function TestimonialCarousel() {
               return (
                 <div
                   key={`${item.name}-${idx}`}
-                  className={`w-[290px] sm:w-[380px] md:w-[450px] shrink-0 rounded-2xl bg-[#161616] p-6 sm:p-8 flex flex-col justify-between border transition-all duration-500 relative ${
+                  className={`w-[290px] sm:w-[380px] md:w-[450px] shrink-0 rounded-2xl bg-surface p-6 sm:p-8 flex flex-col justify-between border transition-all duration-500 relative ${
                     isActive
                       ? 'border-[#C8A96B]/50 bg-[#1a1a1a] scale-100 shadow-[0_6px_20px_-10px_rgba(200,169,107,0.35)]'
-                      : 'border-white/5 opacity-40 scale-95'
+                      : 'border-line opacity-40 scale-95'
                   }`}
                 >
                   {/* Glow effect on active item */}
@@ -147,21 +147,21 @@ export function TestimonialCarousel() {
                   )}
 
                   <div>
-                    <div className="flex items-center justify-between border-b border-white/5 pb-4 mb-4">
+                    <div className="flex items-center justify-between border-b border-line pb-4 mb-4">
                       <div className="flex items-center gap-3">
                         <img
                           src={item.image}
                           alt={item.name}
-                          className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border border-white/10"
+                          className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border border-line"
                         />
                         <div>
-                          <h4 className="text-sm sm:text-base font-bold text-white leading-none">{item.name}</h4>
-                          <span className="text-xs text-white/50">{item.designation}</span>
+                          <h4 className="text-sm sm:text-base font-bold text-ivory leading-none">{item.name}</h4>
+                          <span className="text-xs text-stone">{item.designation}</span>
                         </div>
                       </div>
                       <Sparkles size={16} className="text-[#C8A96B]" />
                     </div>
-                    <p className="text-sm sm:text-base text-white/80 italic leading-relaxed">
+                    <p className="text-sm sm:text-base text-ivory/80 italic leading-relaxed">
                       "{item.message}"
                     </p>
                   </div>
@@ -175,7 +175,7 @@ export function TestimonialCarousel() {
         <div className="flex justify-center items-center gap-6 mt-10">
           <button
             onClick={handlePrev}
-            className="p-3 rounded-full border border-white/10 bg-white/5 text-white/60 hover:text-white hover:border-[#C8A96B] hover:scale-105 active:scale-95 transition-all duration-300"
+            className="p-3 rounded-full border border-line bg-ivory/5 text-stone hover:text-ivory hover:border-[#C8A96B] hover:scale-105 active:scale-95 transition-all duration-300"
             aria-label="Previous testimonial"
           >
             <ArrowLeft size={16} />
@@ -193,7 +193,7 @@ export function TestimonialCarousel() {
                     setTrackIndex(idx + 1);
                   }}
                   className={`h-2 rounded-full transition-all duration-300 focus:outline-none ${
-                    active ? 'w-6 bg-[#C8A96B]' : 'w-2 bg-white/20 hover:bg-white/40'
+                    active ? 'w-6 bg-[#C8A96B]' : 'w-2 bg-ivory/20 hover:bg-ivory/40'
                   }`}
                   aria-label={`Go to testimonial ${idx + 1}`}
                 />
@@ -203,7 +203,7 @@ export function TestimonialCarousel() {
 
           <button
             onClick={handleNext}
-            className="p-3 rounded-full border border-white/10 bg-white/5 text-white/60 hover:text-white hover:border-[#C8A96B] hover:scale-105 active:scale-95 transition-all duration-300"
+            className="p-3 rounded-full border border-line bg-ivory/5 text-stone hover:text-ivory hover:border-[#C8A96B] hover:scale-105 active:scale-95 transition-all duration-300"
             aria-label="Next testimonial"
           >
             <ArrowRight size={16} />

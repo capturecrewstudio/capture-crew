@@ -46,7 +46,7 @@ export function FaqAccordion() {
           Got Questions?
         </span>
         <h2
-          className="text-white mt-3"
+          className="text-ivory mt-3"
           style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300, fontSize: 'clamp(2.4rem, 5vw, 5rem)', lineHeight: 1.05 }}
         >
           Frequently Asked Questions
@@ -60,8 +60,8 @@ export function FaqAccordion() {
           return (
             <div
               key={idx}
-              className={`rounded-xl bg-[#161616] border transition-all duration-300 overflow-hidden relative ${
-                isOpen ? 'border-[#C8A96B] shadow-lg' : 'border-white/5'
+              className={`rounded-xl bg-surface border transition-all duration-300 overflow-hidden relative ${
+                isOpen ? 'border-[#C8A96B] shadow-lg' : 'border-line'
               }`}
             >
               {/* Active Item: 4px top gradient accent bar */}
@@ -78,12 +78,12 @@ export function FaqAccordion() {
                 className="w-full flex items-center justify-between p-6 text-left focus:outline-none"
                 aria-expanded={isOpen}
               >
-                <span className="text-sm sm:text-base font-bold text-white pr-4">
+                <span className="text-sm sm:text-base font-bold text-ivory pr-4">
                   {faq.question}
                 </span>
                 <ChevronDown
                   size={18}
-                  className={`text-white/40 shrink-0 transition-transform duration-300 ${
+                  className={`text-stone/70 shrink-0 transition-transform duration-300 ${
                     isOpen ? 'rotate-180 text-[#C8A96B]' : ''
                   }`}
                 />
@@ -97,8 +97,8 @@ export function FaqAccordion() {
                   opacity: isOpen ? 1 : 0
                 }}
               >
-                <div className="p-6 pt-0 border-t border-white/5">
-                  <p className="text-xs sm:text-sm text-white/60 leading-relaxed pt-4">
+                <div className="p-6 pt-0 border-t border-line">
+                  <p className="text-xs sm:text-sm text-stone leading-relaxed pt-4">
                     {faq.answer}
                   </p>
                 </div>

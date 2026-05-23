@@ -37,7 +37,7 @@ function StatTile({ stat, start, index }: { stat: typeof stats[number]; start: b
   const value = useCountUp(stat.value, start, 1200 + index * 200);
   return (
     <div
-      className="relative group rounded-2xl border border-white/10 bg-[#161616]/70 backdrop-blur-sm p-6 sm:p-8 overflow-hidden transition-all duration-500 hover:border-white/20 hover:-translate-y-1"
+      className="relative group rounded-2xl border border-line bg-surface/70 backdrop-blur-sm p-6 sm:p-8 overflow-hidden transition-all duration-500 hover:border-linemid hover:-translate-y-1"
       style={{ transitionDelay: `${index * 80}ms` }}
     >
       {/* Corner accent */}
@@ -47,20 +47,20 @@ function StatTile({ stat, start, index }: { stat: typeof stats[number]; start: b
       />
       <div className="relative">
         <span
-          className="inline-flex items-center justify-center w-10 h-10 rounded-xl border border-white/10 text-white"
+          className="inline-flex items-center justify-center w-10 h-10 rounded-xl border border-line text-ivory"
           style={{ background: `linear-gradient(135deg, ${stat.color}33, transparent)` }}
         >
           <Icon size={18} style={{ color: stat.color }} />
         </span>
         <div className="mt-5 flex items-baseline gap-1">
-          <span className="text-4xl sm:text-5xl font-extrabold text-white font-accent tabular-nums">
+          <span className="text-4xl sm:text-5xl font-extrabold text-ivory font-accent tabular-nums">
             {value}
           </span>
           <span className="text-sm sm:text-base font-bold" style={{ color: stat.color }}>
             {stat.suffix}
           </span>
         </div>
-        <p className="text-xs uppercase tracking-[0.2em] text-white/50 font-mono mt-2">
+        <p className="text-xs uppercase tracking-[0.2em] text-stone font-mono mt-2">
           {stat.label}
         </p>
       </div>
@@ -98,7 +98,7 @@ export function StatsCounter() {
           By the Numbers
         </span>
         <h2
-          className="text-white mt-3"
+          className="text-ivory mt-3"
           style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300, fontSize: 'clamp(2.4rem, 5vw, 5rem)', lineHeight: 1.05 }}
         >
           Receipts, not promises.

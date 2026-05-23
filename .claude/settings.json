@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /Users/truxo/.claude/plugins -name \"start-server.sh\" 2>/dev/null)",
+      "Read(//Users/truxo/.claude/plugins/**)",
+      "Bash(bash /Users/truxo/.claude/plugins/cache/claude-plugins-official/superpowers/5.1.0/skills/brainstorming/scripts/start-server.sh --project-dir /Users/truxo/Documents/caputre-crew)"
+    ]
+  }
+}

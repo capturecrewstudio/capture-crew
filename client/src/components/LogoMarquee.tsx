@@ -44,7 +44,7 @@ export function LogoMarquee() {
   return (
     <div
       ref={containerRef}
-      className="w-full overflow-hidden py-8 sm:py-12 border-y border-white/10 bg-black/40 relative z-10"
+      className="w-full overflow-hidden py-8 sm:py-12 border-y border-line bg-bg/40 relative z-10"
     >
       <div
         className="flex whitespace-nowrap"
@@ -58,7 +58,7 @@ export function LogoMarquee() {
           {partners.map((partner, index) => (
             <span
               key={`track1-${partner}-${index}`}
-              className="text-lg sm:text-2xl md:text-3xl font-bold uppercase tracking-[0.25em] text-white/20 hover:text-[#C8A96B] transition-colors duration-300 select-none font-mono"
+              className="text-lg sm:text-2xl md:text-3xl font-bold uppercase tracking-[0.25em] text-stone/40 hover:text-[#C8A96B] transition-colors duration-300 select-none font-mono"
             >
               {partner}
             </span>
@@ -69,7 +69,7 @@ export function LogoMarquee() {
           {partners.map((partner, index) => (
             <span
               key={`track2-${partner}-${index}`}
-              className="text-lg sm:text-2xl md:text-3xl font-bold uppercase tracking-[0.25em] text-white/20 hover:text-[#C8A96B] transition-colors duration-300 select-none font-mono"
+              className="text-lg sm:text-2xl md:text-3xl font-bold uppercase tracking-[0.25em] text-stone/40 hover:text-[#C8A96B] transition-colors duration-300 select-none font-mono"
             >
               {partner}
             </span>

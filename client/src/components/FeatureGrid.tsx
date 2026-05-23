@@ -68,12 +68,12 @@ export function FeatureGrid() {
           Flexible Pricing
         </span>
         <h2
-          className="text-white mt-3"
+          className="text-ivory mt-3"
           style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300, fontSize: 'clamp(2.4rem, 5vw, 5rem)', lineHeight: 1.05 }}
         >
           Our Creative Packages
         </h2>
-        <p className="text-white/60 mt-4 leading-relaxed">
+        <p className="text-stone mt-4 leading-relaxed">
           Choose a curated service bundle or request a bespoke quote tailored to your brand's commercial goals.
         </p>
       </div>
@@ -94,14 +94,14 @@ export function FeatureGrid() {
             >
               {/* Outer Wrapper: In XL+, this is absolute centered, allowing card to expand without layout shifts */}
               <div
-                className={`w-full bg-[#161616] border rounded-2xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-500 ${
+                className={`w-full bg-surface border rounded-2xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-500 ${
                   isXl 
                     ? 'absolute left-0 right-0 top-1/2 -translate-y-1/2 z-10' 
                     : ''
                 } ${
                   enableHover
                     ? 'border-[#C8A96B]/60 shadow-[0_8px_24px_-12px_rgba(200,169,107,0.35)] bg-[#181818] z-20 py-10 scale-[1.02]'
-                    : 'border-white/10 shadow-[0_4px_18px_-8px_rgba(0,0,0,0.5)]'
+                    : 'border-line shadow-[0_4px_18px_-8px_rgba(0,0,0,0.5)]'
                 }`}
                 style={isXl ? { minHeight: enableHover ? '380px' : '340px' } : undefined}
               >
@@ -109,28 +109,28 @@ export function FeatureGrid() {
                 {isXl && (
                   <>
                     <div
-                      className={`absolute -top-3 -left-3 px-3 py-1 rounded-full border border-white/20 bg-black text-xs font-mono text-white pointer-events-none transition-all duration-500 ${
+                      className={`absolute -top-3 -left-3 px-3 py-1 rounded-full border border-linemid bg-bg text-xs font-mono text-ivory pointer-events-none transition-all duration-500 ${
                         enableHover ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
                       }`}
                     >
                       {pkg.tags.topLeft}
                     </div>
                     <div
-                      className={`absolute -top-3 -right-3 px-3 py-1 rounded-full border border-white/20 bg-black text-xs font-mono text-white pointer-events-none transition-all duration-500 ${
+                      className={`absolute -top-3 -right-3 px-3 py-1 rounded-full border border-linemid bg-bg text-xs font-mono text-ivory pointer-events-none transition-all duration-500 ${
                         enableHover ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
                       }`}
                     >
                       {pkg.tags.topRight}
                     </div>
                     <div
-                      className={`absolute -bottom-3 -left-3 px-3 py-1 rounded-full border border-white/20 bg-black text-xs font-mono text-white pointer-events-none transition-all duration-500 ${
+                      className={`absolute -bottom-3 -left-3 px-3 py-1 rounded-full border border-linemid bg-bg text-xs font-mono text-ivory pointer-events-none transition-all duration-500 ${
                         enableHover ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
                       }`}
                     >
                       {pkg.tags.bottomLeft}
                     </div>
                     <div
-                      className={`absolute -bottom-3 -right-3 px-3 py-1 rounded-full border border-white/20 bg-black text-xs font-mono text-white pointer-events-none transition-all duration-500 ${
+                      className={`absolute -bottom-3 -right-3 px-3 py-1 rounded-full border border-linemid bg-bg text-xs font-mono text-ivory pointer-events-none transition-all duration-500 ${
                         enableHover ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
                       }`}
                     >
@@ -143,21 +143,21 @@ export function FeatureGrid() {
                 <div>
                   <div className="flex justify-between items-start">
                     <span
-                      className="p-2.5 rounded-xl border border-white/10 text-white"
+                      className="p-2.5 rounded-xl border border-line text-ivory"
                       style={{ background: 'var(--brand-gradient)' }}
                     >
                       <Icon size={20} />
                     </span>
                     <div className="text-right">
-                      <span className="text-2xl sm:text-3xl font-extrabold text-white">{pkg.price}</span>
-                      <span className="text-xs text-white/50">{pkg.period}</span>
+                      <span className="text-2xl sm:text-3xl font-extrabold text-ivory">{pkg.price}</span>
+                      <span className="text-xs text-stone">{pkg.period}</span>
                     </div>
                   </div>
 
-                  <h3 className="text-xl sm:text-2xl font-bold text-white mt-4">{pkg.title}</h3>
+                  <h3 className="text-xl sm:text-2xl font-bold text-ivory mt-4">{pkg.title}</h3>
                   
                   {/* Short Description */}
-                  <p className="text-xs sm:text-sm text-white/60 mt-2 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-stone mt-2 leading-relaxed">
                     {pkg.shortDesc}
                   </p>
 
@@ -170,16 +170,16 @@ export function FeatureGrid() {
                     }}
                   >
                     <div className="overflow-hidden">
-                      <p className="text-xs text-white/50 mt-2 border-t border-white/5 pt-2 leading-relaxed">
+                      <p className="text-xs text-stone mt-2 border-t border-line pt-2 leading-relaxed">
                         {pkg.longDesc}
                       </p>
                     </div>
                   </div>
 
                   {/* List of Features */}
-                  <ul className="mt-4 space-y-2 border-t border-white/5 pt-4">
+                  <ul className="mt-4 space-y-2 border-t border-line pt-4">
                     {pkg.features.slice(0, enableHover ? 6 : 4).map((feat) => (
-                      <li key={feat} className="text-xs text-white/70 flex items-center gap-2">
+                      <li key={feat} className="text-xs text-ivory/70 flex items-center gap-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#C8A96B] shrink-0" />
                         {feat}
                       </li>

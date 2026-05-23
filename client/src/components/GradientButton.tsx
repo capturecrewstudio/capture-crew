@@ -54,7 +54,7 @@ export function GradientButton({
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`relative inline-flex items-center justify-between font-medium tracking-widest uppercase text-[#0A0A0A] transition-transform duration-300 ease-out active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none group overflow-hidden ${heightClass} ${className}`}
+      className={`relative inline-flex items-center justify-between font-medium tracking-widest uppercase text-ink transition-transform duration-300 ease-out active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none group overflow-hidden ${heightClass} ${className}`}
       style={{
         background: '#C8A96B',
         borderRadius: '6px',
@@ -65,9 +65,9 @@ export function GradientButton({
 
       {/* Arrow circle on the right */}
       <div
-        className={`flex items-center justify-center rounded-sm bg-[#0A0A0A]/15 transition-transform duration-300 group-hover:translate-x-1 ${arrowCircleSize}`}
+        className={`flex items-center justify-center rounded-sm bg-ink/15 transition-transform duration-300 group-hover:translate-x-1 ${arrowCircleSize}`}
       >
-        <ArrowRight size={arrowSize} className="text-[#0A0A0A] stroke-[2.5]" />
+        <ArrowRight size={arrowSize} className="text-ink stroke-[2.5]" />
       </div>
     </button>
   );

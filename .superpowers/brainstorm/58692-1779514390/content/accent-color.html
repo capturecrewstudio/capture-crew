@@ -1,0 +1,78 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+<h2>Choose your accent colour</h2>
+<p class="subtitle">Background is always <strong>#0A0A0A</strong>. Text is always <strong>#F5F1E8 ivory</strong>. This is the one colour that defines the studio's identity.</p>
+
+<div class="cards" style="grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+
+  <!-- Option A: Warm Gold (current direction) -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0a0a0a; padding:28px 24px; min-height:260px; display:flex; flex-direction:column; justify-content:space-between; border-bottom:1px solid #1a1a1a;">
+      <div>
+        <div style="font-family:'DM Mono',monospace; font-size:8px; letter-spacing:0.28em; color:#C8A96B; text-transform:uppercase; margin-bottom:14px;">Architecture · Luxury · Film</div>
+        <div style="font-family:'Cormorant Garant',serif; font-size:2.6rem; color:#f5f1e8; line-height:1.0; font-weight:300; margin-bottom:16px;">Where Light<br/><em>Meets Legacy.</em></div>
+        <div style="font-family:'DM Sans',sans-serif; font-size:9px; color:#7a7468; line-height:1.8; font-weight:300;">Cinematic photography for luxury brands and premium spaces.</div>
+      </div>
+      <div style="margin-top:20px; display:flex; gap:10px; align-items:center;">
+        <span style="background:#C8A96B; color:#0a0a0a; font-family:'DM Sans',sans-serif; font-size:8px; letter-spacing:0.15em; text-transform:uppercase; padding:7px 16px; font-weight:500;">Book Studio</span>
+        <span style="width:32px; height:1px; background:#C8A96B; display:inline-block;"></span>
+        <span style="font-family:'DM Sans',sans-serif; font-size:8px; color:#C8A96B; letter-spacing:0.1em; text-transform:uppercase;">View Work</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3 style="display:flex; align-items:center; gap:10px;">Warm Gold <span style="width:18px;height:18px;border-radius:50%;background:#C8A96B;display:inline-block;flex-shrink:0;"></span></h3>
+      <p>Classic luxury — gold has been the language of premium studios, jewellery brands, and architectural firms for decades. Timeless, never trendy. Pairs perfectly with Cormorant's thin strokes.</p>
+      <p style="margin-top:8px;font-size:12px;color:#888;"><strong>#C8A96B</strong> — warm antique gold</p>
+    </div>
+  </div>
+
+  <!-- Option B: Champagne Silver-White -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0a0a0a; padding:28px 24px; min-height:260px; display:flex; flex-direction:column; justify-content:space-between; border-bottom:1px solid #1a1a1a;">
+      <div>
+        <div style="font-family:'DM Mono',monospace; font-size:8px; letter-spacing:0.28em; color:#D4C5B0; text-transform:uppercase; margin-bottom:14px;">Architecture · Luxury · Film</div>
+        <div style="font-family:'Cormorant Garant',serif; font-size:2.6rem; color:#f5f1e8; line-height:1.0; font-weight:300; margin-bottom:16px;">Where Light<br/><em>Meets Legacy.</em></div>
+        <div style="font-family:'DM Sans',sans-serif; font-size:9px; color:#7a7468; line-height:1.8; font-weight:300;">Cinematic photography for luxury brands and premium spaces.</div>
+      </div>
+      <div style="margin-top:20px; display:flex; gap:10px; align-items:center;">
+        <span style="border:1px solid #D4C5B0; color:#D4C5B0; font-family:'DM Sans',sans-serif; font-size:8px; letter-spacing:0.15em; text-transform:uppercase; padding:7px 16px; font-weight:400;">Book Studio</span>
+        <span style="width:32px; height:1px; background:#D4C5B0; display:inline-block;"></span>
+        <span style="font-family:'DM Sans',sans-serif; font-size:8px; color:#D4C5B0; letter-spacing:0.1em; text-transform:uppercase;">View Work</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3 style="display:flex; align-items:center; gap:10px;">Champagne <span style="width:18px;height:18px;border-radius:50%;background:#D4C5B0;display:inline-block;flex-shrink:0;"></span></h3>
+      <p>Near-neutral warm white. More restrained than gold — the site feels monochromatic until you look closely. Used by ultra-minimalist luxury studios (Snøhetta, Pawson-level restraint). Very current in 2025.</p>
+      <p style="margin-top:8px;font-size:12px;color:#888;"><strong>#D4C5B0</strong> — warm champagne/linen</p>
+    </div>
+  </div>
+
+  <!-- Option C: Deep Copper/Bronze -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0a0a0a; padding:28px 24px; min-height:260px; display:flex; flex-direction:column; justify-content:space-between; border-bottom:1px solid #1a1a1a;">
+      <div>
+        <div style="font-family:'DM Mono',monospace; font-size:8px; letter-spacing:0.28em; color:#B87333; text-transform:uppercase; margin-bottom:14px;">Architecture · Luxury · Film</div>
+        <div style="font-family:'Cormorant Garant',serif; font-size:2.6rem; color:#f5f1e8; line-height:1.0; font-weight:300; margin-bottom:16px;">Where Light<br/><em>Meets Legacy.</em></div>
+        <div style="font-family:'DM Sans',sans-serif; font-size:9px; color:#7a7468; line-height:1.8; font-weight:300;">Cinematic photography for luxury brands and premium spaces.</div>
+      </div>
+      <div style="margin-top:20px; display:flex; gap:10px; align-items:center;">
+        <span style="background:#B87333; color:#f5f1e8; font-family:'DM Sans',sans-serif; font-size:8px; letter-spacing:0.15em; text-transform:uppercase; padding:7px 16px; font-weight:500;">Book Studio</span>
+        <span style="width:32px; height:1px; background:#B87333; display:inline-block;"></span>
+        <span style="font-family:'DM Sans',sans-serif; font-size:8px; color:#B87333; letter-spacing:0.1em; text-transform:uppercase;">View Work</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3 style="display:flex; align-items:center; gap:10px;">Deep Copper <span style="width:18px;height:18px;border-radius:50%;background:#B87333;display:inline-block;flex-shrink:0;"></span></h3>
+      <p>Rich, earthy, warm. Copper sits between gold and brown — feels more grounded and unique. Popular on premium hospitality and interior design studios in 2025. Strong contrast on dark backgrounds.</p>
+      <p style="margin-top:8px;font-size:12px;color:#888;"><strong>#B87333</strong> — raw copper / bronze</p>
+    </div>
+  </div>
+
+</div>
+
+<div style="margin-top:20px; padding:14px 18px; background:rgba(200,169,107,0.06); border:1px solid rgba(200,169,107,0.15); border-radius:8px;">
+  <p class="label" style="color:#c8a96b;">Recommendation</p>
+  <p class="subtitle" style="margin:4px 0 0;"><strong>A (Warm Gold)</strong> is the safest and most timeless choice for a luxury studio — it's already in your CSS variables and it works beautifully with Cormorant. B is the most distinctive if you want to stand out from typical gold-studio sites.</p>
+</div>

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capture Crew — Hero Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:wght@200;300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0a0a0a;
+    color: #f5f1e8;
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(24px, 5vw, 80px);
+    height: 72px;
+    background: rgba(10,10,10,0.7);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(245,241,232,0.07);
+  }
+
+  .brand {
+    font-family: 'Cormorant Garant', serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #f5f1e8;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 300;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #7a7468;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: #f5f1e8; }
+
+  .nav-cta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #C8A96B;
+    border: 1px solid rgba(200,169,107,0.4);
+    padding: 8px 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: none;
+  }
+  .nav-cta:hover { background: rgba(200,169,107,0.08); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: relative;
+    overflow: hidden;
+    padding: 0 clamp(24px, 6vw, 96px) clamp(60px, 9vh, 110px);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.15) 40%, rgba(10,10,10,0.92) 80%, #0a0a0a 100%),
+      linear-gradient(90deg, rgba(10,10,10,0.75) 0%, rgba(10,10,10,0.1) 60%);
+    z-index: 1;
+  }
+
+  /* Simulated photo background using a gradient that suggests depth */
+  .hero-photo {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 70% 40%, rgba(180,160,130,0.12) 0%, transparent 55%),
+      radial-gradient(ellipse at 30% 70%, rgba(100,80,60,0.08) 0%, transparent 45%),
+      linear-gradient(135deg, #1a1510 0%, #0d0d0a 40%, #111008 100%);
+    z-index: 0;
+  }
+
+  /* Simulated architectural lines in background */
+  .hero-photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(
+        87deg,
+        transparent 0px,
+        transparent 120px,
+        rgba(245,241,232,0.015) 120px,
+        rgba(245,241,232,0.015) 121px
+      ),
+      repeating-linear-gradient(
+        0deg,
+        transparent 0px,
+        transparent 200px,
+        rgba(245,241,232,0.012) 200px,
+        rgba(245,241,232,0.012) 201px
+      );
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1000px;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 300;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: #C8A96B;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .eyebrow::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: #C8A96B;
+    opacity: 0.6;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garant', serif;
+    font-size: clamp(3.8rem, 9vw, 8.5rem);
+    font-weight: 300;
+    line-height: 0.94;
+    letter-spacing: -0.01em;
+    color: #f5f1e8;
+    margin-bottom: 36px;
+  }
+
+  h1 em {
+    font-style: italic;
+    font-weight: 300;
+    color: #C8A96B;
+  }
+
+  .hero-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(0.82rem, 1.4vw, 1rem);
+    font-weight: 300;
+    color: #7a7468;
+    line-height: 1.75;
+    max-width: 480px;
+    margin-bottom: 48px;
+    letter-spacing: 0.01em;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .btn-primary {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    background: #C8A96B;
+    color: #0a0a0a;
+    border: none;
+    padding: 14px 32px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .btn-primary:hover { background: #d4b87a; }
+
+  .btn-ghost {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 300;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #7a7468;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: color 0.3s;
+    background: none;
+    border: none;
+  }
+  .btn-ghost::after {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 1px;
+    background: currentColor;
+    transition: width 0.3s;
+  }
+  .btn-ghost:hover { color: #f5f1e8; }
+  .btn-ghost:hover::after { width: 44px; }
+
+  /* METRICS BAR */
+  .metrics {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    z-index: 3;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid rgba(245,241,232,0.08);
+  }
+
+  .metric {
+    padding: 20px clamp(24px, 6vw, 96px);
+    border-right: 1px solid rgba(245,241,232,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .metric:last-child { border-right: none; }
+
+  .metric-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #4a4640;
+  }
+
+  .metric-value {
+    font-family: 'Cormorant Garant', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: #f5f1e8;
+    line-height: 1.1;
+  }
+
+  /* ABOUT STRIP */
+  .about-strip {
+    padding: clamp(80px, 11vw, 140px) clamp(24px, 6vw, 96px);
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 80px;
+    align-items: start;
+    border-bottom: 1px solid rgba(245,241,232,0.07);
+  }
+
+  .strip-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: #C8A96B;
+    margin-bottom: 28px;
+  }
+
+  .strip-heading {
+    font-family: 'Cormorant Garant', serif;
+    font-size: clamp(2.4rem, 5vw, 5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    color: #f5f1e8;
+  }
+
+  .strip-heading em { font-style: italic; color: #C8A96B; }
+
+  .strip-body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: #7a7468;
+    line-height: 1.85;
+    margin-top: 28px;
+    max-width: 540px;
+  }
+
+  .strip-right {
+    padding-top: 8px;
+  }
+
+  .strip-list {
+    list-style: none;
+    display: grid;
+    gap: 0;
+  }
+
+  .strip-list li {
+    padding: 22px 0;
+    border-bottom: 1px solid rgba(245,241,232,0.07);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 20px;
+  }
+
+  .strip-list li:first-child { border-top: 1px solid rgba(245,241,232,0.07); }
+
+  .list-name {
+    font-family: 'Cormorant Garant', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: #f5f1e8;
+  }
+
+  .list-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #4a4640;
+  }
+
+  /* NOTE OVERLAY */
+  .note {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    background: rgba(10,10,10,0.92);
+    border: 1px solid rgba(200,169,107,0.3);
+    padding: 14px 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: #C8A96B;
+    letter-spacing: 0.1em;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+    max-width: 260px;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="brand">Capture Crew</div>
+    <ul class="nav-links">
+      <li><a href="#">Portfolio</a></li>
+      <li><a href="#">Services</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Journal</a></li>
+    </ul>
+    <button class="nav-cta">Commission a Shoot</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-photo"></div>
+    <div class="hero-bg"></div>
+
+    <div class="hero-content">
+      <p class="eyebrow">Nat Geo Award · Mumbai · London</p>
+      <h1>
+        Where Light<br/>
+        <em>Meets</em> Legacy.
+      </h1>
+      <p class="hero-sub">
+        Cinematic photography and videography for luxury architecture, hospitality, and premium brands. Engineered for trust. Built for conversion.
+      </p>
+      <div class="hero-actions">
+        <button class="btn-primary">Book Consultation</button>
+        <button class="btn-ghost">View Portfolio</button>
+      </div>
+    </div>
+
+    <div class="metrics">
+      <div class="metric">
+        <span class="metric-label">Experience</span>
+        <span class="metric-value">8+ Years</span>
+      </div>
+      <div class="metric">
+        <span class="metric-label">Architects</span>
+        <span class="metric-value">160+ Network</span>
+      </div>
+      <div class="metric">
+        <span class="metric-label">Brands Partnered</span>
+        <span class="metric-value">68+ Globally</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT STRIP -->
+  <section class="about-strip">
+    <div>
+      <p class="strip-label">The Studio</p>
+      <h2 class="strip-heading">Visual systems<br/>for brands that<br/><em>demand presence.</em></h2>
+      <p class="strip-body">
+        At Capture Crew, we combine National Geographic experience from the UK with local architectural elegance. Our retouched AVIF/WebP libraries and cinematic films are built to convert, not just to impress.
+      </p>
+    </div>
+    <div class="strip-right">
+      <ul class="strip-list">
+        <li>
+          <span class="list-name">Architecture & Interiors</span>
+          <span class="list-tag">Luxury Realty</span>
+        </li>
+        <li>
+          <span class="list-name">Commercial & Product</span>
+          <span class="list-tag">Brand Campaigns</span>
+        </li>
+        <li>
+          <span class="list-name">Cinematic Videography</span>
+          <span class="list-tag">Film & Reels</span>
+        </li>
+        <li>
+          <span class="list-name">Social Media Management</span>
+          <span class="list-tag">Growth & Conversion</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="note">
+    ↑ This is a live preview of your new theme direction.<br/>Cormorant Garant + DM Sans + Gold #C8A96B on #0A0A0A
+  </div>
+
+</body>
+</html>

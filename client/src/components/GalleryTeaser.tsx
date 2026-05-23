@@ -22,7 +22,7 @@ export function GalleryTeaser({ onSeeAll }: Props) {
             Recent Frames
           </span>
           <h2
-            className="text-white mt-3"
+            className="text-ivory mt-3"
             style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300, fontSize: 'clamp(2.4rem, 5vw, 5rem)', lineHeight: 1.05 }}
           >
             A peek inside the archive.
@@ -30,7 +30,7 @@ export function GalleryTeaser({ onSeeAll }: Props) {
         </div>
         <button
           onClick={onSeeAll}
-          className="self-start sm:self-end inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-semibold text-white/70 hover:text-white border border-white/15 hover:border-[#C8A96B]/40 rounded-full px-5 py-3 transition-all duration-300 hover:-translate-y-0.5"
+          className="self-start sm:self-end inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-semibold text-ivory/70 hover:text-ivory border border-linemid hover:border-[#C8A96B]/40 rounded-full px-5 py-3 transition-all duration-300 hover:-translate-y-0.5"
         >
           See full portfolio
           <ArrowUpRight size={14} />
@@ -41,7 +41,7 @@ export function GalleryTeaser({ onSeeAll }: Props) {
         {tiles.map((tile) => (
           <figure
             key={tile.label}
-            className={`relative group overflow-hidden rounded-xl border border-white/10 ${tile.span}`}
+            className={`relative group overflow-hidden rounded-xl border border-line ${tile.span}`}
           >
             <img
               src={tile.src}
@@ -52,10 +52,10 @@ export function GalleryTeaser({ onSeeAll }: Props) {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500" />
             <figcaption className="absolute left-4 bottom-4 right-4 flex items-center justify-between">
-              <span className="text-xs sm:text-sm font-bold uppercase tracking-[0.18em] text-white">
+              <span className="text-xs sm:text-sm font-bold uppercase tracking-[0.18em] text-ivory">
                 {tile.label}
               </span>
-              <span className="w-7 h-7 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-500">
+              <span className="w-7 h-7 rounded-full bg-ivory/10 backdrop-blur-md border border-linemid flex items-center justify-center text-ivory opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-500">
                 <ArrowUpRight size={12} />
               </span>
             </figcaption>

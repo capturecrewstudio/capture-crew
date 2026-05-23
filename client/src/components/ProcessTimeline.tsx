@@ -39,12 +39,12 @@ export function ProcessTimeline() {
           The Workflow
         </span>
         <h2
-          className="text-white mt-3"
+          className="text-ivory mt-3"
           style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300, fontSize: 'clamp(2.4rem, 5vw, 5rem)', lineHeight: 1.05 }}
         >
           From brief to bangers.
         </h2>
-        <p className="text-white/60 mt-4 leading-relaxed text-sm">
+        <p className="text-stone mt-4 leading-relaxed text-sm">
           Four steps. Tightly produced. Zero ambiguity.
         </p>
       </div>
@@ -62,11 +62,11 @@ export function ProcessTimeline() {
             return (
               <div
                 key={step.label}
-                className="relative group rounded-2xl border border-white/10 bg-[#161616]/60 backdrop-blur-sm p-6 transition-all duration-500 hover:border-white/25 hover:-translate-y-1"
+                className="relative group rounded-2xl border border-line bg-surface/60 backdrop-blur-sm p-6 transition-all duration-500 hover:border-linemid hover:-translate-y-1"
               >
                 {/* Step index */}
                 <span
-                  className="absolute top-4 right-5 text-xs font-mono font-bold tracking-[0.2em] text-white/30"
+                  className="absolute top-4 right-5 text-xs font-mono font-bold tracking-[0.2em] text-stone/50"
                 >
                   0{idx + 1}
                 </span>
@@ -78,7 +78,7 @@ export function ProcessTimeline() {
                     style={{ background: step.accent }}
                   />
                   <div
-                    className="relative w-full h-full rounded-full flex items-center justify-center border border-white/15"
+                    className="relative w-full h-full rounded-full flex items-center justify-center border border-linemid"
                     style={{
                       background: `radial-gradient(circle at 30% 30%, ${step.accent}55, #0e0e0e 70%)`
                     }}
@@ -87,13 +87,13 @@ export function ProcessTimeline() {
                   </div>
                 </div>
 
-                <p className="text-[10px] uppercase tracking-[0.25em] font-mono text-white/50 text-center">
+                <p className="text-[10px] uppercase tracking-[0.25em] font-mono text-stone text-center">
                   {step.label}
                 </p>
-                <h3 className="text-lg sm:text-xl font-bold text-white text-center mt-1">
+                <h3 className="text-lg sm:text-xl font-bold text-ivory text-center mt-1">
                   {step.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-white/60 text-center leading-relaxed mt-3">
+                <p className="text-xs sm:text-sm text-stone text-center leading-relaxed mt-3">
                   {step.desc}
                 </p>
               </div>

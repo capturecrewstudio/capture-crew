@@ -2,12 +2,14 @@ import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
 import { env } from '../config/env.js';
 
+// R2 is S3-compatible — only the endpoint differs
 const s3 = new S3Client({
-  region: env.AWS_REGION,
-  credentials: env.AWS_ACCESS_KEY_ID && env.AWS_SECRET_ACCESS_KEY
+  region: 'auto',
+  endpoint: env.R2_ACCOUNT_ID ? `https://${env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com` : undefined,
+  credentials: env.R2_ACCESS_KEY_ID && env.R2_SECRET_ACCESS_KEY
     ? {
-        accessKeyId: env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: env.AWS_SECRET_ACCESS_KEY
+        accessKeyId: env.R2_ACCESS_KEY_ID,
+        secretAccessKey: env.R2_SECRET_ACCESS_KEY
       }
     : undefined
 });
@@ -20,13 +22,13 @@ type UploadVariant = {
 };
 
 function publicUrl(key: string) {
-  const baseUrl = env.AWS_S3_PUBLIC_BASE_URL?.replace(/\/$/, '');
-  return baseUrl ? `${baseUrl}/${key}` : `https://${env.AWS_S3_BUCKET}.s3.${env.AWS_REGION}.amazonaws.com/${key}`;
+  const baseUrl = env.R2_PUBLIC_URL?.replace(/\/$/, '');
+  return baseUrl ? `${baseUrl}/${key}` : key;
 }
 
 export async function uploadOptimizedImage(file: Express.Multer.File, folder = 'portfolio') {
-  if (!env.AWS_S3_BUCKET) {
-    throw new Error('AWS_S3_BUCKET is not configured');
+  if (!env.R2_BUCKET) {
+    throw new Error('R2_BUCKET is not configured');
   }
 
   const safeName = file.originalname.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -43,7 +45,7 @@ export async function uploadOptimizedImage(file: Express.Multer.File, folder = '
       const key = `${folder}/${stamp}-${width}-${safeName}.${format}`;
 
       await s3.send(new PutObjectCommand({
-        Bucket: env.AWS_S3_BUCKET,
+        Bucket: env.R2_BUCKET,
         Key: key,
         Body: body,
         ContentType: `image/${format}`,

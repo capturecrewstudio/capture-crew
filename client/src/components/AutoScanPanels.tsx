@@ -46,7 +46,7 @@ export function AutoScanPanels() {
   }, []);
 
   return (
-    <section className="relative w-full h-[600px] sm:h-[700px] lg:h-[800px] overflow-hidden bg-black flex items-center justify-start rounded-2xl border border-white/10 my-10 relative z-10">
+    <section className="relative w-full h-[600px] sm:h-[700px] lg:h-[800px] overflow-hidden bg-bg flex items-center justify-start rounded-2xl border border-line my-10 relative z-10">
       {/* Background Images Cross-Fade */}
       {panels.map((panel, idx) => (
         <div
@@ -65,7 +65,7 @@ export function AutoScanPanels() {
 
       {/* Left side content - absolute panels */}
       <div className="relative z-[3] w-full max-w-2xl px-6 sm:px-12 md:px-20 py-10 flex flex-col justify-center h-full gap-6">
-        <span className="text-xs uppercase tracking-[0.2em] font-semibold text-white/50">
+        <span className="text-xs uppercase tracking-[0.2em] font-semibold text-stone">
           Core Capabilities
         </span>
 
@@ -83,18 +83,18 @@ export function AutoScanPanels() {
               >
                 <div className="flex items-center gap-3 mb-2">
                   <div
-                    className="p-3 rounded-xl border border-white/10 flex items-center justify-center text-white"
+                    className="p-3 rounded-xl border border-line flex items-center justify-center text-ivory"
                     style={{ background: 'var(--brand-gradient)' }}
                   >
                     <Icon size={24} />
                   </div>
                   <div>
-                    <h3 className="text-2xl sm:text-3xl font-bold font-accent text-white">{panel.title}</h3>
-                    <p className="text-xs text-white/60 font-medium tracking-wide">{panel.subtitle}</p>
+                    <h3 className="text-2xl sm:text-3xl font-bold font-accent text-ivory">{panel.title}</h3>
+                    <p className="text-xs text-stone font-medium tracking-wide">{panel.subtitle}</p>
                   </div>
                 </div>
 
-                <p className="text-sm sm:text-base text-white/70 leading-relaxed my-4">
+                <p className="text-sm sm:text-base text-ivory/70 leading-relaxed my-4">
                   {panel.description}
                 </p>
 
@@ -102,7 +102,7 @@ export function AutoScanPanels() {
                   {panel.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="text-xs px-3 py-1 rounded-full border border-white/10 bg-white/5 text-white/80 font-medium font-mono"
+                      className="text-xs px-3 py-1 rounded-full border border-line bg-ivory/5 text-ivory/80 font-medium font-mono"
                     >
                       {tag}
                     </span>
@@ -123,12 +123,12 @@ export function AutoScanPanels() {
             >
               <div
                 className={`h-[2px] transition-all duration-300 ${
-                  index === idx ? 'w-16 bg-[#C8A96B]' : 'w-8 bg-white/20 group-hover:bg-white/40'
+                  index === idx ? 'w-16 bg-[#C8A96B]' : 'w-8 bg-ivory/20 group-hover:bg-ivory/40'
                 }`}
               />
               <span
                 className={`text-xs uppercase font-mono tracking-wider transition-colors ${
-                  index === idx ? 'text-white' : 'text-white/40 group-hover:text-white/70'
+                  index === idx ? 'text-ivory' : 'text-stone/70 group-hover:text-ivory/70'
                 }`}
               >
                 0{idx + 1}

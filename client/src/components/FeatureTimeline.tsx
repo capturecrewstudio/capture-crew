@@ -154,7 +154,7 @@ export function FeatureTimeline() {
         {/* Progress Bar Container */}
         <div 
           ref={progressBarContainerRef}
-          className="relative w-[3px] bg-white/10 rounded-full h-[520px] shrink-0"
+          className="relative w-[3px] bg-ivory/10 rounded-full h-[520px] shrink-0"
         >
           {/* Active Gradient progress fill */}
           <div
@@ -190,7 +190,7 @@ export function FeatureTimeline() {
                   className={`text-lg sm:text-xl font-bold transition-all duration-500 uppercase tracking-wider ${
                     isActive
                       ? 'text-[#C8A96B]'
-                      : 'text-white/40 group-hover:text-white/80'
+                      : 'text-stone/70 group-hover:text-ivory/80'
                   }`}
                 >
                   {item.title}
@@ -205,7 +205,7 @@ export function FeatureTimeline() {
                   }}
                 >
                   <div className="overflow-hidden">
-                    <p className="text-sm text-white/70 mt-2 max-w-lg leading-relaxed">
+                    <p className="text-sm text-ivory/70 mt-2 max-w-lg leading-relaxed">
                       {item.description}
                     </p>
                     <span className="inline-block text-xs font-mono text-[#C8A96B] mt-1">
@@ -220,7 +220,7 @@ export function FeatureTimeline() {
       </div>
 
       {/* Right side Stacked images (grid-span 5) */}
-      <div className="lg:col-span-5 relative aspect-[4/5] w-full rounded-2xl overflow-hidden border border-white/10 bg-neutral-900 shadow-2xl">
+      <div className="lg:col-span-5 relative aspect-[4/5] w-full rounded-2xl overflow-hidden border border-line bg-surface shadow-2xl">
         {timelineItems.map((item, idx) => {
           // Compute clip-path
           let clipPathStr = 'inset(100% 0% 0% 0%)'; // Future items (wiped down)

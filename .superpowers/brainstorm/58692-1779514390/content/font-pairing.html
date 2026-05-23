@@ -1,0 +1,75 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+<h2>Choose your font pairing</h2>
+<p class="subtitle">All three stay within the Dark Cinematic Luxury direction — the difference is personality within that style.</p>
+
+<div class="cards" style="grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+
+  <!-- Option A: Cormorant + DM Sans -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0a0a0a; padding:28px 24px; min-height:280px; display:flex; flex-direction:column; justify-content:space-between; border-bottom:1px solid #1a1a1a;">
+      <div>
+        <div style="font-size:8px; letter-spacing:0.3em; color:#c8a96b; text-transform:uppercase; margin-bottom:16px; font-family:'DM Sans',sans-serif; font-weight:400;">Architecture · Luxury · Film</div>
+        <div style="font-family:'Cormorant Garant',serif; font-size:2.8rem; color:#f5f1e8; line-height:1.0; font-weight:300; margin-bottom:20px; letter-spacing:-0.01em;">Where Light<br/><em>Meets Legacy.</em></div>
+        <div style="font-family:'DM Sans',sans-serif; font-size:10px; color:#7a7468; line-height:1.8; font-weight:300; letter-spacing:0.01em;">Cinematic photography & videography for luxury brands and premium spaces across Mumbai, Chandigarh, and London.</div>
+      </div>
+      <div style="margin-top:20px; display:flex; gap:12px; align-items:center;">
+        <span style="background:#c8a96b; color:#0a0a0a; font-family:'DM Sans',sans-serif; font-size:8px; letter-spacing:0.15em; text-transform:uppercase; padding:7px 16px; font-weight:500;">Book Studio</span>
+        <span style="font-family:'DM Sans',sans-serif; font-size:8px; color:#5a5650; letter-spacing:0.1em; text-transform:uppercase;">View Work →</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Cormorant Garant + DM Sans</h3>
+      <p>High-contrast pairing. Cormorant's extreme thin serifs feel cinematic and fashion-forward. DM Sans is clean and neutral — never competes. Used by luxury architecture firms globally.</p>
+      <p style="margin-top:8px; font-size:12px; color:#888;"><strong>Heading:</strong> Cormorant Garant Light/Italic<br/><strong>Body:</strong> DM Sans Light 300<br/><strong>Labels:</strong> DM Mono or DM Sans spaced caps</p>
+    </div>
+  </div>
+
+  <!-- Option B: Playfair Display + DM Sans -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0a0a0a; padding:28px 24px; min-height:280px; display:flex; flex-direction:column; justify-content:space-between; border-bottom:1px solid #1a1a1a;">
+      <div>
+        <div style="font-size:8px; letter-spacing:0.3em; color:#c8a96b; text-transform:uppercase; margin-bottom:16px; font-family:'DM Sans',sans-serif; font-weight:400;">Architecture · Luxury · Film</div>
+        <div style="font-family:'Playfair Display',serif; font-size:2.5rem; color:#f5f1e8; line-height:1.05; font-weight:400; margin-bottom:20px;">Where Light<br/><em>Meets Legacy.</em></div>
+        <div style="font-family:'DM Sans',sans-serif; font-size:10px; color:#7a7468; line-height:1.8; font-weight:300;">Cinematic photography & videography for luxury brands and premium spaces across Mumbai, Chandigarh, and London.</div>
+      </div>
+      <div style="margin-top:20px; display:flex; gap:12px; align-items:center;">
+        <span style="background:#c8a96b; color:#0a0a0a; font-family:'DM Sans',sans-serif; font-size:8px; letter-spacing:0.15em; text-transform:uppercase; padding:7px 16px; font-weight:500;">Book Studio</span>
+        <span style="font-family:'DM Sans',sans-serif; font-size:8px; color:#5a5650; letter-spacing:0.1em; text-transform:uppercase;">View Work →</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Playfair Display + DM Sans</h3>
+      <p>Warmer, more editorial. Playfair has thicker strokes and stronger contrast — feels like a luxury magazine (Architectural Digest, Vogue Living). Already partially in your codebase.</p>
+      <p style="margin-top:8px; font-size:12px; color:#888;"><strong>Heading:</strong> Playfair Display Regular/Italic<br/><strong>Body:</strong> DM Sans Light 300<br/><strong>Labels:</strong> DM Sans spaced caps 400</p>
+    </div>
+  </div>
+
+  <!-- Option C: Libre Baskerville + DM Mono -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0a0a0a; padding:28px 24px; min-height:280px; display:flex; flex-direction:column; justify-content:space-between; border-bottom:1px solid #1a1a1a;">
+      <div>
+        <div style="font-size:8px; letter-spacing:0.3em; color:#c8a96b; text-transform:uppercase; margin-bottom:16px; font-family:'DM Mono',monospace; font-weight:300;">Architecture · Luxury · Film</div>
+        <div style="font-family:'Libre Baskerville',serif; font-size:2.2rem; color:#f5f1e8; line-height:1.1; font-weight:400; margin-bottom:20px;">Where Light<br/><em>Meets Legacy.</em></div>
+        <div style="font-family:'DM Mono',monospace; font-size:9px; color:#7a7468; line-height:1.9; font-weight:300; letter-spacing:0.02em;">Cinematic photography & videography for luxury brands and premium spaces across Mumbai, Chandigarh, and London.</div>
+      </div>
+      <div style="margin-top:20px; display:flex; gap:12px; align-items:center;">
+        <span style="border:1px solid #c8a96b; color:#c8a96b; font-family:'DM Mono',monospace; font-size:8px; letter-spacing:0.15em; text-transform:uppercase; padding:7px 16px;">Book Studio</span>
+        <span style="font-family:'DM Mono',monospace; font-size:8px; color:#5a5650; letter-spacing:0.1em;">View Work →</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Libre Baskerville + DM Mono</h3>
+      <p>Most distinctive — old-press serif meets technical monospace. Feels like a luxury atelier with a digital edge. Rare on studio sites, very memorable. Higher risk, highest reward.</p>
+      <p style="margin-top:8px; font-size:12px; color:#888;"><strong>Heading:</strong> Libre Baskerville Italic<br/><strong>Body:</strong> DM Mono Light<br/><strong>Labels:</strong> DM Mono 300 spaced</p>
+    </div>
+  </div>
+
+</div>
+
+<div style="margin-top:20px; padding:14px 18px; background:rgba(200,169,107,0.06); border:1px solid rgba(200,169,107,0.15); border-radius:8px;">
+  <p class="label" style="color:#c8a96b;">Recommendation</p>
+  <p class="subtitle" style="margin:4px 0 0;"><strong>A (Cormorant Garant)</strong> is the strongest differentiation from your current Playfair setup — more refined, thinner, more cinematic. But B is a safer evolution if you want to keep what's partially working.</p>
+</div>

@@ -2,6 +2,17 @@
 @import "tailwindcss";
 
 @theme {
+  /* Semantic colour aliases — map to CSS vars so Tailwind classes are theme-aware */
+  --color-bg:       var(--bg);
+  --color-surface:  var(--surface);
+  --color-surface2: var(--surface-2);
+  --color-ivory:    var(--ivory);
+  --color-stone:    var(--stone);
+  --color-ink:      var(--ink);
+  --color-gold:     var(--gold);
+  --color-line:     var(--line);
+  --color-linemid:  var(--line-mid);
+
   --animate-marquee: marquee 25s linear infinite;
   --animate-progress-flow: progressFlow 2.5s linear infinite;
   --animate-gradient-shift: gradientShift 8s ease-in-out infinite;
@@ -85,6 +96,8 @@
 
 html {
   background: var(--bg);
+  color: var(--ivory);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 body {

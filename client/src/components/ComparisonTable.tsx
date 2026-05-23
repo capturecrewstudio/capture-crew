@@ -20,16 +20,16 @@ export function ComparisonTable() {
         <span className="text-xs uppercase tracking-[0.2em] font-semibold text-[#C8A96B] font-mono">
           Compare Plans
         </span>
-        <h2 className="text-3xl sm:text-5xl font-bold font-accent text-white mt-3">
+        <h2 className="text-3xl sm:text-5xl font-bold font-accent text-ivory mt-3">
           Detailed Matrix Comparison
         </h2>
       </div>
 
-      <div className="max-w-4xl mx-auto bg-[#161616] rounded-2xl border border-white/5 overflow-hidden shadow-2xl">
+      <div className="max-w-4xl mx-auto bg-surface rounded-2xl border border-line overflow-hidden shadow-2xl">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="border-b border-white/5 bg-black/40">
-              <th className="p-4 sm:p-6 text-sm font-bold uppercase tracking-wider text-white">Features</th>
+            <tr className="border-b border-line bg-bg/40">
+              <th className="p-4 sm:p-6 text-sm font-bold uppercase tracking-wider text-ivory">Features</th>
               <th className="p-4 sm:p-6 text-sm font-bold uppercase tracking-wider text-[#C8A96B]/70">Starter</th>
               <th className="p-4 sm:p-6 text-sm font-bold uppercase tracking-wider text-[#C8A96B]">Growth</th>
               <th className="p-4 sm:p-6 text-sm font-bold uppercase tracking-wider text-[#CA6672]">Premium</th>
@@ -37,31 +37,31 @@ export function ComparisonTable() {
           </thead>
           <tbody className="divide-y divide-white/5">
             {features.map((feature, idx) => (
-              <tr key={idx} className="hover:bg-white/[0.02] transition-colors">
-                <td className="p-4 sm:p-6 text-xs sm:text-sm font-medium text-white/80">{feature.name}</td>
+              <tr key={idx} className="hover:bg-ivory/5 transition-colors">
+                <td className="p-4 sm:p-6 text-xs sm:text-sm font-medium text-ivory/80">{feature.name}</td>
                 
                 {/* Starter cell */}
-                <td className="p-4 sm:p-6 text-xs sm:text-sm text-white/60">
+                <td className="p-4 sm:p-6 text-xs sm:text-sm text-stone">
                   {feature.starter === null ? (
-                    <Minus size={14} className="text-white/20" />
+                    <Minus size={14} className="text-stone/40" />
                   ) : (
                     feature.starter
                   )}
                 </td>
 
                 {/* Growth cell */}
-                <td className="p-4 sm:p-6 text-xs sm:text-sm text-white/60">
+                <td className="p-4 sm:p-6 text-xs sm:text-sm text-stone">
                   {feature.growth === null ? (
-                    <Minus size={14} className="text-white/20" />
+                    <Minus size={14} className="text-stone/40" />
                   ) : (
                     feature.growth
                   )}
                 </td>
 
                 {/* Premium cell */}
-                <td className="p-4 sm:p-6 text-xs sm:text-sm text-white/60">
+                <td className="p-4 sm:p-6 text-xs sm:text-sm text-stone">
                   {feature.premium === null ? (
-                    <Minus size={14} className="text-white/20" />
+                    <Minus size={14} className="text-stone/40" />
                   ) : feature.premium === true ? (
                     <Check size={16} className="text-[#CA6672]" />
                   ) : (
