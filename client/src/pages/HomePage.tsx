@@ -55,27 +55,38 @@ export function HomePage({ onNavigate }: Props) {
         <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center pt-24 md:pt-32">
           {/* Pill Badge */}
           <Reveal direction="up">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#20BDFF]/30 bg-black/40 text-xs sm:text-sm font-semibold text-white/90 shadow-lg backdrop-blur-md mb-8">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#20BDFF] animate-pulse" />
-              <span>🏆 Nat Geo Award-Winning Visual Artists</span>
+            <div className="inline-flex items-center gap-3 mb-8">
+              <span className="block w-8 h-px bg-[#C8A96B] opacity-70" />
+              <span style={{ fontFamily: "'DM Mono', monospace" }} className="text-[0.65rem] font-light tracking-[0.26em] uppercase text-[#C8A96B]">
+                Nat Geo Award · Mumbai · London
+              </span>
             </div>
           </Reveal>
 
           {/* 3-line heading */}
           <Reveal direction="up" delay={120}>
-            <h1 className="text-3xl sm:text-5xl md:text-7xl font-extrabold uppercase tracking-tight text-white leading-[1.1] mb-6">
-              🎥 Capture Crew Studio
+            <h1
+              className="mb-6 text-white leading-[0.94]"
+              style={{
+                fontFamily: "'Cormorant Garant', Georgia, serif",
+                fontWeight: 300,
+                fontSize: 'clamp(3.8rem, 9vw, 8.5rem)',
+                letterSpacing: '-0.01em'
+              }}
+            >
+              Where Light
               <br />
-              Where Creativity Meets
-              <br />
-              <span className="gradient-text-anim">Business Conversion.</span>
+              <em style={{ fontStyle: 'italic', color: '#C8A96B' }}>Meets</em> Legacy.
             </h1>
           </Reveal>
 
           {/* Subtitle */}
           <Reveal direction="up" delay={220}>
-            <p className="text-sm sm:text-base md:text-lg text-white/70 max-w-2xl leading-relaxed mb-10">
-              📸 Lights. Lens. Impact. 💡 Premium photography, cinematic videography, and full-suite digital marketing solutions that amplify your brand and accelerate business growth.
+            <p
+              className="max-w-xl mb-10 text-[#7A7468] leading-[1.75]"
+              style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: 'clamp(0.82rem, 1.4vw, 1rem)' }}
+            >
+              Cinematic photography and videography for luxury architecture, hospitality, and premium brands. Engineered for trust. Built for conversion.
             </p>
           </Reveal>
 
@@ -89,10 +100,11 @@ export function HomePage({ onNavigate }: Props) {
               />
               <button
                 onClick={() => onNavigate('portfolio')}
-                className="w-[200px] h-[40px] md:h-[48px] rounded-full border border-white/20 bg-white/5 text-sm sm:text-base font-semibold text-white hover:bg-white/10 hover:border-[#58A4FF] active:scale-95 transition-all duration-300 flex items-center justify-center gap-2"
+                className="h-[40px] md:h-[48px] px-6 border border-[rgba(245,241,232,0.12)] bg-transparent text-[#7A7468] hover:text-[#F5F1E8] hover:border-[rgba(245,241,232,0.25)] active:scale-95 transition-all duration-300 flex items-center justify-center gap-3"
+                style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300, fontSize: '0.65rem', letterSpacing: '0.16em', textTransform: 'uppercase', borderRadius: '2px' }}
               >
                 View Portfolio
-                <ArrowRight size={16} />
+                <ArrowRight size={14} />
               </button>
             </div>
           </Reveal>
@@ -101,16 +113,16 @@ export function HomePage({ onNavigate }: Props) {
         {/* Bottom Metrics Bar */}
         <div className="absolute bottom-0 left-0 right-0 border-t border-white/10 bg-black/20 backdrop-blur-sm py-4 grid grid-cols-3 text-center z-10">
           <div className="border-r border-white/10 px-2">
-            <p className="text-xs uppercase tracking-wider text-white/40 font-mono">Experience</p>
-            <p className="text-sm sm:text-lg font-bold text-white mt-0.5">8+ Years</p>
+            <p style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.6rem] uppercase tracking-[0.2em] text-[#4a4640]">Experience</p>
+            <p style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300 }} className="text-lg sm:text-xl text-[#F5F1E8] mt-0.5">8+ Years</p>
           </div>
           <div className="border-r border-white/10 px-2">
-            <p className="text-xs uppercase tracking-wider text-white/40 font-mono">Architects</p>
-            <p className="text-sm sm:text-lg font-bold text-white mt-0.5">160+ Network</p>
+            <p style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.6rem] uppercase tracking-[0.2em] text-[#4a4640]">Architects</p>
+            <p style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300 }} className="text-lg sm:text-xl text-[#F5F1E8] mt-0.5">160+ Network</p>
           </div>
           <div className="px-2">
-            <p className="text-xs uppercase tracking-wider text-white/40 font-mono">Brands Partnered</p>
-            <p className="text-sm sm:text-lg font-bold text-white mt-0.5">68+ Globally</p>
+            <p style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.6rem] uppercase tracking-[0.2em] text-[#4a4640]">Brands Partnered</p>
+            <p style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300 }} className="text-lg sm:text-xl text-[#F5F1E8] mt-0.5">68+ Globally</p>
           </div>
         </div>
       </section>
@@ -149,11 +161,12 @@ export function HomePage({ onNavigate }: Props) {
             <div
               className="w-full py-12 px-8 sm:px-16 rounded-2xl border border-white/10 flex flex-col md:flex-row items-center justify-between gap-6"
               style={{
-                background: 'linear-gradient(135deg, rgba(84,51,255,0.1) 0%, rgba(32,189,255,0.05) 100%)'
+                background: 'linear-gradient(135deg, rgba(200,169,107,0.08) 0%, rgba(200,169,107,0.03) 100%)',
+                border: '1px solid rgba(200,169,107,0.15)'
               }}
             >
               <div>
-                <h3 className="text-xl sm:text-2xl font-bold text-white">Let’s shoot something unforgettable.</h3>
+                <h3 className="text-xl sm:text-2xl text-white" style={{ fontFamily: "’Cormorant Garant’, serif", fontWeight: 300 }}>Let’s shoot something unforgettable.</h3>
                 <p className="text-xs sm:text-sm text-white/60 mt-2">Bring your spaces, products, and brand story to life with world-class production.</p>
               </div>
               <GradientButton
@@ -170,12 +183,15 @@ export function HomePage({ onNavigate }: Props) {
       <LazySection height="350px">
         <section className="mt-[60px] sm:mt-[80px] md:mt-[100px] lg:mt-[120px] xl:mt-[150px] px-4 max-w-5xl mx-auto text-center">
           <Reveal>
-            <span className="text-xs uppercase tracking-[0.2em] font-semibold text-[#58A4FF] font-mono">
+            <span style={{ fontFamily: "’DM Mono’, monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#C8A96B]">
               Strategic Storytelling
             </span>
-            <h2 className="text-3xl sm:text-5xl font-extrabold font-accent text-white mt-4 leading-tight">
-              We don’t just shoot. <br />
-              We <span className="gradient-text-anim">elevate</span> your vision.
+            <h2
+              className="text-white mt-4 leading-[1.05]"
+              style={{ fontFamily: "’Cormorant Garant’, serif", fontWeight: 300, fontSize: ‘clamp(2.4rem, 5vw, 5rem)’ }}
+            >
+              We don’t just shoot.<br />
+              We <em style={{ fontStyle: ‘italic’, color: ‘#C8A96B’ }}>elevate</em> your vision.
             </h2>
             <p className="text-sm sm:text-base text-white/60 max-w-2xl mx-auto mt-6 leading-relaxed">
               At Capture Crew, we combine our distinguished UK National Geographic background with local elegance. Our visual systems are engineered to build immediate trust. We deliver retouched, AVIF/WebP ready libraries and cinematic films optimized for conversions.
@@ -184,14 +200,14 @@ export function HomePage({ onNavigate }: Props) {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
             {[
-              { Icon: Award, color: '#20BDFF', title: 'Nat Geo Standard', body: 'Working with elite photographers who bring National Geographic experience from the UK.' },
-              { Icon: Users, color: '#5433FF', title: 'Massive Network', body: 'Connecting 160+ architects and 68+ premium brands globally, building long-term assets.' },
-              { Icon: ShieldCheck, color: '#CA6672', title: 'Luxury Heritage', body: 'Partnering with names like Prada, Raymond, Bluestone, Ori, and luxury realty groups.' }
+              { Icon: Award, color: '#C8A96B', title: 'Nat Geo Standard', body: 'Working with elite photographers who bring National Geographic experience from the UK.' },
+              { Icon: Users, color: '#C8A96B', title: 'Massive Network', body: 'Connecting 160+ architects and 68+ premium brands globally, building long-term assets.' },
+              { Icon: ShieldCheck, color: '#C8A96B', title: 'Luxury Heritage', body: 'Partnering with names like Prada, Raymond, Bluestone, Ori, and luxury realty groups.' }
             ].map(({ Icon, color, title, body }, idx) => (
               <Reveal key={title} delay={idx * 120}>
                 <div className="p-6 rounded-2xl border border-white/5 bg-[#161616]/50 hover:border-white/15 hover:-translate-y-1 transition-all duration-500 h-full">
                   <Icon size={28} className="mx-auto mb-4" style={{ color }} />
-                  <h4 className="text-lg font-bold text-white uppercase tracking-wider">{title}</h4>
+                  <h4 className="text-base text-white mt-3" style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 400, letterSpacing: '0.04em' }}>{title}</h4>
                   <p className="text-xs text-white/50 mt-2">{body}</p>
                 </div>
               </Reveal>
@@ -205,11 +221,14 @@ export function HomePage({ onNavigate }: Props) {
         <div id="portfolio-section" className="mt-[60px] sm:mt-[80px] md:mt-[100px] lg:mt-[120px] xl:mt-[150px] px-4 max-w-7xl mx-auto">
           <Reveal>
             <div className="text-center max-w-2xl mx-auto mb-10">
-              <span className="text-xs uppercase tracking-[0.2em] font-semibold text-[#58A4FF] font-mono">
+              <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#C8A96B]">
                 Visual Catalogues
               </span>
-              <h2 className="text-3xl sm:text-5xl font-bold font-accent text-white mt-3">
-                Explore Our <span className="gradient-text-anim">Albums</span>
+              <h2
+                className="text-white mt-3"
+                style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300, fontSize: 'clamp(2.4rem, 5vw, 5rem)', lineHeight: 1.05 }}
+              >
+                Explore Our <em style={{ fontStyle: 'italic', color: '#C8A96B' }}>Albums</em>
               </h2>
               <p className="text-white/60 mt-4 leading-relaxed text-sm">
                 We shoot and package files across key niches. Click any domain below to preview.
@@ -238,11 +257,14 @@ export function HomePage({ onNavigate }: Props) {
           {/* Text Left (grid span 7) */}
           <Reveal direction="left" className="lg:col-span-7">
             <div className="flex flex-col items-start gap-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#20BDFF]/20 bg-white/5 text-[10px] sm:text-xs font-mono text-[#20BDFF]">
+              <div style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#C8A96B]">
                 Social Media Management (SMM)
               </div>
-              <h2 className="text-3xl sm:text-5xl font-bold font-accent text-white leading-tight mt-2">
-                Social Reels and Shorts That <span className="gradient-text-anim">Dominate Feeds</span>
+              <h2
+                className="text-white leading-[1.05] mt-3"
+                style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300, fontSize: 'clamp(2.4rem, 5vw, 5rem)' }}
+              >
+                Social Reels and Shorts That <em style={{ fontStyle: 'italic', color: '#C8A96B' }}>Dominate Feeds</em>
               </h2>
               <p className="text-sm sm:text-base text-white/60 leading-relaxed mt-2">
                 We specialize in scroll-stopping, high-retention vertical films. We script, produce, direct, color-grade, and publish reels designed for modern attention spans, driving immediate customer conversions.
@@ -253,7 +275,7 @@ export function HomePage({ onNavigate }: Props) {
                   ['Hook-First', 'We write high-retention hooks that capture users in the first 2 seconds.'],
                   ['End-to-End', 'From conceptual scripts and color grading to publication and paid ad runs.']
                 ].map(([title, desc]) => (
-                  <li key={title} className="flex gap-4 items-start border-l-2 border-[#5433FF] pl-4">
+                  <li key={title} className="flex gap-4 items-start border-l-2 border-[#C8A96B] pl-4">
                     <div>
                       <h4 className="text-sm sm:text-base font-bold text-white">{title}</h4>
                       <p className="text-xs text-white/50 mt-0.5">{desc}</p>
@@ -361,11 +383,12 @@ export function HomePage({ onNavigate }: Props) {
             <div
               className="w-full py-12 px-8 sm:px-16 rounded-2xl border border-white/10 flex flex-col md:flex-row items-center justify-between gap-6"
               style={{
-                background: 'linear-gradient(135deg, rgba(202,102,114,0.1) 0%, rgba(84,51,255,0.05) 100%)'
+                background: 'linear-gradient(135deg, rgba(200,169,107,0.06) 0%, rgba(200,169,107,0.02) 100%)',
+                border: '1px solid rgba(200,169,107,0.12)'
               }}
             >
               <div>
-                <h3 className="text-xl sm:text-2xl font-bold text-white">Ready to capture your story?</h3>
+                <h3 className="text-xl sm:text-2xl text-white" style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300 }}>Ready to capture your story?</h3>
                 <p className="text-xs sm:text-sm text-white/60 mt-2">Partner with over 160 architects and 68 brands globally. Book Kartik Kanda and the crew today.</p>
               </div>
               <GradientButton
@@ -408,11 +431,14 @@ export function HomePage({ onNavigate }: Props) {
             <Reveal direction="left">
               <div className="flex flex-col gap-6">
                 <div>
-                  <span className="text-xs uppercase tracking-[0.2em] font-semibold text-[#58A4FF] font-mono">
+                  <span style={{ fontFamily: "’DM Mono’, monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#C8A96B]">
                     Get In Touch
                   </span>
-                  <h2 className="text-3xl sm:text-5xl font-bold font-accent text-white mt-3 leading-tight">
-                    Let’s <span className="gradient-text-anim">Capture</span> Your Vision.
+                  <h2
+                    className="text-white mt-3"
+                    style={{ fontFamily: "’Cormorant Garant’, serif", fontWeight: 300, fontSize: ‘clamp(2.4rem, 5vw, 5rem)’, lineHeight: 1.05 }}
+                  >
+                    Let’s <em style={{ fontStyle: ‘italic’, color: ‘#C8A96B’ }}>Capture</em> Your Vision.
                   </h2>
                   <p className="text-white/60 text-sm sm:text-base mt-4 leading-relaxed">
                     We bridge the gap between architectural elegance, commercial brilliance, and business growth. Contact founder Kartik Kanda to plan your campaign shoots.
@@ -421,7 +447,7 @@ export function HomePage({ onNavigate }: Props) {
 
                 <div className="flex flex-col gap-4 mt-6">
                   <div className="flex items-center gap-4 text-white/70 hover:text-white transition-colors duration-300">
-                    <span className="p-3 bg-white/5 border border-white/10 rounded-full text-[#58A4FF]">
+                    <span className="p-3 bg-white/5 border border-white/10 rounded-full text-[#C8A96B]">
                       <Phone size={18} />
                     </span>
                     <div>
@@ -431,7 +457,7 @@ export function HomePage({ onNavigate }: Props) {
                   </div>
 
                   <div className="flex items-center gap-4 text-white/70 hover:text-white transition-colors duration-300">
-                    <span className="p-3 bg-white/5 border border-white/10 rounded-full text-[#20BDFF]">
+                    <span className="p-3 bg-white/5 border border-white/10 rounded-full text-[#C8A96B]">
                       <Mail size={18} />
                     </span>
                     <div>
@@ -441,7 +467,7 @@ export function HomePage({ onNavigate }: Props) {
                   </div>
 
                   <div className="flex items-center gap-4 text-white/70 hover:text-white transition-colors duration-300">
-                    <span className="p-3 bg-white/5 border border-white/10 rounded-full text-[#CA6672]">
+                    <span className="p-3 bg-white/5 border border-white/10 rounded-full text-[#C8A96B]">
                       <MapPin size={18} />
                     </span>
                     <div>
@@ -458,7 +484,7 @@ export function HomePage({ onNavigate }: Props) {
                     href="https://instagram.com/officialcapturecrewstudios"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2.5 rounded-full border border-white/10 bg-white/5 text-white/60 hover:text-white hover:border-[#58A4FF] transition-all duration-300"
+                    className="p-2.5 rounded-full border border-white/10 bg-white/5 text-white/60 hover:text-white hover:border-[#C8A96B] transition-all duration-300"
                     aria-label="Instagram Profile"
                   >
                     <Instagram size={18} />
@@ -467,7 +493,7 @@ export function HomePage({ onNavigate }: Props) {
                     href="https://youtube.com/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2.5 rounded-full border border-white/10 bg-white/5 text-white/60 hover:text-white hover:border-[#58A4FF] transition-all duration-300"
+                    className="p-2.5 rounded-full border border-white/10 bg-white/5 text-white/60 hover:text-white hover:border-[#C8A96B] transition-all duration-300"
                     aria-label="YouTube Channel"
                   >
                     <Youtube size={18} />
@@ -476,7 +502,7 @@ export function HomePage({ onNavigate }: Props) {
                     href="https://linkedin.com/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2.5 rounded-full border border-white/10 bg-white/5 text-white/60 hover:text-white hover:border-[#58A4FF] transition-all duration-300"
+                    className="p-2.5 rounded-full border border-white/10 bg-white/5 text-white/60 hover:text-white hover:border-[#C8A96B] transition-all duration-300"
                     aria-label="LinkedIn Page"
                   >
                     <Linkedin size={18} />
