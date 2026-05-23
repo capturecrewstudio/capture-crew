@@ -180,7 +180,7 @@ export function FeatureGrid() {
                   <ul className="mt-4 space-y-2 border-t border-white/5 pt-4">
                     {pkg.features.slice(0, enableHover ? 6 : 4).map((feat) => (
                       <li key={feat} className="text-xs text-white/70 flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#58A4FF] shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#C8A96B] shrink-0" />
                         {feat}
                       </li>
                     ))}

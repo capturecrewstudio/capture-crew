@@ -159,7 +159,7 @@ export function TestimonialCarousel() {
                           <span className="text-xs text-white/50">{item.designation}</span>
                         </div>
                       </div>
-                      <Sparkles size={16} className="text-[#58A4FF]" />
+                      <Sparkles size={16} className="text-[#C8A96B]" />
                     </div>
                     <p className="text-sm sm:text-base text-white/80 italic leading-relaxed">
                       “{item.message}”
@@ -175,7 +175,7 @@ export function TestimonialCarousel() {
         <div className="flex justify-center items-center gap-6 mt-10">
           <button
             onClick={handlePrev}
-            className="p-3 rounded-full border border-white/10 bg-white/5 text-white/60 hover:text-white hover:border-[#58A4FF] hover:scale-105 active:scale-95 transition-all duration-300"
+            className="p-3 rounded-full border border-white/10 bg-white/5 text-white/60 hover:text-white hover:border-[#C8A96B] hover:scale-105 active:scale-95 transition-all duration-300"
             aria-label="Previous testimonial"
           >
             <ArrowLeft size={16} />
@@ -193,7 +193,7 @@ export function TestimonialCarousel() {
                     setTrackIndex(idx + 1);
                   }}
                   className={`h-2 rounded-full transition-all duration-300 focus:outline-none ${
-                    active ? 'w-6 bg-[#20BDFF]' : 'w-2 bg-white/20 hover:bg-white/40'
+                    active ? 'w-6 bg-[#C8A96B]' : 'w-2 bg-white/20 hover:bg-white/40'
                   }`}
                   aria-label={`Go to testimonial ${idx + 1}`}
                 />
@@ -203,7 +203,7 @@ export function TestimonialCarousel() {
 
           <button
             onClick={handleNext}
-            className="p-3 rounded-full border border-white/10 bg-white/5 text-white/60 hover:text-white hover:border-[#58A4FF] hover:scale-105 active:scale-95 transition-all duration-300"
+            className="p-3 rounded-full border border-white/10 bg-white/5 text-white/60 hover:text-white hover:border-[#C8A96B] hover:scale-105 active:scale-95 transition-all duration-300"
             aria-label="Next testimonial"
           >
             <ArrowRight size={16} />
