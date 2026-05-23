@@ -54,24 +54,20 @@ export function GradientButton({
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`relative inline-flex items-center justify-between rounded-full font-semibold tracking-wide text-white transition-transform duration-300 ease-out active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none group overflow-hidden ${heightClass} ${className}`}
+      className={`relative inline-flex items-center justify-between font-medium tracking-widest uppercase text-[#0A0A0A] transition-transform duration-300 ease-out active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none group overflow-hidden ${heightClass} ${className}`}
       style={{
-        background: 'var(--brand-gradient)',
-        backgroundSize: '200% 200%',
-        animation: 'gradientShift 8s ease-in-out infinite',
+        background: '#C8A96B',
+        borderRadius: '2px',
         willChange: 'transform'
       }}
     >
-      {/* Inset darker inner-glow container */}
-      <div className="absolute inset-[1.5px] rounded-full bg-[#131313]/90 group-hover:bg-[#131313]/70 transition-colors duration-300 -z-10" />
-
-      <span className="relative z-10 pr-2">{label}</span>
+<span className="relative z-10 pr-2">{label}</span>
 
       {/* Arrow circle on the right */}
       <div
-        className={`flex items-center justify-center rounded-full bg-[#58A4FF] border border-white/40 shadow-[0_2px_6px_-2px_rgba(88,164,255,0.55)] transition-transform duration-300 group-hover:translate-x-1 ${arrowCircleSize}`}
+        className={`flex items-center justify-center rounded-sm bg-[#0A0A0A]/15 transition-transform duration-300 group-hover:translate-x-1 ${arrowCircleSize}`}
       >
-        <ArrowRight size={arrowSize} className="text-black stroke-[2.5]" />
+        <ArrowRight size={arrowSize} className="text-[#0A0A0A] stroke-[2.5]" />
       </div>
     </button>
   );
