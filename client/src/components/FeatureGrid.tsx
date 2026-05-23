@@ -190,7 +190,7 @@ export function FeatureGrid() {
                 <div className="mt-6 sm:mt-8">
                   <GradientButton
                     label={pkg.price === 'Custom' ? 'Enquire Now' : 'Choose Package'}
-                    size="sm"
+                    size="md"
                     className="w-full"
                     onClick={() => {
                       const contactSection = document.getElementById('contact-us');

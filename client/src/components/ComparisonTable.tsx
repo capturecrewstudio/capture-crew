@@ -17,7 +17,7 @@ export function ComparisonTable() {
   return (
     <section className="my-20 xl:my-28 relative z-10 px-4 sm:px-6 overflow-x-auto">
       <div className="text-center max-w-2xl mx-auto mb-16">
-        <span className="text-xs uppercase tracking-[0.2em] font-semibold text-[#58A4FF] font-mono">
+        <span className="text-xs uppercase tracking-[0.2em] font-semibold text-[#C8A96B] font-mono">
           Compare Plans
         </span>
         <h2 className="text-3xl sm:text-5xl font-bold font-accent text-white mt-3">
@@ -30,8 +30,8 @@ export function ComparisonTable() {
           <thead>
             <tr className="border-b border-white/5 bg-black/40">
               <th className="p-4 sm:p-6 text-sm font-bold uppercase tracking-wider text-white">Features</th>
-              <th className="p-4 sm:p-6 text-sm font-bold uppercase tracking-wider text-[#20BDFF]">Starter</th>
-              <th className="p-4 sm:p-6 text-sm font-bold uppercase tracking-wider text-[#5433FF]">Growth</th>
+              <th className="p-4 sm:p-6 text-sm font-bold uppercase tracking-wider text-[#C8A96B]/70">Starter</th>
+              <th className="p-4 sm:p-6 text-sm font-bold uppercase tracking-wider text-[#C8A96B]">Growth</th>
               <th className="p-4 sm:p-6 text-sm font-bold uppercase tracking-wider text-[#CA6672]">Premium</th>
             </tr>
           </thead>

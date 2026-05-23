@@ -142,7 +142,7 @@ export function TestimonialCarousel() {
                   {isActive && (
                     <div
                       className="absolute -inset-px rounded-2xl pointer-events-none opacity-40 -z-10"
-                      style={{ background: 'var(--blue-glow)' }}
+                      style={{ background: 'var(--gold-glow)' }}
                     />
                   )}
 

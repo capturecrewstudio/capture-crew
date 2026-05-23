@@ -44,8 +44,8 @@
 }
 
 :root {
-  --brand-gradient: linear-gradient(92.51deg, #5433FF 17.31%, #20BDFF 103.26%, #CA6672 115.38%);
-  --blue-glow: radial-gradient(ellipse at center, rgba(0,64,255,0.45) 0%, transparent 70%);
+  --brand-gradient: linear-gradient(135deg, #C8A96B 0%, #E8C98A 50%, #C8A96B 100%);
+  --gold-glow: radial-gradient(ellipse at center, rgba(200,169,107,0.35) 0%, transparent 70%);
   --bg:        #0A0A0A;
   --surface:   #141414;
   --surface-2: #1C1C1C;

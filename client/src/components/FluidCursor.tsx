@@ -7,7 +7,7 @@ type FluidProps = {
   curl?: number;
   splatRadius?: number;
   splatForce?: number;
-  color?: string; // hex color e.g. "#58A4FF"
+  color?: string;
 };
 
 export function FluidCursor({
@@ -17,7 +17,7 @@ export function FluidCursor({
   curl = 20,
   splatRadius = 0.0018,
   splatForce = 1800,
-  color = '#20BDFF'
+  color = '#C8A96B'
 }: FluidProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 

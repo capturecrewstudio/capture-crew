@@ -60,7 +60,7 @@ const LINKS: SocialLink[] = [
     ),
   },
   {
-    id: 'mail', label: 'Email', href: 'mailto:hello@capturecrew.com', color: '#20BDFF',
+    id: 'mail', label: 'Email', href: 'mailto:hello@capturecrew.com', color: '#C8A96B',
     Icon: () => (
       <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
         <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
@@ -229,7 +229,7 @@ export function SocialDock() {
               className="flex items-center justify-center rounded-full text-white no-underline w-full h-full"
               style={{
                 background: link.color,
-                boxShadow: vis ? `0 0 0 3px ${link.color}28, 0 8px 28px ${link.color}65` : 'none',
+                boxShadow: vis ? `0 0 0 2px ${link.color}18, 0 6px 20px ${link.color}40` : 'none',
                 transform: vis ? 'scale(1)' : 'scale(0)',
                 opacity: vis ? 1 : 0,
                 transformOrigin: 'center center',
@@ -262,24 +262,22 @@ export function SocialDock() {
 
         {/* Glow halo */}
         <div className="absolute rounded-full pointer-events-none" style={{
-          inset: open ? -14 : -5,
-          background: 'var(--brand-gradient)',
-          filter: `blur(${open ? 22 : 11}px)`,
-          opacity: open ? 0.9 : 0.45,
+          inset: open ? -10 : -4,
+          background: 'radial-gradient(ellipse at center, rgba(200,169,107,0.5) 0%, transparent 70%)',
+          filter: `blur(${open ? 16 : 8}px)`,
+          opacity: open ? 0.6 : 0.25,
           transition: 'inset 0.4s ease, opacity 0.4s ease, filter 0.4s ease',
         }} />
 
         {/* Face */}
         <div className="relative flex items-center justify-center rounded-full w-full h-full" style={{
-          background: 'var(--brand-gradient)',
-          backgroundSize: '200% 200%',
-          animation: 'gradientShift 8s ease-in-out infinite',
-          border: '2px solid rgba(255,255,255,0.22)',
+          background: 'linear-gradient(135deg, #1a1a1a 0%, #242424 100%)',
+          border: '1px solid rgba(200,169,107,0.35)',
           boxShadow: open
-            ? '0 0 0 4px rgba(84,51,255,0.3), 0 14px 44px rgba(84,51,255,0.65)'
-            : '0 6px 26px rgba(84,51,255,0.5)',
+            ? '0 0 0 3px rgba(200,169,107,0.15), 0 10px 32px rgba(0,0,0,0.6)'
+            : '0 4px 18px rgba(0,0,0,0.5)',
           transition: 'transform 0.38s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.38s ease',
-          transform: open ? 'scale(1.1)' : 'scale(1)',
+          transform: open ? 'scale(1.08)' : 'scale(1)',
         }}>
           <div style={{
             transition: 'transform 0.38s cubic-bezier(0.34,1.56,0.64,1)',
@@ -287,9 +285,9 @@ export function SocialDock() {
             display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>
             {open
-              ? <X size={22} className="text-white" strokeWidth={2.5} />
+              ? <X size={22} style={{ color: '#C8A96B' }} strokeWidth={2.5} />
               : (
-                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="white" strokeWidth="2.2" strokeLinecap="round">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C8A96B" strokeWidth="2.2" strokeLinecap="round">
                   <line x1="5" y1="7"  x2="19" y2="7"/>
                   <line x1="5" y1="12" x2="19" y2="12"/>
                   <line x1="5" y1="17" x2="19" y2="17"/>
@@ -302,9 +300,9 @@ export function SocialDock() {
 
       <style>{`
         @keyframes sdPulse {
-          0%   { box-shadow: 0 0 0 0   rgba(84,51,255,0.6); }
-          70%  { box-shadow: 0 0 0 16px rgba(84,51,255,0);  }
-          100% { box-shadow: 0 0 0 0   rgba(84,51,255,0);   }
+          0%   { box-shadow: 0 0 0 0   rgba(200,169,107,0.3); }
+          70%  { box-shadow: 0 0 0 12px rgba(200,169,107,0);  }
+          100% { box-shadow: 0 0 0 0   rgba(200,169,107,0);   }
         }
       `}</style>
     </>

@@ -61,7 +61,7 @@ export function GradientButton({
         willChange: 'transform'
       }}
     >
-<span className="relative z-10 pr-2">{label}</span>
+<span className="relative z-10 pr-2 whitespace-nowrap">{label}</span>
 
       {/* Arrow circle on the right */}
       <div

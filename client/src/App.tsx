@@ -7,6 +7,7 @@ import { SiteFooter } from './components/SiteFooter';
 import { SiteHeader } from './components/SiteHeader';
 import { BlogPage, LegalPage, TestimonialsPage } from './pages/SupportPages';
 import { FluidCursor } from './components/FluidCursor';
+import { SocialDock } from './components/SocialDock';
 
 export type RouteName =
   | 'home'
@@ -172,7 +173,7 @@ export function App() {
     <>
       {route !== 'admin' && (
         <FluidCursor
-          color="#20BDFF"
+          color="#C8A96B"
           splatRadius={0.0018}
           splatForce={1800}
         />
@@ -180,6 +181,7 @@ export function App() {
       {route !== 'admin' && <SiteHeader activeRoute={route} onNavigate={handleNavigate} />}
       {content}
       {route !== 'admin' && <SiteFooter onNavigate={handleNavigate} />}
+      {route !== 'admin' && <SocialDock />}
     </>
   );
 }

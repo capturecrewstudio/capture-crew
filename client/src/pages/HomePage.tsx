@@ -49,7 +49,7 @@ export function HomePage({ onNavigate }: Props) {
         {/* Blue Radial Glow behind heading (floats) */}
         <div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[650px] aspect-square rounded-full pointer-events-none -z-10 opacity-30 blur-[80px]"
-          style={{ background: 'var(--blue-glow)', animation: 'float 8s ease-in-out infinite' }}
+          style={{ background: 'var(--gold-glow)', animation: 'float 8s ease-in-out infinite' }}
         />
 
         {/* Hero Content */}
@@ -517,7 +517,7 @@ export function HomePage({ onNavigate }: Props) {
               <div className="bg-[#161616] border border-white/5 p-6 sm:p-10 rounded-3xl shadow-2xl relative">
                 <div
                   className="absolute -inset-px rounded-3xl pointer-events-none opacity-20 -z-10"
-                  style={{ background: 'var(--blue-glow)' }}
+                  style={{ background: 'var(--gold-glow)' }}
                 />
                 <h3 className="text-xl sm:text-2xl text-white mb-6" style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300 }}>Commission a Visual Campaign</h3>
                 <LeadForm />
