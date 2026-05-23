@@ -262,7 +262,6 @@ p {
 
 .primary-button,
 .ghost-button {
-  border-radius: 999px;
   gap: 10px;
   justify-content: center;
   min-height: 46px;
@@ -340,7 +339,7 @@ p {
 
 .category-band span {
   display: block;
-  font-family: "Playfair Display", Georgia, serif;
+  font-family: 'Cormorant Garant', Georgia, serif;
   font-size: 1.5rem;
   margin-bottom: 8px;
 }
@@ -492,7 +491,7 @@ blockquote {
 
 blockquote p {
   color: var(--ivory);
-  font-family: "Playfair Display", Georgia, serif;
+  font-family: 'Cormorant Garant', Georgia, serif;
   font-size: clamp(1.8rem, 3vw, 3rem);
   line-height: 1.12;
 }
@@ -673,7 +672,7 @@ cite {
 }
 
 .portfolio-tile strong {
-  font-family: "Playfair Display", Georgia, serif;
+  font-family: 'Cormorant Garant', Georgia, serif;
   font-size: 1.8rem;
 }
 
@@ -759,7 +758,7 @@ cite {
 
 .testimonial-wall p {
   color: var(--ivory);
-  font-family: "Playfair Display", Georgia, serif;
+  font-family: 'Cormorant Garant', Georgia, serif;
   font-size: 1.7rem;
   line-height: 1.2;
 }
