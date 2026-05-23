@@ -156,8 +156,8 @@ export function SiteHeader({ activeRoute, onNavigate }: Props) {
       >
         {navItems.map((item) => (
           <button
-            className={`text-xs uppercase tracking-widest font-semibold transition-colors duration-300 whitespace-nowrap ${
-              activeRoute === item.route ? 'text-[#20BDFF]' : 'text-white/70 hover:text-white'
+            className={`text-xs uppercase tracking-widest font-light transition-colors duration-300 whitespace-nowrap ${
+              activeRoute === item.route ? 'text-[#C8A96B]' : 'text-[#7A7468] hover:text-[#F5F1E8]'
             }`}
             key={item.route}
             onClick={() => navigate(item.route)}
@@ -226,10 +226,10 @@ export function SiteHeader({ activeRoute, onNavigate }: Props) {
             >
               {navItems.map((item) => (
                 <button
-                  className={`w-full py-3 text-left px-4 rounded-xl text-sm font-semibold transition-colors ${
+                  className={`w-full py-3 text-left px-4 rounded-xl text-sm font-light transition-colors ${
                     activeRoute === item.route
-                      ? 'bg-white/5 text-[#20BDFF]'
-                      : 'text-white/60 hover:bg-white/[0.02] hover:text-white'
+                      ? 'bg-[#C8A96B]/10 text-[#C8A96B]'
+                      : 'text-[#7A7468] hover:bg-white/[0.02] hover:text-[#F5F1E8]'
                   }`}
                   key={item.route}
                   onClick={() => navigate(item.route)}
