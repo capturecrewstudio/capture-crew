@@ -102,7 +102,7 @@ export function HomePage({ onNavigate }: Props) {
               <button
                 onClick={() => onNavigate('portfolio')}
                 className="h-[40px] md:h-[48px] px-6 border border-[rgba(245,241,232,0.12)] bg-transparent text-[#7A7468] hover:text-[#F5F1E8] hover:border-[rgba(245,241,232,0.25)] active:scale-95 transition-all duration-300 flex items-center justify-center gap-3"
-                style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300, fontSize: '0.65rem', letterSpacing: '0.16em', textTransform: 'uppercase', borderRadius: '2px' }}
+                style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300, fontSize: '0.65rem', letterSpacing: '0.16em', textTransform: 'uppercase', borderRadius: '6px' }}
               >
                 View Portfolio
                 <ArrowRight size={14} />

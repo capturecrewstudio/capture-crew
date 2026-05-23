@@ -18,7 +18,7 @@ export function GradientButton({
   className = '',
   disabled = false
 }: ButtonProps) {
-  const heightClass = size === 'sm' ? 'h-[34px] px-3 text-xs' : 'h-[40px] md:h-[48px] px-5 text-sm md:text-base';
+  const heightClass = size === 'sm' ? 'h-[36px] px-5 text-xs' : 'h-[40px] md:h-[48px] px-6 text-sm md:text-base';
   const arrowSize = size === 'sm' ? 12 : 15;
   const arrowCircleSize = size === 'sm' ? 'w-5 h-5 ml-2' : 'w-7 h-7 ml-3 md:w-8 md:h-8';
 
@@ -57,7 +57,7 @@ export function GradientButton({
       className={`relative inline-flex items-center justify-between font-medium tracking-widest uppercase text-[#0A0A0A] transition-transform duration-300 ease-out active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none group overflow-hidden ${heightClass} ${className}`}
       style={{
         background: '#C8A96B',
-        borderRadius: '2px',
+        borderRadius: '6px',
         willChange: 'transform'
       }}
     >

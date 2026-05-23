@@ -264,8 +264,8 @@ p {
 .ghost-button {
   gap: 10px;
   justify-content: center;
-  min-height: 46px;
-  padding: 0 22px;
+  min-height: 48px;
+  padding: 0 28px;
   text-decoration: none;
   transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
 }
@@ -280,7 +280,7 @@ p {
 .primary-button {
   background: var(--gold);
   border: 1px solid var(--gold);
-  border-radius: 2px;
+  border-radius: 6px;
   color: var(--ink);
   font-family: 'DM Sans', sans-serif;
   font-weight: 500;
@@ -296,7 +296,7 @@ p {
 .ghost-button {
   background: rgba(245, 241, 232, 0.04);
   border: 1px solid var(--line-mid);
-  border-radius: 2px;
+  border-radius: 6px;
   color: var(--stone);
   font-family: 'DM Mono', monospace;
   font-weight: 300;
