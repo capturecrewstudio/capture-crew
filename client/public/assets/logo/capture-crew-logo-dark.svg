@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 230" fill="none">
+
+  <!-- Camera top bar (shutter bump) -->
+  <rect x="216" y="42" width="88" height="9" rx="2" fill="#F5F1E8"/>
+
+  <!-- Camera bracket LEFT [ -->
+  <line x1="108" y1="56" x2="72"  y2="56"  stroke="#F5F1E8" stroke-width="10" stroke-linecap="square"/>
+  <line x1="72"  y1="56" x2="72"  y2="164" stroke="#F5F1E8" stroke-width="10" stroke-linecap="square"/>
+  <line x1="72"  y1="164" x2="108" y2="164" stroke="#F5F1E8" stroke-width="10" stroke-linecap="square"/>
+
+  <!-- Camera bracket RIGHT ] -->
+  <line x1="412" y1="56"  x2="448" y2="56"  stroke="#F5F1E8" stroke-width="10" stroke-linecap="square"/>
+  <line x1="448" y1="56"  x2="448" y2="164" stroke="#F5F1E8" stroke-width="10" stroke-linecap="square"/>
+  <line x1="448" y1="164" x2="412" y2="164" stroke="#F5F1E8" stroke-width="10" stroke-linecap="square"/>
+
+  <!-- Outer lens ring — full circle arc, bottom-half visible -->
+  <circle cx="260" cy="165" r="108" stroke="#F5F1E8" stroke-width="9" fill="none"
+    stroke-dasharray="339 340"
+    stroke-dashoffset="-1"
+    transform="rotate(-180 260 165)"
+  />
+
+  <!-- Aperture fill group — clipped to lower semicircle -->
+  <defs>
+    <clipPath id="lensClip">
+      <rect x="150" y="60" width="220" height="108"/>
+    </clipPath>
+  </defs>
+
+  <!-- Aperture blades — 6 blade shutter in gold, clipped to upper half of lens -->
+  <g clip-path="url(#lensClip)">
+    <!-- Full circle background -->
+    <circle cx="260" cy="165" r="105" fill="#C8A96B" opacity="0.12"/>
+
+    <!-- Blade 1 -->
+    <path d="M260 165 L165 115 L205 55 Z" fill="#C8A96B" opacity="0.95"/>
+    <!-- Blade 2 -->
+    <path d="M260 165 L220 60  L290 55 Z" fill="#C8A96B" opacity="0.85"/>
+    <!-- Blade 3 -->
+    <path d="M260 165 L310 58  L355 110 Z" fill="#C8A96B" opacity="0.9"/>
+    <!-- Blade 4 — thin divider left -->
+    <path d="M260 165 L162 130 L168 100 Z" fill="#0A0A0A" opacity="0.5"/>
+    <!-- Blade 4 — thin divider right -->
+    <path d="M260 165 L358 130 L352 100 Z" fill="#0A0A0A" opacity="0.5"/>
+    <!-- Blade 5 — inner separator -->
+    <path d="M260 165 L240 62  L260 58 Z"  fill="#0A0A0A" opacity="0.35"/>
+    <path d="M260 165 L280 62  L260 58 Z"  fill="#0A0A0A" opacity="0.35"/>
+
+    <!-- Inner lens dark circle -->
+    <circle cx="260" cy="155" r="38" fill="#141414"/>
+    <!-- Inner gold ring -->
+    <circle cx="260" cy="155" r="38" stroke="#C8A96B" stroke-width="2.5" fill="none" opacity="0.6"/>
+    <!-- Tiny centre dot -->
+    <circle cx="260" cy="155" r="6" fill="#C8A96B" opacity="0.7"/>
+  </g>
+
+  <!-- Outer lens ring redrawn on top so it overlaps blades cleanly -->
+  <path
+    d="M152 165 A108 108 0 0 1 368 165"
+    stroke="#F5F1E8" stroke-width="9" fill="none" stroke-linecap="butt"
+  />
+
+  <!-- CAPTURE CREW wordmark -->
+  <text
+    x="260"
+    y="206"
+    text-anchor="middle"
+    font-family="'DM Mono', 'Courier New', monospace"
+    font-size="26"
+    font-weight="300"
+    letter-spacing="13"
+    fill="#F5F1E8"
+    dx="6"
+  >CAPTURE CREW</text>
+
+</svg>
