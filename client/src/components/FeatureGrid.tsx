@@ -12,7 +12,7 @@ const packages = [
     longDesc: 'Establish your brand presence with consistent high-quality assets. Perfect for social feeds and basic online engagement.',
     features: ['10 Product Photos', '2 Reels (30-45s)', '8 Social Graphics', 'Basic SMM (1 Platform)'],
     tags: { topLeft: '10 Photos', topRight: '2 Reels', bottomLeft: '8 Posts', bottomRight: '1 Platform' },
-    color: '#20BDFF'
+    color: '#C8A96B'
   },
   {
     title: 'Growth Package',
@@ -23,7 +23,7 @@ const packages = [
     longDesc: 'Boost your customer acquisitions with professional-grade content and direct advertising. High-definition media that converts.',
     features: ['25 Edited Photos', '5 HD Reels', '12 Custom Graphics', 'SMM (2 Platforms)', '2 Paid Campaigns'],
     tags: { topLeft: '25 Photos', topRight: '5 Reels', bottomLeft: '12 Graphics', bottomRight: '2 Paid Ads' },
-    color: '#5433FF'
+    color: '#C8A96B'
   },
   {
     title: 'Premium Brand',
@@ -34,7 +34,7 @@ const packages = [
     longDesc: 'A complete creative and strategic takeover. We handle everything from full-day shoots to paid meta/google ad campaigns and SMM.',
     features: ['Full-Day Shoot', '50 Edited Photos', '8 Reels + 1 Film', 'All-Platform SMM', 'Google/Meta Ads', 'Monthly Reports'],
     tags: { topLeft: 'Full Day', topRight: '50 Photos', bottomLeft: '8 Reels', bottomRight: 'Brand Film' },
-    color: '#CA6672'
+    color: '#C8A96B'
   },
   {
     title: 'Custom Retainer',
@@ -64,10 +64,13 @@ export function FeatureGrid() {
   return (
     <section className="my-20 xl:my-28 relative z-10 px-4 sm:px-6">
       <div className="text-center max-w-2xl mx-auto mb-16">
-        <span className="text-xs uppercase tracking-[0.2em] font-semibold text-[#58A4FF] font-mono">
+        <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#C8A96B]">
           Flexible Pricing
         </span>
-        <h2 className="text-3xl sm:text-5xl font-bold font-accent text-white mt-3">
+        <h2
+          className="text-white mt-3"
+          style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300, fontSize: 'clamp(2.4rem, 5vw, 5rem)', lineHeight: 1.05 }}
+        >
           Our Creative Packages
         </h2>
         <p className="text-white/60 mt-4 leading-relaxed">

@@ -18,16 +18,19 @@ export function GalleryTeaser({ onSeeAll }: Props) {
     <section className="relative z-10 px-4 sm:px-6 max-w-7xl mx-auto">
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-10">
         <div className="max-w-xl">
-          <span className="text-xs uppercase tracking-[0.2em] font-semibold text-[#58A4FF] font-mono">
+          <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#C8A96B]">
             Recent Frames
           </span>
-          <h2 className="text-3xl sm:text-5xl font-bold font-accent text-white mt-3 leading-tight">
+          <h2
+            className="text-white mt-3"
+            style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300, fontSize: 'clamp(2.4rem, 5vw, 5rem)', lineHeight: 1.05 }}
+          >
             A peek inside the archive.
           </h2>
         </div>
         <button
           onClick={onSeeAll}
-          className="self-start sm:self-end inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-semibold text-white/70 hover:text-white border border-white/15 hover:border-white/40 rounded-full px-5 py-3 transition-all duration-300 hover:-translate-y-0.5"
+          className="self-start sm:self-end inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-semibold text-white/70 hover:text-white border border-white/15 hover:border-[#C8A96B]/40 rounded-full px-5 py-3 transition-all duration-300 hover:-translate-y-0.5"
         >
           See full portfolio
           <ArrowUpRight size={14} />

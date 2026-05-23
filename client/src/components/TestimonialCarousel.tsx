@@ -101,10 +101,13 @@ export function TestimonialCarousel() {
   return (
     <section className="my-20 xl:my-28 relative z-10 px-4 overflow-hidden">
       <div className="text-center max-w-2xl mx-auto mb-16">
-        <span className="text-xs uppercase tracking-[0.2em] font-semibold text-[#58A4FF] font-mono">
+        <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#C8A96B]">
           Client Feedback
         </span>
-        <h2 className="text-3xl sm:text-5xl font-bold font-accent text-white mt-3">
+        <h2
+          className="text-white mt-3"
+          style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300, fontSize: 'clamp(2.4rem, 5vw, 5rem)', lineHeight: 1.05 }}
+        >
           Trusted by Industry Leaders
         </h2>
       </div>
