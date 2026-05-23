@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import type { RouteName } from '../App';
 import { GlassFilter } from './GlassFilter';
+import { ThemeToggle } from './ThemeToggle';
 
 const navItems: Array<{ label: string; route: RouteName }> = [
   { label: 'Portfolio', route: 'portfolio' },
@@ -15,9 +16,11 @@ const navItems: Array<{ label: string; route: RouteName }> = [
 type Props = {
   activeRoute: RouteName;
   onNavigate: (route: RouteName) => void;
+  isDark: boolean;
+  onToggleTheme: () => void;
 };
 
-export function SiteHeader({ activeRoute, onNavigate }: Props) {
+export function SiteHeader({ activeRoute, onNavigate, isDark, onToggleTheme }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [useGlass, setUseGlass] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -156,9 +159,12 @@ export function SiteHeader({ activeRoute, onNavigate }: Props) {
       >
         {navItems.map((item) => (
           <button
-            className={`text-xs uppercase tracking-widest font-light transition-colors duration-300 whitespace-nowrap ${
-              activeRoute === item.route ? 'text-[#C8A96B]' : 'text-[#7A7468] hover:text-[#F5F1E8]'
-            }`}
+            className="text-xs uppercase tracking-widest font-light transition-colors duration-300 whitespace-nowrap"
+            style={{
+              color: activeRoute === item.route ? 'var(--gold)' : 'var(--stone)',
+            }}
+            onMouseEnter={e => { if (activeRoute !== item.route) (e.currentTarget as HTMLElement).style.color = 'var(--ivory)'; }}
+            onMouseLeave={e => { if (activeRoute !== item.route) (e.currentTarget as HTMLElement).style.color = 'var(--stone)'; }}
             key={item.route}
             onClick={() => navigate(item.route)}
             type="button"
@@ -168,9 +174,13 @@ export function SiteHeader({ activeRoute, onNavigate }: Props) {
         ))}
       </nav>
 
+      {/* Theme toggle */}
+      <ThemeToggle isDark={isDark} onToggle={onToggleTheme} />
+
       {/* Mobile toggle */}
       <button
-        className="md:hidden flex items-center justify-center p-2 text-white/70 hover:text-white focus:outline-none ml-auto"
+        className="md:hidden flex items-center justify-center p-2 focus:outline-none"
+        style={{ color: 'var(--stone)' }}
         type="button"
         aria-label="Toggle navigation"
         onClick={() => setMenuOpen((open) => !open)}
@@ -180,14 +190,14 @@ export function SiteHeader({ activeRoute, onNavigate }: Props) {
     </>
   );
 
-  // Pill base classes — width is driven via inline style (rAF). Items spread with justify-between.
   const containerClass = `relative flex items-center justify-between gap-6 lg:gap-8 h-[60px] px-5 lg:px-7 rounded-full border backdrop-blur-xl box-border transition-[opacity,background-color,border-color,box-shadow] duration-500 ease-out ${
-    useGlass
-      ? isCompact
-        ? 'opacity-55 border-white/[0.06] bg-white/[0.03] shadow-[0_2px_10px_-6px_rgba(0,0,0,0.35)]'
-        : 'opacity-100 border-white/15 bg-white/[0.07] shadow-[0_4px_16px_-8px_rgba(0,0,0,0.5)]'
-      : 'opacity-100 bg-[#131313]/95 border-white/5 shadow-[0_2px_10px_-6px_rgba(0,0,0,0.4)]'
+    useGlass && isCompact ? 'opacity-55' : 'opacity-100'
   }`;
+  const containerStyle = useGlass
+    ? isCompact
+      ? { background: 'var(--surface-2)', borderColor: 'var(--line)', boxShadow: '0 2px 10px -6px rgba(0,0,0,0.2)' }
+      : { background: 'color-mix(in srgb, var(--surface) 80%, transparent)', borderColor: 'var(--line-mid)', boxShadow: 'var(--shadow)' }
+    : { background: 'color-mix(in srgb, var(--bg) 95%, transparent)', borderColor: 'var(--line)', boxShadow: '0 2px 10px -6px rgba(0,0,0,0.3)' };
 
   return (
     <>
@@ -209,11 +219,11 @@ export function SiteHeader({ activeRoute, onNavigate }: Props) {
           }}
         >
           {useGlass ? (
-            <GlassFilter className={containerClass} borderRadius="999px" distortionScale={4} blur={16}>
+            <GlassFilter className={containerClass} style={containerStyle} borderRadius="999px" distortionScale={4} blur={16}>
               {headerContent}
             </GlassFilter>
           ) : (
-            <div className={containerClass}>
+            <div className={containerClass} style={containerStyle}>
               {headerContent}
             </div>
           )}
@@ -221,16 +231,17 @@ export function SiteHeader({ activeRoute, onNavigate }: Props) {
           {/* Mobile drawer (sibling of pill so overflow-hidden on pill doesn't clip it) */}
           {menuOpen && (
             <nav
-              className="absolute left-0 right-0 top-[72px] flex flex-col gap-2 p-6 rounded-2xl border border-white/10 bg-[#161616]/98 shadow-2xl md:hidden z-50"
+              className="absolute left-0 right-0 top-[72px] flex flex-col gap-2 p-6 rounded-2xl shadow-2xl md:hidden z-50"
+              style={{ background: 'var(--surface)', border: '1px solid var(--line-mid)' }}
               aria-label="Mobile navigation"
             >
               {navItems.map((item) => (
                 <button
-                  className={`w-full py-3 text-left px-4 rounded-xl text-sm font-light transition-colors ${
-                    activeRoute === item.route
-                      ? 'bg-[#C8A96B]/10 text-[#C8A96B]'
-                      : 'text-[#7A7468] hover:bg-white/[0.02] hover:text-[#F5F1E8]'
-                  }`}
+                  className="w-full py-3 text-left px-4 rounded-xl text-sm font-light transition-colors"
+                  style={{
+                    color: activeRoute === item.route ? 'var(--gold)' : 'var(--stone)',
+                    background: activeRoute === item.route ? 'var(--gold-dim)' : 'transparent',
+                  }}
                   key={item.route}
                   onClick={() => navigate(item.route)}
                   type="button"

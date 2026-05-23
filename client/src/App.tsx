@@ -41,6 +41,16 @@ export function scrollToSection(sectionId: string) {
 }
 
 export function App() {
+  const [isDark, setIsDark] = useState<boolean>(() => {
+    const saved = localStorage.getItem('cc-theme');
+    return saved ? saved === 'dark' : true;
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    localStorage.setItem('cc-theme', isDark ? 'dark' : 'light');
+  }, [isDark]);
+
   const [route, setRoute] = useState<RouteName>(() => {
     const path = window.location.pathname;
     if (path === '/admin') return 'admin';
@@ -178,7 +188,7 @@ export function App() {
           splatForce={1800}
         />
       )}
-      {route !== 'admin' && <SiteHeader activeRoute={route} onNavigate={handleNavigate} />}
+      {route !== 'admin' && <SiteHeader activeRoute={route} onNavigate={handleNavigate} isDark={isDark} onToggleTheme={() => setIsDark(d => !d)} />}
       {content}
       {route !== 'admin' && <SiteFooter onNavigate={handleNavigate} />}
       {route !== 'admin' && <SocialDock />}
