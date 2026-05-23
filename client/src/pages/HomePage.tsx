@@ -277,7 +277,7 @@ export function HomePage({ onNavigate }: Props) {
                 ].map(([title, desc]) => (
                   <li key={title} className="flex gap-4 items-start border-l-2 border-[#C8A96B] pl-4">
                     <div>
-                      <h4 className="text-sm sm:text-base font-bold text-white">{title}</h4>
+                      <h4 className="text-sm sm:text-base font-medium text-white" style={{ fontFamily: "'Cormorant Garant', serif" }}>{title}</h4>
                       <p className="text-xs text-white/50 mt-0.5">{desc}</p>
                     </div>
                   </li>
@@ -312,7 +312,7 @@ export function HomePage({ onNavigate }: Props) {
                     <div className="flex items-center gap-2">
                       <div className="w-8 h-8 rounded-full border border-white/20 bg-cover bg-center" style={{ backgroundImage: `url('/assets/media/fashion-detail-1.jpeg')` }} />
                       <div>
-                        <h4 className="text-[10px] font-bold text-white leading-none">@capturecrew</h4>
+                        <h4 className="text-[10px] font-medium text-white leading-none">@capturecrew</h4>
                         <span className="text-[8px] text-white/60">Cinematic Stories</span>
                       </div>
                     </div>
@@ -518,7 +518,7 @@ export function HomePage({ onNavigate }: Props) {
                   className="absolute -inset-px rounded-3xl pointer-events-none opacity-20 -z-10"
                   style={{ background: 'var(--blue-glow)' }}
                 />
-                <h3 className="text-xl sm:text-2xl font-bold text-white mb-6">Commission a Visual Campaign</h3>
+                <h3 className="text-xl sm:text-2xl text-white mb-6" style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300 }}>Commission a Visual Campaign</h3>
                 <LeadForm />
               </div>
             </Reveal>
