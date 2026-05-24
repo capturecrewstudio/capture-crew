@@ -142,7 +142,7 @@ export function SiteHeader({ activeRoute, onNavigate, isDark, onToggleTheme }: P
         type="button"
       >
         <img
-          src="/assets/logo/capture-crew-logo-gold.png"
+          src={isDark ? '/assets/logo/capture-crew-logo-gold.png' : '/assets/logo/capture-crew-logo-light.png'}
           alt="Capture Crew"
           className="object-contain"
           style={{ height: '64px', width: 'auto', minWidth: '240px' }}
