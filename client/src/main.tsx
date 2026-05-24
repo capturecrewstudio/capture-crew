@@ -2,6 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import Lenis from 'lenis';
 import { App } from './App';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import './styles/global.css';
 
 const lenis = new Lenis({
@@ -18,6 +19,8 @@ requestAnimationFrame(raf);
 
 createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <App />
+    <ErrorBoundary>
+      <App />
+    </ErrorBoundary>
   </React.StrictMode>
 );

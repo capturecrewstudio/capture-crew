@@ -9,7 +9,11 @@
     "start": "node dist/index.js",
     "lint": "eslint .",
     "prisma:generate": "prisma generate --schema ../prisma/schema.prisma",
-    "prisma:migrate": "prisma migrate dev --schema ../prisma/schema.prisma"
+    "prisma:migrate": "prisma migrate dev --schema ../prisma/schema.prisma",
+    "prisma:seed": "tsx ../prisma/seed.ts"
+  },
+  "prisma": {
+    "seed": "tsx ../prisma/seed.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.716.0",
