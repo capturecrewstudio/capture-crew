@@ -17,10 +17,13 @@ export function ComparisonTable() {
   return (
     <section className="my-20 xl:my-28 relative z-10 px-4 sm:px-6 overflow-x-auto">
       <div className="text-center max-w-2xl mx-auto mb-16">
-        <span className="text-xs uppercase tracking-[0.2em] font-semibold text-[#E8192C] font-mono">
+        <span className="text-xs uppercase tracking-[0.2em] font-semibold text-accent font-mono">
           Compare Plans
         </span>
-        <h2 className="text-3xl sm:text-5xl font-bold font-accent text-ivory mt-3">
+        <h2
+          className="text-ivory mt-3"
+          style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300, fontSize: 'clamp(2.4rem, 5vw, 5rem)', lineHeight: 1.05 }}
+        >
           Detailed Matrix Comparison
         </h2>
       </div>
@@ -30,9 +33,9 @@ export function ComparisonTable() {
           <thead>
             <tr className="border-b border-line bg-bg/40">
               <th className="p-4 sm:p-6 text-sm font-bold uppercase tracking-wider text-ivory">Features</th>
-              <th className="p-4 sm:p-6 text-sm font-bold uppercase tracking-wider text-[#E8192C]/70">Starter</th>
-              <th className="p-4 sm:p-6 text-sm font-bold uppercase tracking-wider text-[#E8192C]">Growth</th>
-              <th className="p-4 sm:p-6 text-sm font-bold uppercase tracking-wider text-[#CA6672]">Premium</th>
+              <th className="p-4 sm:p-6 text-sm font-bold uppercase tracking-wider text-accent/70">Starter</th>
+              <th className="p-4 sm:p-6 text-sm font-bold uppercase tracking-wider text-accent">Growth</th>
+              <th className="p-4 sm:p-6 text-sm font-bold uppercase tracking-wider text-accent">Premium</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-white/5">
@@ -63,7 +66,7 @@ export function ComparisonTable() {
                   {feature.premium === null ? (
                     <Minus size={14} className="text-stone/40" />
                   ) : feature.premium === true ? (
-                    <Check size={16} className="text-[#CA6672]" />
+                    <Check size={16} className="text-accent" />
                   ) : (
                     feature.premium
                   )}

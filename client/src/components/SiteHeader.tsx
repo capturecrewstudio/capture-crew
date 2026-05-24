@@ -36,10 +36,10 @@ export function SiteHeader({ activeRoute, onNavigate, isDark, onToggleTheme }: P
   // Smoky/translucent when scrolled AND not hovered
   const isCompact = useGlass && !isHovered;
 
-  // Track viewport-derived full width
+  // Track viewport-derived full width — cap at 960px so pill isn't edge-to-edge
   useEffect(() => {
     const update = () => {
-      setFullWidth(Math.min(window.innerWidth - 32, 1320));
+      setFullWidth(Math.min(window.innerWidth - 64, 960));
     };
     update();
     window.addEventListener('resize', update);
@@ -83,9 +83,10 @@ export function SiteHeader({ activeRoute, onNavigate, isDark, onToggleTheme }: P
   const applyWidth = () => {
     if (!pillRef.current) return;
     const p = progressRef.current;
+    const maxAllowed = Math.min(fullWidth, window.innerWidth - 32);
     const naturalCompact = Math.max(contentWidth, 410);
-    const compactWidth = Math.round(fullWidth - p * (fullWidth - naturalCompact));
-    const target = hoveredRef.current ? fullWidth : compactWidth;
+    const compactWidth = Math.round(maxAllowed - p * (maxAllowed - naturalCompact));
+    const target = Math.min(hoveredRef.current ? maxAllowed : compactWidth, maxAllowed);
     pillRef.current.style.width = `${target}px`;
   };
 
@@ -145,7 +146,9 @@ export function SiteHeader({ activeRoute, onNavigate, isDark, onToggleTheme }: P
           src={isDark ? '/assets/logo/capture-crew-logo-gold.png' : '/assets/logo/capture-crew-logo-light.png'}
           alt="Capture Crew"
           className="object-contain"
-          style={{ height: '64px', width: 'auto', minWidth: '240px' }}
+          style={isDark
+            ? { height: '60px', width: 'auto', minWidth: '200px', maxWidth: '260px' }
+            : { height: '72px', width: 'auto', minWidth: '240px', maxWidth: '300px' }}
         />
       </button>
 
@@ -189,45 +192,62 @@ export function SiteHeader({ activeRoute, onNavigate, isDark, onToggleTheme }: P
     </>
   );
 
-  const containerClass = `relative flex items-center justify-between gap-6 lg:gap-8 h-[72px] px-5 lg:px-7 rounded-full border box-border transition-[opacity,background-color,border-color,box-shadow] duration-500 ease-out`;
-  const containerStyle = isCompact
-    ? {
-        background: 'rgba(12,10,8,0.55)',
-        borderColor: 'rgba(200,169,107,0.25)',
-        backdropFilter: 'blur(24px) brightness(0.85) saturate(1.6)',
-        WebkitBackdropFilter: 'blur(24px) brightness(0.85) saturate(1.6)',
-        boxShadow: [
-          '0 8px 32px -4px rgba(0,0,0,0.7)',
-          '0 2px 8px rgba(0,0,0,0.5)',
-          'inset 0 1px 0 rgba(200,169,107,0.14)',
-          '0 0 40px -8px rgba(200,169,107,0.1)',
-        ].join(', '),
-        opacity: 0.88,
-      }
-    : {
-        background: 'rgba(12,10,8,0.48)',
-        borderColor: 'rgba(200,169,107,0.35)',
-        backdropFilter: 'blur(28px) brightness(0.82) saturate(1.8)',
-        WebkitBackdropFilter: 'blur(28px) brightness(0.82) saturate(1.8)',
-        boxShadow: [
-          '0 12px 48px -8px rgba(0,0,0,0.8)',
-          '0 4px 16px rgba(0,0,0,0.6)',
-          '0 0 0 1px rgba(200,169,107,0.10)',
-          'inset 0 1px 0 rgba(200,169,107,0.22)',
-          '0 0 60px -12px rgba(200,169,107,0.18)',
-        ].join(', '),
-      };
+  const containerClass = `relative flex items-center justify-between gap-4 sm:gap-6 lg:gap-8 h-[60px] sm:h-[68px] lg:h-[72px] px-4 sm:px-5 lg:px-7 rounded-full border box-border overflow-hidden transition-[opacity,background-color,border-color,box-shadow] duration-500 ease-out`;
+  const darkCompact = {
+    background: 'rgba(12,10,8,0.55)',
+    borderColor: 'rgba(200,169,107,0.25)',
+    backdropFilter: 'blur(24px) brightness(0.85) saturate(1.6)',
+    WebkitBackdropFilter: 'blur(24px) brightness(0.85) saturate(1.6)',
+    boxShadow: [
+      '0 8px 32px -4px rgba(0,0,0,0.7)',
+      '0 2px 8px rgba(0,0,0,0.5)',
+      'inset 0 1px 0 rgba(200,169,107,0.14)',
+      '0 0 40px -8px rgba(200,169,107,0.1)',
+    ].join(', '),
+    opacity: 0.88,
+  };
+  const darkFull = {
+    background: 'rgba(12,10,8,0.48)',
+    borderColor: 'rgba(200,169,107,0.35)',
+    backdropFilter: 'blur(28px) brightness(0.82) saturate(1.8)',
+    WebkitBackdropFilter: 'blur(28px) brightness(0.82) saturate(1.8)',
+    boxShadow: [
+      '0 12px 48px -8px rgba(0,0,0,0.8)',
+      '0 4px 16px rgba(0,0,0,0.6)',
+      '0 0 0 1px rgba(200,169,107,0.10)',
+      'inset 0 1px 0 rgba(200,169,107,0.22)',
+      '0 0 60px -12px rgba(200,169,107,0.18)',
+    ].join(', '),
+  };
+  const lightCompact = {
+    background: 'rgba(242,239,233,0.72)',
+    borderColor: 'rgba(26,23,20,0.14)',
+    backdropFilter: 'blur(24px) saturate(1.4)',
+    WebkitBackdropFilter: 'blur(24px) saturate(1.4)',
+    boxShadow: '0 8px 32px -4px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.7)',
+    opacity: 0.92,
+  };
+  const lightFull = {
+    background: 'rgba(242,239,233,0.82)',
+    borderColor: 'rgba(26,23,20,0.18)',
+    backdropFilter: 'blur(28px) saturate(1.6)',
+    WebkitBackdropFilter: 'blur(28px) saturate(1.6)',
+    boxShadow: '0 12px 48px -8px rgba(0,0,0,0.14), 0 4px 16px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.8)',
+  };
+  const containerStyle = isDark
+    ? (isCompact ? darkCompact : darkFull)
+    : (isCompact ? lightCompact : lightFull);
 
   return (
     <>
       <header
-        className="fixed left-1/2 -translate-x-1/2 top-5 z-40 pointer-events-none"
-        style={{ maxWidth: 'calc(100vw - 32px)' }}
+        className="fixed left-1/2 -translate-x-1/2 top-3 sm:top-5 z-40 pointer-events-none"
+        style={{ width: 'calc(100vw - 32px)', maxWidth: '960px' }}
       >
         <div
           ref={pillRef}
-          className="pointer-events-auto transition-[width] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-          style={{ width: `${fullWidth}px`, willChange: 'width' }}
+          className="pointer-events-auto transition-[width] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] w-full"
+          style={{ width: `${fullWidth}px`, maxWidth: '100%', willChange: 'width' }}
           onMouseEnter={() => {
             hoveredRef.current = true;
             setIsHovered(true);
@@ -244,7 +264,7 @@ export function SiteHeader({ activeRoute, onNavigate, isDark, onToggleTheme }: P
           {/* Mobile drawer (sibling of pill so overflow-hidden on pill doesn't clip it) */}
           {menuOpen && (
             <nav
-              className="absolute left-0 right-0 top-[72px] flex flex-col gap-2 p-6 rounded-2xl shadow-2xl md:hidden z-50"
+              className="absolute left-0 right-0 top-[60px] sm:top-[68px] flex flex-col gap-2 p-4 sm:p-6 rounded-2xl shadow-2xl md:hidden z-50"
               style={{ background: 'var(--surface)', border: '1px solid var(--line-mid)' }}
               aria-label="Mobile navigation"
             >

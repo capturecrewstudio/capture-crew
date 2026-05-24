@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import { Camera, Building2, Award, Users } from 'lucide-react';
 
 const stats = [
-  { icon: Camera,    value: 500, suffix: '+',      label: 'Shoots Delivered',   color: '#E8192C' },
-  { icon: Building2, value: 160, suffix: '+',      label: 'Architects Trusted', color: '#E8192C' },
-  { icon: Award,     value: 68,  suffix: '+',      label: 'Premium Brands',     color: '#E8192C' },
-  { icon: Users,     value: 8,   suffix: '+ yrs',  label: 'Studio Heritage',    color: '#E8192C' }
+  { icon: Camera,    value: 500, suffix: '+',      label: 'Shoots Delivered',   color: 'var(--accent)' },
+  { icon: Building2, value: 160, suffix: '+',      label: 'Architects Trusted', color: 'var(--accent)' },
+  { icon: Award,     value: 68,  suffix: '+',      label: 'Premium Brands',     color: 'var(--accent)' },
+  { icon: Users,     value: 8,   suffix: '+ yrs',  label: 'Studio Heritage',    color: 'var(--accent)' }
 ];
 
 function useCountUp(target: number, start: boolean, durationMs = 1400) {
@@ -53,7 +53,7 @@ function StatTile({ stat, start, index }: { stat: typeof stats[number]; start: b
           <Icon size={18} style={{ color: stat.color }} />
         </span>
         <div className="mt-5 flex items-baseline gap-1">
-          <span className="text-4xl sm:text-5xl font-extrabold text-ivory font-accent tabular-nums">
+          <span className="font-extrabold text-ivory font-accent tabular-nums" style={{ fontSize: 'clamp(2.2rem, 4vw, 3.5rem)' }}>
             {value}
           </span>
           <span className="text-sm sm:text-base font-bold" style={{ color: stat.color }}>
@@ -94,7 +94,7 @@ export function StatsCounter() {
       className="relative z-10 px-4 sm:px-6 max-w-7xl mx-auto"
     >
       <div className="text-center max-w-2xl mx-auto mb-12">
-        <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#E8192C]">
+        <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-accent">
           By the Numbers
         </span>
         <h2

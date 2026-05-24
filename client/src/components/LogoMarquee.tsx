@@ -58,7 +58,7 @@ export function LogoMarquee() {
           {partners.map((partner, index) => (
             <span
               key={`track1-${partner}-${index}`}
-              className="text-lg sm:text-2xl md:text-3xl font-bold uppercase tracking-[0.25em] text-stone/40 hover:text-[#E8192C] transition-colors duration-300 select-none font-mono"
+              className="text-lg sm:text-2xl md:text-3xl font-bold uppercase tracking-[0.25em] text-stone/40 hover:text-accent transition-colors duration-300 select-none font-mono"
             >
               {partner}
             </span>
@@ -69,7 +69,7 @@ export function LogoMarquee() {
           {partners.map((partner, index) => (
             <span
               key={`track2-${partner}-${index}`}
-              className="text-lg sm:text-2xl md:text-3xl font-bold uppercase tracking-[0.25em] text-stone/40 hover:text-[#E8192C] transition-colors duration-300 select-none font-mono"
+              className="text-lg sm:text-2xl md:text-3xl font-bold uppercase tracking-[0.25em] text-stone/40 hover:text-accent transition-colors duration-300 select-none font-mono"
             >
               {partner}
             </span>

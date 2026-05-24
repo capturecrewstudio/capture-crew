@@ -1,62 +1,42 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 import { Sparkles, Zap, Shield, Flame } from 'lucide-react';
 import { GradientButton } from './GradientButton';
+import { getSiteContent, subscribeAdminStore } from '../lib/adminStore';
 
-const packages = [
-  {
-    title: 'Starter Bundle',
-    icon: Zap,
-    price: '₹19,999',
-    period: '/month',
-    shortDesc: 'Perfect for early-stage brands looking for visual consistency.',
-    longDesc: 'Establish your brand presence with consistent high-quality assets. Perfect for social feeds and basic online engagement.',
-    features: ['10 Product Photos', '2 Reels (30-45s)', '8 Social Graphics', 'Basic SMM (1 Platform)'],
-    tags: { topLeft: '10 Photos', topRight: '2 Reels', bottomLeft: '8 Posts', bottomRight: '1 Platform' },
-    color: '#E8192C'
-  },
-  {
-    title: 'Growth Package',
-    icon: Flame,
-    price: '₹39,999',
-    period: '/month',
-    shortDesc: 'Accelerate your online visibility and drive active engagement.',
-    longDesc: 'Boost your customer acquisitions with professional-grade content and direct advertising. High-definition media that converts.',
-    features: ['25 Edited Photos', '5 HD Reels', '12 Custom Graphics', 'SMM (2 Platforms)', '2 Paid Campaigns'],
-    tags: { topLeft: '25 Photos', topRight: '5 Reels', bottomLeft: '12 Graphics', bottomRight: '2 Paid Ads' },
-    color: '#E8192C'
-  },
-  {
-    title: 'Premium Brand',
-    icon: Sparkles,
-    price: '₹79,999',
-    period: '/month',
-    shortDesc: 'Comprehensive content creation and full digital management.',
-    longDesc: 'A complete creative and strategic takeover. We handle everything from full-day shoots to paid meta/google ad campaigns and SMM.',
-    features: ['Full-Day Shoot', '50 Edited Photos', '8 Reels + 1 Film', 'All-Platform SMM', 'Google/Meta Ads', 'Monthly Reports'],
-    tags: { topLeft: 'Full Day', topRight: '50 Photos', bottomLeft: '8 Reels', bottomRight: 'Brand Film' },
-    color: '#E8192C'
-  },
-  {
-    title: 'Custom Retainer',
-    icon: Shield,
-    price: 'Custom',
-    period: ' /quote',
-    shortDesc: 'Tailored productions designed for luxury architects and global brands.',
-    longDesc: 'Fully custom solutions: architectural campaigns, global location shoots, multi-city activations, and priority retainer delivery.',
-    features: ['Architect-first focus', 'Global locations', 'Custom deliverables', 'Dedicated team', 'Priority retouching'],
-    tags: { topLeft: 'Tailored', topRight: 'Unlimited', bottomLeft: 'Global Reach', bottomRight: 'Flexible' },
-    color: '#ffffff'
-  }
+const ICONS = [Zap, Flame, Sparkles, Shield];
+const ICON_TAGS = [
+  { topLeft: '10 Photos', topRight: '2 Reels', bottomLeft: '8 Posts', bottomRight: '1 Platform' },
+  { topLeft: '25 Photos', topRight: '5 Reels', bottomLeft: '12 Graphics', bottomRight: '2 Paid Ads' },
+  { topLeft: 'Full Day', topRight: '50 Photos', bottomLeft: '8 Reels', bottomRight: 'Brand Film' },
+  { topLeft: 'Tailored', topRight: 'Unlimited', bottomLeft: 'Global Reach', bottomRight: 'Flexible' },
 ];
 
-export function FeatureGrid() {
+type Props = {
+  onSelectPackage?: (title: string) => void;
+};
+
+export function FeatureGrid({ onSelectPackage }: Props) {
   const [isXl, setIsXl] = useState(() => typeof window !== 'undefined' && window.innerWidth >= 1280);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const content = useSyncExternalStore(subscribeAdminStore, getSiteContent);
+
+  const packages = content.packages.map((pkg, i) => ({
+    title: pkg.title,
+    icon: ICONS[i % ICONS.length],
+    price: pkg.price,
+    period: pkg.priceNote ? ` / ${pkg.priceNote}` : '',
+    shortDesc: pkg.summary,
+    longDesc: pkg.summary,
+    features: pkg.features,
+    tags: ICON_TAGS[i % ICON_TAGS.length],
+    highlight: pkg.highlight,
+    cta: pkg.cta,
+    tag: pkg.tag,
+  }));
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsXl(window.innerWidth >= 1280);
-    };
+    const handleResize = () => setIsXl(window.innerWidth >= 1280);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -64,7 +44,7 @@ export function FeatureGrid() {
   return (
     <section className="my-20 xl:my-28 relative z-10 px-4 sm:px-6">
       <div className="text-center max-w-2xl mx-auto mb-16">
-        <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#E8192C]">
+        <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-accent">
           Flexible Pricing
         </span>
         <h2
@@ -83,59 +63,48 @@ export function FeatureGrid() {
         {packages.map((pkg, idx) => {
           const Icon = pkg.icon;
           const isHovered = hoveredIndex === idx;
+          const isExpanded = !isXl && expandedIndex === idx;
           const enableHover = isXl && isHovered;
+          const showDetails = enableHover || isExpanded;
 
           return (
             <div
               key={pkg.title}
-              className="relative w-full h-[400px] sm:h-[450px] xl:h-full"
+              className={`relative w-full ${isXl ? 'h-[400px] sm:h-[450px] xl:h-full' : ''}`}
               onMouseEnter={() => setHoveredIndex(idx)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
               {/* Outer Wrapper: In XL+, this is absolute centered, allowing card to expand without layout shifts */}
               <div
                 className={`w-full bg-surface border rounded-2xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-500 ${
-                  isXl 
-                    ? 'absolute left-0 right-0 top-1/2 -translate-y-1/2 z-10' 
+                  isXl
+                    ? 'absolute left-0 right-0 top-1/2 -translate-y-1/2 z-10'
                     : ''
                 } ${
-                  enableHover
-                    ? 'border-[#E8192C]/60 shadow-[0_8px_24px_-12px_rgba(232,25,44,0.35)] bg-[#181818] z-20 py-10 scale-[1.02]'
+                  showDetails
+                    ? 'border-accent/60 shadow-[0_8px_24px_-12px_color-mix(in_srgb,var(--accent)_35%,transparent)] bg-surface-2 z-20 py-10 scale-[1.02]'
                     : 'border-line shadow-[0_4px_18px_-8px_rgba(0,0,0,0.5)]'
                 }`}
-                style={isXl ? { minHeight: enableHover ? '380px' : '340px' } : undefined}
+                style={isXl ? { minHeight: showDetails ? '380px' : '340px' } : undefined}
               >
-                {/* 4 Floating Tag Pills (XL Hover Only) */}
+                {/* 4 Floating Tag Pills (XL hover only) */}
                 {isXl && (
                   <>
-                    <div
-                      className={`absolute -top-3 -left-3 px-3 py-1 rounded-full border border-linemid bg-bg text-xs font-mono text-ivory pointer-events-none transition-all duration-500 ${
-                        enableHover ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
-                      }`}
-                    >
-                      {pkg.tags.topLeft}
-                    </div>
-                    <div
-                      className={`absolute -top-3 -right-3 px-3 py-1 rounded-full border border-linemid bg-bg text-xs font-mono text-ivory pointer-events-none transition-all duration-500 ${
-                        enableHover ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
-                      }`}
-                    >
-                      {pkg.tags.topRight}
-                    </div>
-                    <div
-                      className={`absolute -bottom-3 -left-3 px-3 py-1 rounded-full border border-linemid bg-bg text-xs font-mono text-ivory pointer-events-none transition-all duration-500 ${
-                        enableHover ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
-                      }`}
-                    >
-                      {pkg.tags.bottomLeft}
-                    </div>
-                    <div
-                      className={`absolute -bottom-3 -right-3 px-3 py-1 rounded-full border border-linemid bg-bg text-xs font-mono text-ivory pointer-events-none transition-all duration-500 ${
-                        enableHover ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
-                      }`}
-                    >
-                      {pkg.tags.bottomRight}
-                    </div>
+                    {[
+                      { pos: '-top-3 -left-3', val: pkg.tags.topLeft },
+                      { pos: '-top-3 -right-3', val: pkg.tags.topRight },
+                      { pos: '-bottom-3 -left-3', val: pkg.tags.bottomLeft },
+                      { pos: '-bottom-3 -right-3', val: pkg.tags.bottomRight },
+                    ].map(({ pos, val }) => (
+                      <div
+                        key={val}
+                        className={`absolute ${pos} px-3 py-1 rounded-full border border-linemid bg-bg text-xs font-mono text-ivory pointer-events-none transition-all duration-500 ${
+                          showDetails ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
+                        }`}
+                      >
+                        {val}
+                      </div>
+                    ))}
                   </>
                 )}
 
@@ -161,12 +130,12 @@ export function FeatureGrid() {
                     {pkg.shortDesc}
                   </p>
 
-                  {/* Expanded Description (XL hover only) */}
+                  {/* Expanded Description */}
                   <div
                     className="grid transition-all duration-500 ease-in-out overflow-hidden"
                     style={{
-                      gridTemplateRows: enableHover ? '1fr' : '0fr',
-                      opacity: enableHover ? 1 : 0
+                      gridTemplateRows: showDetails ? '1fr' : '0fr',
+                      opacity: showDetails ? 1 : 0
                     }}
                   >
                     <div className="overflow-hidden">
@@ -178,27 +147,36 @@ export function FeatureGrid() {
 
                   {/* List of Features */}
                   <ul className="mt-4 space-y-2 border-t border-line pt-4">
-                    {pkg.features.slice(0, enableHover ? 6 : 4).map((feat) => (
+                    {pkg.features.slice(0, showDetails ? 6 : 4).map((feat) => (
                       <li key={feat} className="text-xs text-ivory/70 flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#E8192C] shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
                         {feat}
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <div className="mt-6 sm:mt-8">
+                <div className="mt-6 sm:mt-8 flex flex-col gap-2">
                   <GradientButton
-                    label={pkg.price === 'Custom' ? 'Enquire Now' : 'Choose Package'}
+                    label={pkg.cta}
                     size="md"
                     className="w-full"
                     onClick={() => {
-                      const contactSection = document.getElementById('contact-us');
-                      if (contactSection) {
-                        contactSection.scrollIntoView({ behavior: 'smooth' });
-                      }
+                      onSelectPackage?.(pkg.title);
+                      const el = document.getElementById('contact-us');
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
                     }}
                   />
+                  {/* Mobile only: tap to expand/collapse details */}
+                  {!isXl && (
+                    <button
+                      type="button"
+                      onClick={() => setExpandedIndex(prev => prev === idx ? null : idx)}
+                      className="text-[0.6rem] uppercase tracking-widest font-mono text-stone/60 hover:text-accent transition-colors duration-200 text-center py-1"
+                    >
+                      {isExpanded ? 'Show less ↑' : 'See details ↓'}
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

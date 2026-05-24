@@ -6,28 +6,28 @@ const steps = [
     label: 'Brief',
     title: 'Discovery call',
     desc: 'We dive into your brand goals, audience, references, and KPIs. You leave with a clear shot list and mood direction.',
-    accent: '#E8192C'
+    accent: 'var(--accent)'
   },
   {
     icon: Lightbulb,
     label: 'Pre-Prod',
     title: 'Storyboard & lock',
     desc: 'Locations scouted, talent locked, lighting boards finalised. Every frame planned before the camera rolls.',
-    accent: '#E8192C'
+    accent: 'var(--accent)'
   },
   {
     icon: Clapperboard,
     label: 'Shoot',
     title: 'Set day',
     desc: 'On-set crew, gimbals, drones, and live preview. Tightly directed so we capture stills + motion in one go.',
-    accent: '#E8192C'
+    accent: 'var(--accent)'
   },
   {
     icon: Sparkles,
     label: 'Delivery',
     title: 'Retouch & ship',
     desc: 'Color graded, retouched, AVIF/WebP optimized. Delivered in 7–14 days with rollout-ready assets.',
-    accent: '#E8192C'
+    accent: 'var(--accent)'
   }
 ];
 
@@ -35,7 +35,7 @@ export function ProcessTimeline() {
   return (
     <section className="relative z-10 px-4 sm:px-6 max-w-7xl mx-auto">
       <div className="text-center max-w-2xl mx-auto mb-14">
-        <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#E8192C]">
+        <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-accent">
           The Workflow
         </span>
         <h2
@@ -80,7 +80,7 @@ export function ProcessTimeline() {
                   <div
                     className="relative w-full h-full rounded-full flex items-center justify-center border border-linemid"
                     style={{
-                      background: `radial-gradient(circle at 30% 30%, ${step.accent}55, #0e0e0e 70%)`
+                      background: `radial-gradient(circle at 30% 30%, ${step.accent}55, var(--bg) 70%)`
                     }}
                   >
                     <Icon size={22} style={{ color: step.accent }} />

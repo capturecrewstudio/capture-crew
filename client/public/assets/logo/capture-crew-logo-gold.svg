@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 200" fill="none">
+  <defs>
+    <!-- Clip to upper semicircle of lens only -->
+    <clipPath id="apertureClip">
+      <rect x="148" y="48" width="224" height="112"/>
+    </clipPath>
+  </defs>
+
+  <!-- Viewfinder bump (top centre rect) -->
+  <rect x="218" y="36" width="84" height="10" rx="2" fill="#C8A96B"/>
+
+  <!-- Camera bracket LEFT [ -->
+  <polyline points="116,52 76,52 76,162 116,162"
+    stroke="#C8A96B" stroke-width="11" stroke-linecap="square" stroke-linejoin="miter" fill="none"/>
+
+  <!-- Camera bracket RIGHT ] -->
+  <polyline points="404,52 444,52 444,162 404,162"
+    stroke="#C8A96B" stroke-width="11" stroke-linecap="square" stroke-linejoin="miter" fill="none"/>
+
+  <!-- Thick lens arc (upper half) — drawn as a semicircle path -->
+  <path d="M152 160 A108 108 0 0 1 368 160"
+    stroke="#C8A96B" stroke-width="13" fill="none" stroke-linecap="butt"/>
+
+  <!-- Aperture blades — clipped to upper semicircle -->
+  <g clip-path="url(#apertureClip)">
+
+    <!-- Gold fill base -->
+    <circle cx="260" cy="160" r="106" fill="#C8A96B"/>
+
+    <!-- Blade divider lines (thin ivory gaps matching original) -->
+    <!-- Left outer blade boundary -->
+    <line x1="260" y1="160" x2="168" y2="80"  stroke="#1a1a1a" stroke-width="3.5"/>
+    <!-- Left-centre divider -->
+    <line x1="260" y1="160" x2="222" y2="52"  stroke="#1a1a1a" stroke-width="3.5"/>
+    <!-- Centre divider -->
+    <line x1="260" y1="160" x2="298" y2="52"  stroke="#1a1a1a" stroke-width="3.5"/>
+    <!-- Right-centre divider -->
+    <line x1="260" y1="160" x2="352" y2="80"  stroke="#1a1a1a" stroke-width="3.5"/>
+
+    <!-- Inner dark lens circle (aperture hole) -->
+    <circle cx="260" cy="160" r="44" fill="#141414"/>
+
+    <!-- Inner gold rim -->
+    <circle cx="260" cy="160" r="44" stroke="#C8A96B" stroke-width="3" fill="none"/>
+
+  </g>
+
+  <!-- Redraw lens arc on top of blades so it's crisp -->
+  <path d="M152 160 A108 108 0 0 1 368 160"
+    stroke="#C8A96B" stroke-width="13" fill="none" stroke-linecap="butt"/>
+
+  <!-- CAPTURE CREW wordmark -->
+  <text
+    x="260"
+    y="192"
+    text-anchor="middle"
+    font-family="'DM Mono', 'Courier New', monospace"
+    font-size="24"
+    font-weight="400"
+    letter-spacing="11"
+    fill="#C8A96B"
+    dx="5"
+  >CAPTURE CREW</text>
+
+</svg>

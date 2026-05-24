@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Camera, Clapperboard, TrendingUp } from 'lucide-react';
 
 const panels = [
@@ -30,23 +30,27 @@ const panels = [
 
 export function AutoScanPanels() {
   const [index, setIndex] = useState(0);
+  const pausedRef = useRef(false);
 
   useEffect(() => {
-    // Check if prefers-reduced-motion is enabled
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (mediaQuery.matches) {
-      return; // Skip auto-rotation
-    }
+    if (mediaQuery.matches) return;
 
     const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % panels.length);
+      if (!pausedRef.current) {
+        setIndex((prev) => (prev + 1) % panels.length);
+      }
     }, 3500);
 
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <section className="relative w-full h-[600px] sm:h-[700px] lg:h-[800px] overflow-hidden bg-bg flex items-center justify-start rounded-2xl border border-line my-10 relative z-10">
+    <section
+      className="relative w-full h-[600px] sm:h-[700px] lg:h-[800px] overflow-hidden bg-bg flex items-center justify-start rounded-2xl border border-line my-10 relative z-10"
+      onMouseEnter={() => { pausedRef.current = true; }}
+      onMouseLeave={() => { pausedRef.current = false; }}
+    >
       {/* Background Images Cross-Fade */}
       {panels.map((panel, idx) => (
         <div
@@ -63,7 +67,7 @@ export function AutoScanPanels() {
       {/* Dark Vignette Overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent z-[2]" />
 
-      {/* Left side content - absolute panels */}
+      {/* Left side content */}
       <div className="relative z-[3] w-full max-w-2xl px-6 sm:px-12 md:px-20 py-10 flex flex-col justify-center h-full gap-6">
         <span className="text-xs uppercase tracking-[0.2em] font-semibold text-stone">
           Core Capabilities
@@ -120,10 +124,11 @@ export function AutoScanPanels() {
               key={`dot-${idx}`}
               onClick={() => setIndex(idx)}
               className="group flex flex-col items-start gap-1 text-left focus:outline-none"
+              aria-label={`View ${panel.title}`}
             >
               <div
                 className={`h-[2px] transition-all duration-300 ${
-                  index === idx ? 'w-16 bg-[#E8192C]' : 'w-8 bg-ivory/20 group-hover:bg-ivory/40'
+                  index === idx ? 'w-16 bg-accent' : 'w-8 bg-ivory/20 group-hover:bg-ivory/40'
                 }`}
               />
               <span

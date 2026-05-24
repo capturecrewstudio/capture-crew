@@ -1,40 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { Sparkles, ArrowLeft, ArrowRight } from 'lucide-react';
-
-const testimonials = [
-  {
-    name: 'Aarav Mehta',
-    designation: 'Principal Architect, AM Studio',
-    message: 'Capture Crew understood the silence of the building. Every image felt deliberate, premium, and deeply human.',
-    image: '/assets/media/architecture-detail-1.jpeg'
-  },
-  {
-    name: 'Ira Kapoor',
-    designation: 'Brand Director, Solenne',
-    message: 'The team turned our campaign into a visual world. We used the assets across web, print, press, and investor presentations.',
-    image: '/assets/media/fashion-detail-1.jpeg'
-  },
-  {
-    name: 'Rohan Sethi',
-    designation: 'Founder, Atlas Table',
-    message: 'The launch film gave our restaurant an identity before guests had even stepped through the door.',
-    image: '/assets/media/food-detail-1.jpeg'
-  },
-  {
-    name: 'Riya J.',
-    designation: 'Founder, Boutique Fashion Brand',
-    message: 'Capture Crew took our brand visuals to the next level. Their turnaround, edit quality, and production direction are unmatched.',
-    image: '/assets/media/fashion-hero.jpeg'
-  },
-  {
-    name: 'Kunal P.',
-    designation: 'Director, Luxury Realty Group',
-    message: 'We saw a 3x boost in organic customer engagement after switching our campaign assets and social management to the Crew.',
-    image: '/assets/media/interiors-hero.jpeg'
-  }
-];
+import { Pause, Play } from 'lucide-react';
+import { getTestimonials, subscribeAdminStore } from '../lib/adminStore';
 
 export function TestimonialCarousel() {
+  const allTestimonials = useSyncExternalStore(subscribeAdminStore, getTestimonials);
+  // Only show featured ones; fall back to all if none are featured
+  const featured = allTestimonials.filter(t => t.featured);
+  const testimonials = featured.length > 0 ? featured : allTestimonials;
   const N = testimonials.length;
   // Looped array: last, all, first, second
   const loopedItems = [testimonials[N - 1], ...testimonials, testimonials[0], testimonials[1]];
@@ -44,7 +17,9 @@ export function TestimonialCarousel() {
   const [trackIndex, setTrackIndex] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(true);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [paused, setPaused] = useState(false);
   const timerRef = useRef<number | null>(null);
+  const pausedRef = useRef(false);
 
   useEffect(() => {
     const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -84,24 +59,28 @@ export function TestimonialCarousel() {
     setIsTransitioning(true);
   }, [trackIndex, N]);
 
-  // Autoplay
+  // Autoplay — pauses on hover or manual pause toggle
   useEffect(() => {
     if (reducedMotion) return;
 
-    const tick = () => {
-      handleNext();
-    };
-
-    const interval = setInterval(tick, 3000);
+    const interval = setInterval(() => {
+      if (!pausedRef.current) handleNext();
+    }, 3500);
     return () => clearInterval(interval);
   }, [isTransitioning, reducedMotion]);
+
+  function togglePause() {
+    const next = !paused;
+    setPaused(next);
+    pausedRef.current = next;
+  }
 
   const activeOriginalIndex = (trackIndex - 1 + N) % N;
 
   return (
     <section className="my-20 xl:my-28 relative z-10 px-4 overflow-hidden">
       <div className="text-center max-w-2xl mx-auto mb-16">
-        <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-[#E8192C]">
+        <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-accent">
           Client Feedback
         </span>
         <h2
@@ -112,7 +91,11 @@ export function TestimonialCarousel() {
         </h2>
       </div>
 
-      <div className="relative w-full max-w-6xl mx-auto">
+      <div
+        className="relative w-full max-w-6xl mx-auto"
+        onMouseEnter={() => { pausedRef.current = true; }}
+        onMouseLeave={() => { if (!paused) pausedRef.current = false; }}
+      >
         {/* Left/Right Fade Masking (lg+ only) */}
         <div className="absolute inset-y-0 left-0 w-16 sm:w-32 bg-gradient-to-r from-bg to-transparent z-10 pointer-events-none" />
         <div className="absolute inset-y-0 right-0 w-16 sm:w-32 bg-gradient-to-l from-bg to-transparent z-10 pointer-events-none" />
@@ -134,7 +117,7 @@ export function TestimonialCarousel() {
                   key={`${item.name}-${idx}`}
                   className={`w-[290px] sm:w-[380px] md:w-[450px] shrink-0 rounded-2xl bg-surface p-6 sm:p-8 flex flex-col justify-between border transition-all duration-500 relative ${
                     isActive
-                      ? 'border-[#E8192C]/50 bg-[#1a1a1a] scale-100 shadow-[0_6px_20px_-10px_rgba(232,25,44,0.35)]'
+                      ? 'border-accent/50 bg-surface scale-100 shadow-[0_6px_20px_-10px_color-mix(in_srgb,var(--accent)_35%,transparent)]'
                       : 'border-line opacity-40 scale-95'
                   }`}
                 >
@@ -159,7 +142,7 @@ export function TestimonialCarousel() {
                           <span className="text-xs text-stone">{item.designation}</span>
                         </div>
                       </div>
-                      <Sparkles size={16} className="text-[#E8192C]" />
+                      <Sparkles size={16} className="text-accent" />
                     </div>
                     <p className="text-sm sm:text-base text-ivory/80 italic leading-relaxed">
                       "{item.message}"
@@ -172,10 +155,10 @@ export function TestimonialCarousel() {
         </div>
 
         {/* Navigation buttons */}
-        <div className="flex justify-center items-center gap-6 mt-10">
+        <div className="flex justify-center items-center gap-4 mt-10">
           <button
             onClick={handlePrev}
-            className="p-3 rounded-full border border-line bg-ivory/5 text-stone hover:text-ivory hover:border-[#E8192C] hover:scale-105 active:scale-95 transition-all duration-300"
+            className="p-3 rounded-full border border-line bg-ivory/5 text-stone hover:text-ivory hover:border-accent hover:scale-105 active:scale-95 transition-all duration-300"
             aria-label="Previous testimonial"
           >
             <ArrowLeft size={16} />
@@ -193,7 +176,7 @@ export function TestimonialCarousel() {
                     setTrackIndex(idx + 1);
                   }}
                   className={`h-2 rounded-full transition-all duration-300 focus:outline-none ${
-                    active ? 'w-6 bg-[#E8192C]' : 'w-2 bg-ivory/20 hover:bg-ivory/40'
+                    active ? 'w-6 bg-accent' : 'w-2 bg-ivory/20 hover:bg-ivory/40'
                   }`}
                   aria-label={`Go to testimonial ${idx + 1}`}
                 />
@@ -201,9 +184,20 @@ export function TestimonialCarousel() {
             })}
           </div>
 
+          {/* Pause / Play toggle */}
+          {!reducedMotion && (
+            <button
+              onClick={togglePause}
+              className="p-3 rounded-full border border-line bg-ivory/5 text-stone hover:text-ivory hover:border-accent hover:scale-105 active:scale-95 transition-all duration-300"
+              aria-label={paused ? 'Resume autoplay' : 'Pause autoplay'}
+            >
+              {paused ? <Play size={14} /> : <Pause size={14} />}
+            </button>
+          )}
+
           <button
             onClick={handleNext}
-            className="p-3 rounded-full border border-line bg-ivory/5 text-stone hover:text-ivory hover:border-[#E8192C] hover:scale-105 active:scale-95 transition-all duration-300"
+            className="p-3 rounded-full border border-line bg-ivory/5 text-stone hover:text-ivory hover:border-accent hover:scale-105 active:scale-95 transition-all duration-300"
             aria-label="Next testimonial"
           >
             <ArrowRight size={16} />
