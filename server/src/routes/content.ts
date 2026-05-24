@@ -41,7 +41,7 @@ router.put('/', requireAdmin, async (req, res) => {
   const existing = await getOrCreateContent();
   const updated = await prisma.siteContent.update({
     where: { id: existing.id },
-    data: body,
+    data: body as never,
   });
   res.json(updated);
 });

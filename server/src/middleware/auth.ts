@@ -8,9 +8,11 @@ export type AuthUser = {
   role: 'ADMIN' | 'EDITOR';
 };
 
-declare module 'express-serve-static-core' {
-  interface Request {
-    user?: AuthUser;
+declare global {
+  namespace Express {
+    interface Request {
+      user?: AuthUser;
+    }
   }
 }
 

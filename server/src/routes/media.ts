@@ -22,7 +22,7 @@ const upload = multer({
 });
 
 router.post('/upload', requireAdmin, uploadLimiter, upload.array('images', 12), async (req, res) => {
-  const files = req.files as Express.Multer.File[] | undefined;
+  const files = req.files as { originalname: string; buffer: Buffer; mimetype: string }[] | undefined;
 
   if (!files?.length) {
     return res.status(400).json({ message: 'At least one image is required' });

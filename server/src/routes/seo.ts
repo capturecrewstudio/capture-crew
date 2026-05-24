@@ -31,9 +31,9 @@ router.get('/', async (_req, res) => {
 
 router.put('/:path', requireAdmin, async (req, res) => {
   const body = seoSchema.parse({ ...req.body, path: `/${req.params.path}`.replace('//', '/') });
-  const data = { ...body };
+  const data = { ...body } as never;
   const setting = await prisma.seoSetting.upsert({
-    where: { path: data.path },
+    where: { path: body.path },
     update: data,
     create: data
   });

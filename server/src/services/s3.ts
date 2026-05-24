@@ -26,7 +26,9 @@ function publicUrl(key: string) {
   return baseUrl ? `${baseUrl}/${key}` : key;
 }
 
-export async function uploadOptimizedImage(file: Express.Multer.File, folder = 'portfolio') {
+type UploadFile = { originalname: string; buffer: Buffer; mimetype: string };
+
+export async function uploadOptimizedImage(file: UploadFile, folder = 'portfolio') {
   if (!env.R2_BUCKET) {
     throw new Error('R2_BUCKET is not configured');
   }
