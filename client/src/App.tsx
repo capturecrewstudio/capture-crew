@@ -23,6 +23,9 @@ export type RouteName =
   | 'terms'
   | 'admin';
 
+// Kept for future use — accent picking hidden but types preserved
+export type AccentName = 'red' | 'gold' | 'blue' | 'custom';
+
 // Smooth-scrolls the window so target sits 70px below top.
 // Polls up to 20× × 100ms in case the target hasn't mounted yet.
 export function scrollToSection(sectionId: string) {
@@ -41,25 +44,21 @@ export function scrollToSection(sectionId: string) {
 }
 
 export function App() {
+  // Default: dark mode. Persist preference.
   const [isDark, setIsDark] = useState<boolean>(() => {
     const saved = localStorage.getItem('cc-theme');
     return saved ? saved === 'dark' : true;
   });
 
-  const [accent, setAccent] = useState<'red' | 'gold' | 'blue'>(() => {
-    const saved = localStorage.getItem('cc-accent');
-    return (saved as 'red' | 'gold' | 'blue') ?? 'red';
-  });
-
+  // Dark = gold accent, light = red accent. Applied automatically — no user choice.
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-accent', isDark ? 'gold' : 'red');
     localStorage.setItem('cc-theme', isDark ? 'dark' : 'light');
   }, [isDark]);
 
-  useEffect(() => {
-    document.documentElement.setAttribute('data-accent', accent);
-    localStorage.setItem('cc-accent', accent);
-  }, [accent]);
+  // Fluid cursor colour matches active accent
+  const fluidColor = isDark ? '#C8A96B' : '#E8192C';
 
   const [route, setRoute] = useState<RouteName>(() => {
     const path = window.location.pathname;
@@ -131,8 +130,8 @@ export function App() {
       }
       setRoute('home');
       // Scroll to appropriate section ID
-      const sectionId = 
-        newRoute === 'contact' ? 'contact-us' : 
+      const sectionId =
+        newRoute === 'contact' ? 'contact-us' :
         newRoute === 'about' ? 'about-section' : `${newRoute}-section`;
       scrollToSection(sectionId);
       return;
@@ -142,7 +141,7 @@ export function App() {
     if (newRoute !== 'home' && newRoute !== 'category' && newRoute !== 'project') {
       path = `/${newRoute}`;
     }
-    
+
     if (window.location.pathname !== path) {
       window.history.pushState(null, '', path);
     }
@@ -193,12 +192,19 @@ export function App() {
     <>
       {route !== 'admin' && (
         <FluidCursor
-          color={accent === 'red' ? '#E8192C' : accent === 'gold' ? '#C8A96B' : '#4D9EFF'}
+          color={fluidColor}
           splatRadius={0.0018}
           splatForce={1800}
         />
       )}
-      {route !== 'admin' && <SiteHeader activeRoute={route} onNavigate={handleNavigate} isDark={isDark} onToggleTheme={() => setIsDark(d => !d)} accent={accent} onAccentChange={setAccent} />}
+      {route !== 'admin' && (
+        <SiteHeader
+          activeRoute={route}
+          onNavigate={handleNavigate}
+          isDark={isDark}
+          onToggleTheme={() => setIsDark(d => !d)}
+        />
+      )}
       {content}
       {route !== 'admin' && <SiteFooter onNavigate={handleNavigate} />}
       {route !== 'admin' && <SocialDock />}

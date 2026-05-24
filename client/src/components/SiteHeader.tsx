@@ -18,11 +18,9 @@ type Props = {
   onNavigate: (route: RouteName) => void;
   isDark: boolean;
   onToggleTheme: () => void;
-  accent: 'red' | 'gold' | 'blue';
-  onAccentChange: (a: 'red' | 'gold' | 'blue') => void;
 };
 
-export function SiteHeader({ activeRoute, onNavigate, isDark, onToggleTheme, accent, onAccentChange }: Props) {
+export function SiteHeader({ activeRoute, onNavigate, isDark, onToggleTheme }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [useGlass, setUseGlass] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -137,26 +135,23 @@ export function SiteHeader({ activeRoute, onNavigate, isDark, onToggleTheme, acc
 
   const headerContent = (
     <>
-      {/* Brand logo */}
+      {/* Brand logo — anchored left */}
       <button
-        className={`relative h-8 bg-transparent border-0 cursor-pointer focus:outline-none shrink-0 transition-opacity duration-500 ${
-          isCompact ? 'opacity-60' : 'opacity-100'
-        }`}
+        className="relative bg-transparent border-0 cursor-pointer focus:outline-none shrink-0"
         onClick={() => navigate('home')}
         type="button"
       >
         <img
-          className="h-8 w-auto object-contain"
-          src="/assets/logo/capture-crew-logo-wide.jpeg"
+          src="/assets/logo/capture-crew-logo-gold.png"
           alt="Capture Crew"
+          className="object-contain"
+          style={{ height: '64px', width: 'auto', minWidth: '240px' }}
         />
       </button>
 
-      {/* Desktop nav — fades when compact but always remains in layout */}
+      {/* Desktop nav — centred by auto margins */}
       <nav
-        className={`hidden md:flex gap-6 lg:gap-8 items-center shrink-0 transition-opacity duration-500 ease-out ${
-          isCompact ? 'opacity-40' : 'opacity-100'
-        }`}
+        className="hidden md:flex gap-6 lg:gap-8 items-center mx-auto"
         aria-label="Primary navigation"
       >
         {navItems.map((item) => (
@@ -176,12 +171,14 @@ export function SiteHeader({ activeRoute, onNavigate, isDark, onToggleTheme, acc
         ))}
       </nav>
 
-      {/* Theme toggle */}
-      <ThemeToggle isDark={isDark} onToggle={onToggleTheme} accent={accent} onAccentChange={onAccentChange} />
+      {/* Theme toggle — anchored right */}
+      <div className="shrink-0">
+        <ThemeToggle isDark={isDark} onToggle={onToggleTheme} />
+      </div>
 
       {/* Mobile toggle */}
       <button
-        className="md:hidden flex items-center justify-center p-2 focus:outline-none"
+        className="md:hidden flex items-center justify-center p-2 focus:outline-none shrink-0"
         style={{ color: 'var(--stone)' }}
         type="button"
         aria-label="Toggle navigation"
@@ -192,14 +189,34 @@ export function SiteHeader({ activeRoute, onNavigate, isDark, onToggleTheme, acc
     </>
   );
 
-  const containerClass = `relative flex items-center justify-between gap-6 lg:gap-8 h-[60px] px-5 lg:px-7 rounded-full border backdrop-blur-xl box-border transition-[opacity,background-color,border-color,box-shadow] duration-500 ease-out ${
-    useGlass && isCompact ? 'opacity-55' : 'opacity-100'
-  }`;
-  const containerStyle = useGlass
-    ? isCompact
-      ? { background: 'var(--surface-2)', borderColor: 'var(--line)', boxShadow: '0 2px 10px -6px rgba(0,0,0,0.2)' }
-      : { background: 'color-mix(in srgb, var(--surface) 80%, transparent)', borderColor: 'var(--line-mid)', boxShadow: 'var(--shadow)' }
-    : { background: 'color-mix(in srgb, var(--bg) 95%, transparent)', borderColor: 'var(--line)', boxShadow: '0 2px 10px -6px rgba(0,0,0,0.3)' };
+  const containerClass = `relative flex items-center justify-between gap-6 lg:gap-8 h-[72px] px-5 lg:px-7 rounded-full border box-border transition-[opacity,background-color,border-color,box-shadow] duration-500 ease-out`;
+  const containerStyle = isCompact
+    ? {
+        background: 'rgba(12,10,8,0.55)',
+        borderColor: 'rgba(200,169,107,0.25)',
+        backdropFilter: 'blur(24px) brightness(0.85) saturate(1.6)',
+        WebkitBackdropFilter: 'blur(24px) brightness(0.85) saturate(1.6)',
+        boxShadow: [
+          '0 8px 32px -4px rgba(0,0,0,0.7)',
+          '0 2px 8px rgba(0,0,0,0.5)',
+          'inset 0 1px 0 rgba(200,169,107,0.14)',
+          '0 0 40px -8px rgba(200,169,107,0.1)',
+        ].join(', '),
+        opacity: 0.88,
+      }
+    : {
+        background: 'rgba(12,10,8,0.48)',
+        borderColor: 'rgba(200,169,107,0.35)',
+        backdropFilter: 'blur(28px) brightness(0.82) saturate(1.8)',
+        WebkitBackdropFilter: 'blur(28px) brightness(0.82) saturate(1.8)',
+        boxShadow: [
+          '0 12px 48px -8px rgba(0,0,0,0.8)',
+          '0 4px 16px rgba(0,0,0,0.6)',
+          '0 0 0 1px rgba(200,169,107,0.10)',
+          'inset 0 1px 0 rgba(200,169,107,0.22)',
+          '0 0 60px -12px rgba(200,169,107,0.18)',
+        ].join(', '),
+      };
 
   return (
     <>
@@ -220,15 +237,9 @@ export function SiteHeader({ activeRoute, onNavigate, isDark, onToggleTheme, acc
             setIsHovered(false);
           }}
         >
-          {useGlass ? (
-            <GlassFilter className={containerClass} style={containerStyle} borderRadius="999px" distortionScale={4} blur={16}>
-              {headerContent}
-            </GlassFilter>
-          ) : (
-            <div className={containerClass} style={containerStyle}>
-              {headerContent}
-            </div>
-          )}
+          <GlassFilter className={containerClass} style={containerStyle} borderRadius="999px" distortionScale={5} blur={28}>
+            {headerContent}
+          </GlassFilter>
 
           {/* Mobile drawer (sibling of pill so overflow-hidden on pill doesn't clip it) */}
           {menuOpen && (

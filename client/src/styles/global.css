@@ -42,6 +42,22 @@
   }
 }
 
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 34s linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+}
+
 .gradient-text-anim {
   background-image: var(--brand-gradient);
   background-size: 200% 200%;
@@ -56,14 +72,14 @@
 }
 
 :root {
-  --brand-gradient: linear-gradient(135deg, #E8192C 0%, #FF4D5E 50%, #E8192C 100%);
-  --accent-glow: radial-gradient(ellipse at center, rgba(232,25,44,0.35) 0%, transparent 70%);
-  /* Dark mode tokens (default) */
+  --brand-gradient: linear-gradient(135deg, #C8A96B 0%, #E8C98A 50%, #C8A96B 100%);
+  --accent-glow: radial-gradient(ellipse at center, rgba(200,169,107,0.35) 0%, transparent 70%);
+  /* Dark mode tokens (default) — gold accent */
   --bg:        #0A0A0A;
   --surface:   #141414;
   --surface-2: #1C1C1C;
-  --accent:      #E8192C;
-  --accent-dim:  rgba(232, 25, 44, 0.15);
+  --accent:      #C8A96B;
+  --accent-dim:  rgba(200, 169, 107, 0.15);
   --ivory:     #F5F1E8;
   --stone:     #7A7468;
   --ink:       #0A0A0A;
