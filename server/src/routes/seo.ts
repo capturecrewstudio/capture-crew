@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import type { Prisma } from '@prisma/client';
 import { z } from 'zod';
 import { prisma } from '../config/prisma.js';
 import { requireAdmin } from '../middleware/auth.js';
@@ -32,10 +31,7 @@ router.get('/', async (_req, res) => {
 
 router.put('/:path', requireAdmin, async (req, res) => {
   const body = seoSchema.parse({ ...req.body, path: `/${req.params.path}`.replace('//', '/') });
-  const data = {
-    ...body,
-    structured: body.structured as Prisma.InputJsonValue | undefined
-  };
+  const data = { ...body };
   const setting = await prisma.seoSetting.upsert({
     where: { path: data.path },
     update: data,

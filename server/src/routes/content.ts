@@ -2,7 +2,6 @@ import { Router } from 'express';
 import { z } from 'zod';
 import { prisma } from '../config/prisma.js';
 import { requireAdmin } from '../middleware/auth.js';
-import type { Prisma } from '@prisma/client';
 
 const router = Router();
 
@@ -42,7 +41,7 @@ router.put('/', requireAdmin, async (req, res) => {
   const existing = await getOrCreateContent();
   const updated = await prisma.siteContent.update({
     where: { id: existing.id },
-    data: body as Prisma.SiteContentUpdateInput,
+    data: body,
   });
   res.json(updated);
 });
