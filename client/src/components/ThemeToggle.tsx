@@ -20,6 +20,9 @@ export function ThemeToggle({ isDark, onToggle }: Props) {
         background: 'transparent',
         border: '1px solid var(--line-mid)',
         color: 'var(--stone)',
+        pointerEvents: 'auto',
+        position: 'relative',
+        zIndex: 2,
       }}
     >
       {isDark ? <Sun size={14} /> : <Moon size={14} />}

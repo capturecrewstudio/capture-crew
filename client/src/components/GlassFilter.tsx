@@ -1,5 +1,3 @@
-import { useId } from 'react';
-
 type GlassFilterProps = {
   children?: React.ReactNode;
   className?: string;
@@ -18,56 +16,43 @@ export function GlassFilter({
   className = '',
   borderRadius = '999px',
   borderWidth = '1px',
-  distortionScale = 12,
+  distortionScale: _distortionScale = 12,
   brightness = 1.05,
   opacity = 1.0,
   backgroundOpacity = 0.08,
   blur = 24,
   style = {}
 }: GlassFilterProps) {
-  const filterId = useId();
-
   return (
     <>
-      <svg className="absolute w-0 h-0 pointer-events-none" aria-hidden="true" style={{ position: 'absolute' }}>
-        <defs>
-          <filter id={filterId} x="-20%" y="-20%" width="140%" height="140%">
-            {/* Generates fine fractal noise */}
-            <feTurbulence
-              type="fractalNoise"
-              baseFrequency="0.015"
-              numOctaves="3"
-              result="noise"
-            />
-            {/* Uses noise channel R & G to distort coordinates */}
-            <feDisplacementMap
-              in="SourceGraphic"
-              in2="noise"
-              scale={distortionScale}
-              xChannelSelector="R"
-              yChannelSelector="G"
-              result="displaced"
-            />
-            {/* Blurs the displaced result slightly */}
-            <feGaussianBlur in="displaced" stdDeviation={blur / 8} result="blurred" />
-            <feMerge>
-              <feMergeNode in="blurred" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
-      </svg>
       <div
         className={className}
         style={{
           borderRadius,
           border: `${borderWidth} solid rgba(255, 255, 255, ${backgroundOpacity})`,
-          backdropFilter: `url(#${filterId}) blur(${blur}px) brightness(${brightness})`,
+          position: 'relative',
           opacity,
           ...style
         }}
       >
-        {children}
+        {/* Blur layer — absolutely fills the pill, never intercepts clicks */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            borderRadius,
+            backdropFilter: `blur(${blur}px) brightness(${brightness}) saturate(1.4)`,
+            WebkitBackdropFilter: `blur(${blur}px) brightness(${brightness}) saturate(1.4)`,
+            overflow: 'hidden',
+            zIndex: 0,
+            pointerEvents: 'none',
+          }}
+        />
+        {/* Content sits above the blur layer */}
+        <div style={{ position: 'relative', zIndex: 1, display: 'contents' }}>
+          {children}
+        </div>
       </div>
     </>
   );
