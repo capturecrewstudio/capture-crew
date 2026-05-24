@@ -10,23 +10,17 @@ const testimonialSchema = z.object({
   designation: z.string().optional(),
   message: z.string().min(10),
   image: z.string().url().optional(),
-  featured: z.boolean().default(false)
+  featured: z.boolean().default(false),
 });
 
 router.get('/', async (_req, res) => {
   try {
-    const testimonials = await prisma.testimonial.findMany({ orderBy: [{ featured: 'desc' }, { createdAt: 'desc' }] });
+    const testimonials = await prisma.testimonial.findMany({
+      orderBy: [{ featured: 'desc' }, { createdAt: 'desc' }],
+    });
     res.json(testimonials);
   } catch {
-    res.json([
-      {
-        id: 'aarav-mehta',
-        name: 'Aarav Mehta',
-        designation: 'Principal Architect, AM Studio',
-        message: 'Every image felt deliberate, premium, and deeply human.',
-        featured: true
-      }
-    ]);
+    res.json([]);
   }
 });
 
@@ -34,6 +28,20 @@ router.post('/', requireAdmin, async (req, res) => {
   const body = testimonialSchema.parse(req.body);
   const testimonial = await prisma.testimonial.create({ data: body });
   res.status(201).json(testimonial);
+});
+
+router.put('/:id', requireAdmin, async (req, res) => {
+  const body = testimonialSchema.parse(req.body);
+  const testimonial = await prisma.testimonial.update({
+    where: { id: req.params.id },
+    data: body,
+  });
+  res.json(testimonial);
+});
+
+router.delete('/:id', requireAdmin, async (req, res) => {
+  await prisma.testimonial.delete({ where: { id: req.params.id } });
+  res.status(204).end();
 });
 
 export { router as testimonialsRouter };

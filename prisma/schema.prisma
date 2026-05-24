@@ -118,11 +118,24 @@ model SeoSetting {
   updatedAt   DateTime @updatedAt
 }
 
-model HomeContent {
-  id              String   @id @default(uuid())
-  heroVideoUrl    String?
-  heroImageUrl    String?
-  heroHeadline    String   @default("Architecture. Luxury. Visual Storytelling.")
-  heroSubheadline String?
-  updatedAt       DateTime @updatedAt
+model SiteContent {
+  id                  String   @id @default(uuid())
+  heroHeadline        String   @default("Where Craft\nMeets Legacy.")
+  heroSubheadline     String   @default("Architecture. Luxury. Visual Storytelling.")
+  heroCta1            String   @default("View Portfolio")
+  heroCta2            String   @default("Book a Shoot")
+  stats               Json     @default("{}")
+  partners            Json     @default("[]")
+  socialProofEyebrow  String   @default("Trusted worldwide")
+  socialProofHeadline String   @default("Receipts, not promises.")
+  faq                 Json     @default("[]")
+  packages            Json     @default("[]")
+  footerTagline       String   @default("")
+  footerPhone         String   @default("")
+  footerEmail         String   @default("")
+  footerCities        String   @default("")
+  contactHeadline     String   @default("Let's make something worth keeping.")
+  contactSubheadline  String   @default("Tell us about your project and we'll get back to you within 24 hours.")
+  socialDock          Json     @default("{}")
+  updatedAt           DateTime @updatedAt
 }

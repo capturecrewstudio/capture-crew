@@ -13,12 +13,12 @@ const fallbackCategories = [
   { id: 'commercial', name: 'Commercial', slug: 'commercial' },
   { id: 'product', name: 'Product', slug: 'product' },
   { id: 'food', name: 'Food', slug: 'food' },
-  { id: 'weddings', name: 'Weddings', slug: 'weddings' }
+  { id: 'weddings', name: 'Weddings', slug: 'weddings' },
 ];
 
 const categorySchema = z.object({
   name: z.string().min(2),
-  slug: z.string().optional()
+  slug: z.string().optional(),
 });
 
 router.get('/', async (_req, res) => {
@@ -35,10 +35,15 @@ router.post('/', requireAdmin, async (req, res) => {
   const category = await prisma.category.create({
     data: {
       name: body.name,
-      slug: body.slug ?? slugify(body.name, { lower: true, strict: true })
-    }
+      slug: body.slug ?? slugify(body.name, { lower: true, strict: true }),
+    },
   });
   res.status(201).json(category);
+});
+
+router.delete('/:id', requireAdmin, async (req, res) => {
+  await prisma.category.delete({ where: { id: req.params.id } });
+  res.status(204).end();
 });
 
 export { router as categoriesRouter };
