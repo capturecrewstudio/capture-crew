@@ -33,14 +33,14 @@ router.post('/', requireAdmin, async (req, res) => {
 router.put('/:id', requireAdmin, async (req, res) => {
   const body = testimonialSchema.parse(req.body);
   const testimonial = await prisma.testimonial.update({
-    where: { id: req.params.id },
+    where: { id: req.params.id as string },
     data: body,
   });
   res.json(testimonial);
 });
 
 router.delete('/:id', requireAdmin, async (req, res) => {
-  await prisma.testimonial.delete({ where: { id: req.params.id } });
+  await prisma.testimonial.delete({ where: { id: req.params.id as string } });
   res.status(204).end();
 });
 

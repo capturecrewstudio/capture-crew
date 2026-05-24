@@ -35,7 +35,7 @@ router.get('/', requireAdmin, async (_req, res) => {
 router.patch('/:id', requireAdmin, async (req, res) => {
   const { status } = statusSchema.parse(req.body);
   const lead = await prisma.lead.update({
-    where: { id: req.params.id },
+    where: { id: req.params.id as string },
     data: { status },
   });
   res.json(lead);

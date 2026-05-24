@@ -42,7 +42,7 @@ router.post('/', requireAdmin, async (req, res) => {
 });
 
 router.delete('/:id', requireAdmin, async (req, res) => {
-  await prisma.category.delete({ where: { id: req.params.id } });
+  await prisma.category.delete({ where: { id: req.params.id as string } });
   res.status(204).end();
 });
 
