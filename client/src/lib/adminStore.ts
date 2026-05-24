@@ -219,8 +219,7 @@ const DEFAULT_CATEGORIES: AdminCategory[] = [
   { slug: 'fashion', name: 'Fashion', description: 'Campaign imagery, lookbooks, motion edits, and sculptural portraits.', heroImage: '/assets/media/fashion-hero.jpeg', sortOrder: 2 },
   { slug: 'commercial', name: 'Commercial', description: 'Launch films and image libraries for premium businesses and hospitality brands.', heroImage: '/assets/media/commercial-hero.jpeg', sortOrder: 3 },
   { slug: 'product', name: 'Product', description: 'Still-life systems for objects, textures, packaging, and ecommerce hero assets.', heroImage: '/assets/media/product-hero.jpeg', sortOrder: 4 },
-  { slug: 'food', name: 'Food', description: 'Atmospheric food, beverage, and restaurant stories that feel intimate and premium.', heroImage: '/assets/media/food-hero.jpeg', sortOrder: 5 },
-  { slug: 'weddings', name: 'Weddings', description: 'Cinematic wedding storytelling with quiet luxury, movement, and editorial texture.', heroImage: '/assets/media/wedding-hero.jpeg', sortOrder: 6 },
+  { slug: 'real-estate', name: 'Real Estate', description: 'Drone aerials, luxury site films, and property walkthroughs that sell the space.', heroImage: '/assets/media/real-estate-hero.jpeg', sortOrder: 5 },
 ];
 
 const DEFAULT_TESTIMONIALS: AdminTestimonial[] = [

@@ -12,6 +12,14 @@ type SocialLink = {
 
 const LINK_DEFS: Omit<SocialLink, 'href'>[] = [
   {
+    id: 'phone', label: 'Call Us', color: '#888',
+    Icon: () => (
+      <svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17">
+        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+      </svg>
+    ),
+  },
+  {
     id: 'whatsapp', label: 'WhatsApp', color: '#25D366',
     Icon: () => (
       <svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17">
@@ -84,7 +92,8 @@ export function SocialDock() {
 
   const LINKS: SocialLink[] = LINK_DEFS.map(def => ({
     ...def,
-    href: def.id === 'whatsapp'  ? dock.whatsapp
+    href: def.id === 'phone'     ? dock.phone
+        : def.id === 'whatsapp'  ? dock.whatsapp
         : def.id === 'instagram' ? dock.instagram
         : def.id === 'youtube'   ? dock.youtube
         : def.id === 'linkedin'  ? 'https://www.linkedin.com/in/capturecrew-studio-6b568b411'
