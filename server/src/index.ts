@@ -1,10 +1,13 @@
+import 'express-async-errors';
 import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
 import { env } from './config/env.js';
+import { globalLimiter } from './middleware/rateLimit.js';
 import { authRouter } from './routes/auth.js';
 import { blogRouter } from './routes/blog.js';
 import { categoriesRouter } from './routes/categories.js';
+import { contentRouter } from './routes/content.js';
 import { leadsRouter } from './routes/leads.js';
 import { mediaRouter } from './routes/media.js';
 import { projectsRouter } from './routes/projects.js';
@@ -15,6 +18,7 @@ const app = express();
 
 app.use(helmet());
 app.use(cors({ origin: env.CLIENT_ORIGIN }));
+app.use(globalLimiter);
 app.use(express.json({ limit: '1mb' }));
 
 app.get('/api/health', (_req, res) => {
@@ -24,6 +28,7 @@ app.get('/api/health', (_req, res) => {
 app.use('/api/auth', authRouter);
 app.use('/api/blog', blogRouter);
 app.use('/api/categories', categoriesRouter);
+app.use('/api/content', contentRouter);
 app.use('/api/leads', leadsRouter);
 app.use('/api/media', mediaRouter);
 app.use('/api/projects', projectsRouter);
