@@ -10,7 +10,6 @@ import { AutoScanPanels } from '../components/AutoScanPanels';
 import { FeatureTimeline } from '../components/FeatureTimeline';
 import { FeatureGrid } from '../components/FeatureGrid';
 import { TestimonialCarousel } from '../components/TestimonialCarousel';
-import { FaqAccordion } from '../components/FaqAccordion';
 import { ComparisonTable } from '../components/ComparisonTable';
 import { LazySection } from '../components/LazySection';
 import { Reveal } from '../components/Reveal';
@@ -140,7 +139,7 @@ export function HomePage({ onNavigate, onSelectCategory }: Props) {
         {/* Background Image with blur-up */}
         <div className="absolute inset-0 z-0">
           <BlurImage
-            src="/assets/media/architecture-hero.jpeg"
+            src="/assets/media/hero-bg-2.jpeg"
             alt="Capture Crew luxury architecture shoot"
             fetchPriority="high"
             wrapperClassName="absolute inset-0"
@@ -159,21 +158,21 @@ export function HomePage({ onNavigate, onSelectCategory }: Props) {
         <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center pt-24 md:pt-32">
           {/* Brand name badge */}
           <Reveal direction="up">
-            <div className="inline-flex items-center gap-4 mb-6">
-              <span className="block w-10 h-px opacity-60" style={{ background: 'var(--accent)' }} />
+            <div className="inline-flex items-center gap-6 mb-6">
+              <span className="block w-20 h-px opacity-60" style={{ background: 'var(--accent)' }} />
               <span
                 style={{
                   fontFamily: "'Cormorant Garant', Georgia, serif",
-                  fontSize: 'clamp(1.1rem, 2vw, 1.5rem)',
+                  fontSize: 'clamp(1.5rem, 3vw, 2.2rem)',
                   fontWeight: 400,
-                  letterSpacing: '0.18em',
+                  letterSpacing: '0.22em',
                   color: 'var(--accent)',
                   textTransform: 'uppercase',
                 }}
               >
                 Capture Crew
               </span>
-              <span className="block w-10 h-px opacity-60" style={{ background: 'var(--accent)' }} />
+              <span className="block w-20 h-px opacity-60" style={{ background: 'var(--accent)' }} />
             </div>
           </Reveal>
 
@@ -185,23 +184,36 @@ export function HomePage({ onNavigate, onSelectCategory }: Props) {
                 fontFamily: "'Cormorant Garant', Georgia, serif",
                 fontWeight: 300,
                 fontSize: 'clamp(2.4rem, 6vw, 6rem)',
-                lineHeight: 1.08,
+                lineHeight: 1.0,
                 letterSpacing: '-0.01em',
                 whiteSpace: 'pre-line',
               }}
             >
-              {content.heroHeadline}
+              {content.heroHeadline.replace(/\.$/, '')}
             </h1>
           </Reveal>
 
           {/* Subtitle */}
           <Reveal direction="up" delay={220}>
-            <p
-              className="max-w-xl mb-10 text-stone leading-[1.75]"
-              style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: 'clamp(0.82rem, 1.4vw, 1rem)' }}
-            >
-              {content.heroSubheadline}
-            </p>
+            <div className="flex items-center gap-4 mt-6 mb-10 flex-wrap justify-center">
+              {['Architecture', 'Real Estate', 'Luxury Brands'].map((word, i, arr) => (
+                <span key={i} className="flex items-center gap-4">
+                  <span style={{
+                    fontFamily: "'Cormorant Garant', Georgia, serif",
+                    fontWeight: 300,
+                    fontSize: 'clamp(1.1rem, 2vw, 1.5rem)',
+                    color: 'var(--accent)',
+                    letterSpacing: '0.12em',
+                    textTransform: 'uppercase',
+                  }}>
+                    {word}
+                  </span>
+                  {i < arr.length - 1 && (
+                    <span style={{ color: 'var(--accent)', opacity: 0.4, fontSize: '1.2rem', fontWeight: 300 }}>|</span>
+                  )}
+                </span>
+              ))}
+            </div>
           </Reveal>
 
           {/* CTA Buttons */}
@@ -257,7 +269,7 @@ export function HomePage({ onNavigate, onSelectCategory }: Props) {
               We <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>elevate</em> your vision.
             </h2>
             <p className="text-sm sm:text-base text-stone max-w-2xl mx-auto mt-6 leading-relaxed">
-              At <span style={{ color: 'var(--accent)', fontWeight: 500 }}>Capture Crew</span>, we combine our distinguished UK National Geographic background with local elegance. Our visual systems are engineered to build immediate trust. We deliver retouched, AVIF/WebP ready libraries and cinematic films optimized for conversions.
+              At <span style={{ color: 'var(--accent)', fontWeight: 500 }}>Capture Crew</span>, every frame is intentional. Every visual, a statement. We build content that doesn't just look premium — it positions your brand as the obvious choice in a crowded market.
             </p>
           </Reveal>
 
@@ -265,7 +277,7 @@ export function HomePage({ onNavigate, onSelectCategory }: Props) {
             {[
               { Icon: Award, color: 'var(--accent)', title: 'Nat Geo Standard', body: 'Working with elite photographers who bring National Geographic experience from the UK.' },
               { Icon: Users, color: 'var(--accent)', title: 'Massive Network', body: 'Connecting 160+ architects and 68+ premium brands globally, building long-term assets.' },
-              { Icon: ShieldCheck, color: 'var(--accent)', title: 'Luxury Heritage', body: 'Partnering with names like Prada, Raymond, Bluestone, Ori, and luxury realty groups.' }
+              { Icon: ShieldCheck, color: 'var(--accent)', title: 'Luxury Heritage', body: 'Partnering with names like Prada, Raymond, Bluestone, ORRA, Malabar Gold and Diamonds, and luxury realty groups.' }
             ].map(({ Icon, color, title, body }, idx) => (
               <Reveal key={title} delay={idx * 120}>
                 <div className="p-6 rounded-2xl border border-line bg-surface/50 hover:border-linemid hover:-translate-y-1 transition-all duration-500 h-full">
@@ -432,22 +444,13 @@ export function HomePage({ onNavigate, onSelectCategory }: Props) {
         </div>
       </LazySection>
 
-      {/* 13. FAQ Accordion (7 items) */}
-      <LazySection height="650px">
-        <div className="mt-[60px] sm:mt-[80px] md:mt-[100px] lg:mt-[120px] xl:mt-[150px]">
-          <Reveal>
-            <FaqAccordion />
-          </Reveal>
-        </div>
-      </LazySection>
-
       {/* 14. About Us + Contact Form + Footer */}
       <LazySection height="750px">
         <section
           id="about-section"
           className="mt-[60px] sm:mt-[80px] md:mt-[100px] lg:mt-[120px] xl:mt-[150px] border-t border-line bg-bg/40 py-16 sm:py-24 px-4 sm:px-6 relative z-10"
         >
-          <div id="contact-us" className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          <div id="contact-us" className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start lg:gap-12">
 
             {/* Left side details */}
             <Reveal direction="left">
@@ -499,8 +502,9 @@ export function HomePage({ onNavigate, onSelectCategory }: Props) {
                   </div>
                 </div>
 
+
                 {/* Social Media Link Icons */}
-                <div className="flex gap-4 mt-8 items-center">
+                <div className="flex gap-4 mt-6 items-center">
                   <span className="text-xs uppercase tracking-widest font-mono text-stone/60">Follow Us:</span>
                   <a
                     href="https://instagram.com/officialcapturecrewstudios"
@@ -546,6 +550,60 @@ export function HomePage({ onNavigate, onSelectCategory }: Props) {
             </Reveal>
 
           </div>
+
+          {/* Full-width map below contact grid */}
+          <div className="max-w-7xl mx-auto mt-14 px-0">
+            <div className="relative rounded-2xl overflow-hidden border border-line" style={{ height: '420px' }}>
+              <iframe
+                title="Capture Crew Studio Location"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3429.7!2d76.6599892!3d30.7313509!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390fefc5f4bf1755%3A0xbbcbd918e39ba84b!2sCaptureCrew%20Studio!5e0!3m2!1sen!2sin!4v1"
+                width="100%"
+                height="100%"
+                style={{
+                  border: 0,
+                  filter: 'invert(90%) hue-rotate(180deg) saturate(0.55) brightness(0.82) contrast(1.1)',
+                }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+
+              {/* Branded pin overlay */}
+              <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-center">
+                <div className="relative flex items-center justify-center">
+                  <span className="absolute w-16 h-16 rounded-full opacity-20 animate-ping" style={{ background: 'var(--accent)' }} />
+                  <span className="absolute w-10 h-10 rounded-full opacity-15" style={{ background: 'var(--accent)' }} />
+                  <span className="relative z-10 w-6 h-6 rounded-full border-2 border-white shadow-2xl flex items-center justify-center" style={{ background: 'var(--accent)' }}>
+                    <span className="w-2 h-2 rounded-full bg-white" />
+                  </span>
+                </div>
+                <div
+                  className="mt-3 px-4 py-2 rounded-xl text-[0.65rem] font-mono uppercase tracking-[0.18em] text-ivory shadow-2xl whitespace-nowrap"
+                  style={{ background: 'rgba(8,8,8,0.88)', border: '1px solid color-mix(in srgb, var(--accent) 45%, transparent)', backdropFilter: 'blur(10px)' }}
+                >
+                  CaptureCrew Studio · Chandigarh
+                </div>
+              </div>
+
+              {/* Corner brackets */}
+              <div className="absolute top-4 left-4 w-7 h-7 border-t-2 border-l-2 rounded-tl-lg pointer-events-none" style={{ borderColor: 'var(--accent)' }} />
+              <div className="absolute top-4 right-4 w-7 h-7 border-t-2 border-r-2 rounded-tr-lg pointer-events-none" style={{ borderColor: 'var(--accent)' }} />
+              <div className="absolute bottom-4 left-4 w-7 h-7 border-b-2 border-l-2 rounded-bl-lg pointer-events-none" style={{ borderColor: 'var(--accent)' }} />
+              <div className="absolute bottom-4 right-4 w-7 h-7 border-b-2 border-r-2 rounded-br-lg pointer-events-none" style={{ borderColor: 'var(--accent)' }} />
+
+              {/* Open in maps */}
+              <a
+                href="https://www.google.co.in/maps/place/CaptureCrew+Studio/@30.7313463,76.6625641,17z"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute bottom-5 right-5 pointer-events-auto flex items-center gap-1.5 text-[0.6rem] uppercase tracking-widest font-mono px-3 py-2 rounded-lg transition-all duration-300 hover:opacity-100 opacity-75"
+                style={{ background: 'rgba(8,8,8,0.85)', border: '1px solid color-mix(in srgb, var(--accent) 35%, transparent)', color: 'var(--accent)', backdropFilter: 'blur(10px)' }}
+              >
+                Open in Maps ↗
+              </a>
+            </div>
+          </div>
+
         </section>
       </LazySection>
     </main>

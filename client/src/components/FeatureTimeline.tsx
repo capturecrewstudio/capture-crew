@@ -3,45 +3,39 @@ import { useEffect, useRef, useState, useMemo } from 'react';
 const timelineItems = [
   {
     title: 'Architecture',
-    description: 'Built environments framed through proportion, light, material honesty, and structural lines.',
-    image: '/assets/media/architecture-hero.jpeg',
-    location: 'Surat | Bengaluru | Ludhiana'
+    description: 'Elevation, light, and leading lines — we capture the vision behind every structure with minimal composition and cinematic precision.',
+    image: '/assets/media/architecture-night.png',
+    location: 'Façade · Elevation · Structural · Aerial · Walkthrough'
   },
   {
     title: 'Luxury Interiors',
     description: 'Editorial interior stories for high-end residences, hotels, private galleries, and hospitality brands.',
-    image: '/assets/media/interiors-hero.jpeg',
-    location: 'Mumbai | London | Pune'
+    image: '/assets/media/interiors-panel.jpeg',
+    location: 'Interior Design · Décor · Ambience · Lifestyle · Detailing'
   },
   {
     title: 'Fashion Editorials',
     description: 'Campaign imagery, lookbooks, motion portraits, and studio portfolios with international polish.',
-    image: '/assets/media/fashion-hero.jpeg',
-    location: 'Chandigarh | Ludhiana | Mumbai'
+    image: '/assets/media/fashion-editorials-hero.jpeg',
+    location: 'Lookbook · Campaign · Portrait · Studio · Reels'
   },
   {
-    title: 'Commercial & Brand Films',
-    description: 'Cinematic corporate launch films, product teasers, explainer videos, and brand storytelling.',
-    image: '/assets/media/commercial-hero.jpeg',
-    location: 'Gurgaon | Surat | London'
+    title: 'Luxury Brand Films & Event Shoots',
+    description: 'Showroom walkthroughs, mockup brand shoots, commercial event coverage — cinematic content that positions your brand at the top.',
+    image: '/assets/media/luxury-brands-hero.jpeg',
+    location: 'Showroom · Brand Shoot · Event · Walkthrough · Commercial'
   },
   {
     title: 'Product Shoots',
     description: 'Still-life systems for design objects, cosmetics, luxury accessories, packaging, and e-commerce.',
-    image: '/assets/media/product-hero.jpeg',
-    location: 'Delhi | Bengaluru | Chandigarh'
+    image: '/assets/media/product-shoots-hero.jpeg',
+    location: 'Still Life · Packaging · E-commerce · Cosmetics · Lifestyle'
   },
   {
-    title: 'Food & Beverage',
-    description: 'Intimate food, beverage, menu designs, and luxury restaurant stories that feel sensory and raw.',
-    image: '/assets/media/food-hero.jpeg',
-    location: 'Goa | Pune | Bengaluru'
-  },
-  {
-    title: 'Weddings',
-    description: 'Editorial wedding archives capturing quiet luxury, raw emotions, intimacy, and cinematic depth.',
-    image: '/assets/media/wedding-hero.jpeg',
-    location: 'Udaipur | Chandigarh | Global'
+    title: 'Real Estate',
+    description: 'Drone aerials, luxury site films, and property walkthroughs that make buyers feel the space before they step inside.',
+    image: '/assets/media/real-estate-panel.jpeg',
+    location: 'Drone · Site Film · Walkthrough · Progress · Launch'
   }
 ];
 

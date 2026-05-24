@@ -6,10 +6,10 @@ import { ThemeToggle } from './ThemeToggle';
 
 const navItems: Array<{ label: string; route: RouteName }> = [
   { label: 'Portfolio', route: 'portfolio' },
-  { label: 'About', route: 'about' },
   { label: 'Services', route: 'services' },
+  { label: 'About', route: 'about' },
   // { label: 'Testimonials', route: 'testimonials' },
-  { label: 'Blog', route: 'blog' },
+  // { label: 'Blog', route: 'blog' },
   { label: 'Contact', route: 'contact' }
 ];
 
@@ -72,7 +72,7 @@ export function SiteHeader({ activeRoute, onNavigate, isDark, onToggleTheme }: P
     // After web fonts swap, glyph widths change — re-measure
     const fonts = (document as Document & { fonts?: { ready: Promise<unknown> } }).fonts;
     if (fonts?.ready) {
-      fonts.ready.then(measure).catch(() => {});
+      fonts.ready.then(measure).catch(() => { });
     }
 
     window.addEventListener('resize', measure);
@@ -159,12 +159,13 @@ export function SiteHeader({ activeRoute, onNavigate, isDark, onToggleTheme }: P
       >
         {navItems.map((item) => (
           <button
-            className="text-xs uppercase tracking-widest font-light transition-colors duration-300 whitespace-nowrap"
+            className="text-xs uppercase tracking-widest font-medium transition-colors duration-300 whitespace-nowrap"
             style={{
-              color: activeRoute === item.route ? 'var(--accent)' : 'var(--stone)',
+              color: 'var(--accent)',
+              opacity: activeRoute === item.route ? 1 : 0.6,
             }}
-            onMouseEnter={e => { if (activeRoute !== item.route) (e.currentTarget as HTMLElement).style.color = 'var(--ivory)'; }}
-            onMouseLeave={e => { if (activeRoute !== item.route) (e.currentTarget as HTMLElement).style.color = 'var(--stone)'; }}
+            onMouseEnter={e => { if (activeRoute !== item.route) (e.currentTarget as HTMLElement).style.opacity = '1'; }}
+            onMouseLeave={e => { if (activeRoute !== item.route) (e.currentTarget as HTMLElement).style.opacity = '0.6'; }}
             key={item.route}
             onClick={() => navigate(item.route)}
             type="button"

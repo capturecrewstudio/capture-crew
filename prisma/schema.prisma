@@ -133,14 +133,14 @@ model SeoSetting {
 
 model SiteContent {
   id                  String   @id @default(uuid())
-  heroHeadline        String   @default("Where Craft\nMeets Legacy.")
+  heroHeadline        String   @default("Where Craft\nMeets Legacy")
   heroSubheadline     String   @default("Architecture. Luxury. Visual Storytelling.")
   heroCta1            String   @default("View Portfolio")
   heroCta2            String   @default("Book a Shoot")
   stats               Json     @default("{}")
   partners            Json     @default("[]")
-  socialProofEyebrow  String   @default("Trusted worldwide")
-  socialProofHeadline String   @default("Receipts, not promises.")
+  socialProofEyebrow  String   @default("Our Clients")
+  socialProofHeadline String   @default("Brands That Trust Our Lens")
   faq                 Json     @default("[]")
   packages            Json     @default("[]")
   footerTagline       String   @default("")

@@ -1,30 +1,30 @@
 import { useEffect, useRef, useState } from 'react';
-import { Camera, Clapperboard, TrendingUp } from 'lucide-react';
+import { Building2, Home, Gem } from 'lucide-react';
 
 const panels = [
   {
-    title: 'Photography',
-    icon: Camera,
-    subtitle: 'High-end brand assets',
-    description: 'We shoot scroll-stopping stills that speak your brand language: Architectural projects, luxury residential interiors, fashion campaigns, premium products, and culinary menu stories.',
-    image: '/assets/media/architecture-hero.jpeg',
-    tags: ['Architecture', 'Fashion', 'E-commerce', 'Food']
+    title: 'Architecture',
+    icon: Building2,
+    subtitle: 'Your work is extraordinary. Show it that way.',
+    description: 'Great spaces go unnoticed when the content doesn\'t match the craft. We document your projects with the precision they deserve — cinematic walkthroughs, editorial stills, and reels that stop the scroll. You design. We make the world see it.',
+    image: '/assets/media/architecture-panel.jpeg',
+    tags: ['Site Shoots', 'Cinematic Reels', 'Walkthroughs', 'Social Content']
   },
   {
-    title: 'Videography',
-    icon: Clapperboard,
-    subtitle: 'Cinematic brand films',
-    description: 'Motion that excites, engages, and converts. From multi-million dollar real estate launch films to high-conversion Reels/Shorts, brand commercials, and drone capture.',
+    title: 'Real Estate',
+    icon: Home,
+    subtitle: 'Buyers decide online. Make it count.',
+    description: 'Premium properties deserve visuals that sell before a single site visit. Drone aerials, luxury walkthroughs, construction stories, and launch films — we craft content that makes buyers feel the space before they step inside. Presentation sells faster than price.',
+    image: '/assets/media/real-estate-hero.jpeg',
+    tags: ['Drone Shoots', 'Luxury Films', 'Progress Videos', 'Photography']
+  },
+  {
+    title: 'Luxury Brands',
+    icon: Gem,
+    subtitle: 'World-class brands deserve world-class visuals.',
+    description: 'Behind every frame is a full team obsessed with making your brand impossible to ignore. Directing, color grading, storytelling — all engineered to position you at the top. Trusted by 160+ architects and 65+ premium brands across India.',
     image: '/assets/media/commercial-hero.jpeg',
-    tags: ['Brand Films', 'Social Reels', 'Demos', 'Aerials']
-  },
-  {
-    title: 'Digital Marketing',
-    icon: TrendingUp,
-    subtitle: 'Strategic brand amplification',
-    description: "We don't just capture visuals — we make sure they perform. End-to-end Social Media Management (SMM), hyper-targeted Google/Meta Ads campaigns, SEO, and monthly ROI reports.",
-    image: '/assets/media/interiors-hero.jpeg',
-    tags: ['SMM Strategy', 'Ad Campaigns', 'SEO', 'Influencers']
+    tags: ['Brand Visuals', 'Color Grading', 'Storytelling', 'Directing']
   }
 ];
 
@@ -40,7 +40,7 @@ export function AutoScanPanels() {
       if (!pausedRef.current) {
         setIndex((prev) => (prev + 1) % panels.length);
       }
-    }, 3500);
+    }, 4500);
 
     return () => clearInterval(interval);
   }, []);
@@ -74,7 +74,7 @@ export function AutoScanPanels() {
         </span>
 
         {/* Stacked cards with fade effect */}
-        <div className="relative h-[300px] sm:h-[260px] w-full">
+        <div className="relative h-[300px] sm:h-[280px] w-full">
           {panels.map((panel, idx) => {
             const Icon = panel.icon;
             const active = index === idx;

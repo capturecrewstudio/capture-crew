@@ -9,11 +9,8 @@ const SERVICES = [
   'Fashion',
   'Commercial',
   'Product',
-  'Food',
-  'Weddings',
   'Social Media Management',
   'Brand Film',
-  'Custom Retainer',
 ];
 
 type Props = {

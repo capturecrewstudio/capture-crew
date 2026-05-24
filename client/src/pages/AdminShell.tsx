@@ -1063,7 +1063,7 @@ function ContentPanel() {
                 <Textarea value={content.footerTagline} onChange={v => update({ footerTagline: v })} rows={2} />
               </Field>
               <Field label="Phone Number">
-                <Input value={content.footerPhone} onChange={v => update({ footerPhone: v })} placeholder="+91 98765 43210" />
+                <Input value={content.footerPhone} onChange={v => update({ footerPhone: v })} placeholder="+91 8898400022" />
               </Field>
               <Field label="Email Address">
                 <Input value={content.footerEmail} onChange={v => update({ footerEmail: v })} placeholder="hello@capturecrew.in" />

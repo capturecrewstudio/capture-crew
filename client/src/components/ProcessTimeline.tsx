@@ -4,29 +4,29 @@ const steps = [
   {
     icon: ClipboardList,
     label: 'Brief',
-    title: 'Discovery call',
-    desc: 'We dive into your brand goals, audience, references, and KPIs. You leave with a clear shot list and mood direction.',
+    title: 'Discovery Call',
+    desc: 'We understand your actual requirements — project type, goals, and vision. A customised package is decided, reference videos are collected, and we lock the creative direction before anything moves forward.',
     accent: 'var(--accent)'
   },
   {
     icon: Lightbulb,
     label: 'Pre-Prod',
-    title: 'Storyboard & lock',
-    desc: 'Locations scouted, talent locked, lighting boards finalised. Every frame planned before the camera rolls.',
+    title: 'Storyboard & Script',
+    desc: 'We write the script and build the storyboard together. The actual theme, narrative, and shot flow are discussed and approved by you before a single camera is set up.',
     accent: 'var(--accent)'
   },
   {
     icon: Clapperboard,
     label: 'Shoot',
-    title: 'Set day',
-    desc: 'On-set crew, gimbals, drones, and live preview. Tightly directed so we capture stills + motion in one go.',
+    title: 'Set Day',
+    desc: 'Full crew on location — gimbals, drones, and live preview. For architecture shoots, we require the architect\'s presence to ensure every design intent is captured with precision.',
     accent: 'var(--accent)'
   },
   {
     icon: Sparkles,
     label: 'Delivery',
-    title: 'Retouch & ship',
-    desc: 'Color graded, retouched, AVIF/WebP optimized. Delivered in 7–14 days with rollout-ready assets.',
+    title: 'Retouch & Deliver',
+    desc: 'Color graded, retouched, and delivery-ready. Everything is shared within 10 working days. You get 15 days to request any revisions — nothing ships until you\'re satisfied.',
     accent: 'var(--accent)'
   }
 ];
@@ -40,9 +40,9 @@ export function ProcessTimeline() {
         </span>
         <h2
           className="text-ivory mt-3"
-          style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300, fontSize: 'clamp(2.4rem, 5vw, 5rem)', lineHeight: 1.05 }}
+          style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300, fontSize: 'clamp(2rem, 4vw, 4.5rem)', lineHeight: 1.05, whiteSpace: 'nowrap' }}
         >
-          From brief to bangers.
+          From Brief to Bangers
         </h2>
         <p className="text-stone mt-4 leading-relaxed text-sm">
           Four steps. Tightly produced. Zero ambiguity.

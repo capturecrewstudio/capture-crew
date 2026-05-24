@@ -2,6 +2,13 @@ import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { Camera, Building2, Award, Users } from 'lucide-react';
 import { getSiteContent, subscribeAdminStore } from '../lib/adminStore';
 
+const architectureStudiosBase = [
+  'Green Lotus', 'Genesis Heights', 'STJ Groups', 'Atulyam The Bliss',
+  'AR. Rahul Bamba', 'Co.lab Designs Studio', 'Studio 261',
+  'AR Amit Khanna', 'Inner Value Architects', 'Nomatic Luxe'
+];
+const architectureStudios = [...architectureStudiosBase, ...architectureStudiosBase];
+
 const ICONS = [Camera, Building2, Award, Users];
 
 function useCountUp(target: number, start: boolean, durationMs = 1400) {
@@ -115,32 +122,59 @@ export function SocialProof() {
         </h2>
       </div>
 
-      {/* Marquee strip — no container border, just the tape */}
-      <div className="relative border-y border-line py-5 sm:py-6 overflow-hidden mb-8">
-        {/* Fade edges */}
-        <div className="absolute inset-y-0 left-0 w-20 sm:w-32 z-10 pointer-events-none"
-          style={{ background: 'linear-gradient(to right, var(--bg), transparent)' }} />
-        <div className="absolute inset-y-0 right-0 w-20 sm:w-32 z-10 pointer-events-none"
-          style={{ background: 'linear-gradient(to left, var(--bg), transparent)' }} />
-
-        {/*
-          Two identical tracks side-by-side.
-          --marquee-offset defaults to -50% which is exactly one track width.
-          No JS measurement needed.
-        */}
-        <div className="marquee-track">
-          {/* Track A */}
-          <div className="flex shrink-0">{track}</div>
-          {/* Track B — identical clone for seamless loop */}
-          <div className="flex shrink-0" aria-hidden>{track}</div>
+      {/* Architecture Studios */}
+      <div className="mb-8">
+        <div className="flex items-center gap-4 mb-4 px-1">
+          <span className="h-px flex-1" style={{ background: 'var(--line)' }} />
+          <span className="text-[0.6rem] uppercase tracking-[0.25em] text-stone/40 font-mono shrink-0" style={{ fontFamily: "'DM Mono', monospace" }}>Architecture Studios</span>
+          <span className="h-px flex-1" style={{ background: 'var(--line)' }} />
+        </div>
+        <div className="relative border-y border-line py-5 overflow-hidden">
+          <div className="absolute inset-y-0 left-0 w-20 z-10 pointer-events-none" style={{ background: 'linear-gradient(to right, var(--bg), transparent)' }} />
+          <div className="absolute inset-y-0 right-0 w-20 z-10 pointer-events-none" style={{ background: 'linear-gradient(to left, var(--bg), transparent)' }} />
+          <div className="marquee-track" style={{ animationDirection: 'reverse', animationDuration: '80s' }}>
+            <div className="flex shrink-0">
+              {architectureStudios.map((name, i) => (
+                <span key={i} className="flex items-center shrink-0">
+                  <span className="inline-block w-1 h-1 rounded-full mx-8 sm:mx-12 md:mx-16 opacity-35 shrink-0" style={{ background: 'var(--accent)' }} />
+                  <span className="text-sm sm:text-lg md:text-xl uppercase tracking-[0.3em] text-stone/40 hover:text-ivory transition-colors duration-500 cursor-default select-none" style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }}>{name}</span>
+                </span>
+              ))}
+            </div>
+            <div className="flex shrink-0" aria-hidden>
+              {architectureStudios.map((name, i) => (
+                <span key={i} className="flex items-center shrink-0">
+                  <span className="inline-block w-1 h-1 rounded-full mx-8 sm:mx-12 md:mx-16 opacity-35 shrink-0" style={{ background: 'var(--accent)' }} />
+                  <span className="text-sm sm:text-lg md:text-xl uppercase tracking-[0.3em] text-stone/40 hover:text-ivory transition-colors duration-500 cursor-default select-none" style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }}>{name}</span>
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Stat cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-10">
         {stats.map((stat, idx) => (
           <StatTile key={stat.label} stat={stat} start={inView} index={idx} />
         ))}
+      </div>
+
+      {/* Luxury Brands */}
+      <div>
+        <div className="flex items-center gap-4 mb-4 px-1">
+          <span className="h-px flex-1" style={{ background: 'var(--line)' }} />
+          <span className="text-[0.6rem] uppercase tracking-[0.25em] text-stone/40 font-mono shrink-0" style={{ fontFamily: "'DM Mono', monospace" }}>Luxury Brands</span>
+          <span className="h-px flex-1" style={{ background: 'var(--line)' }} />
+        </div>
+        <div className="relative border-y border-line py-5 overflow-hidden">
+          <div className="absolute inset-y-0 left-0 w-20 z-10 pointer-events-none" style={{ background: 'linear-gradient(to right, var(--bg), transparent)' }} />
+          <div className="absolute inset-y-0 right-0 w-20 z-10 pointer-events-none" style={{ background: 'linear-gradient(to left, var(--bg), transparent)' }} />
+          <div className="marquee-track" style={{ animationDuration: '80s' }}>
+            <div className="flex shrink-0">{track}</div>
+            <div className="flex shrink-0" aria-hidden>{track}</div>
+          </div>
+        </div>
       </div>
 
     </section>
