@@ -64,6 +64,15 @@ model ProjectImage {
   createdAt   DateTime @default(now())
 }
 
+model Media {
+  id           String   @id @default(uuid())
+  originalName String
+  folder       String   @default("portfolio")
+  variants     Json
+  blurDataUrl  String
+  createdAt    DateTime @default(now())
+}
+
 model Testimonial {
   id          String   @id @default(uuid())
   name        String
