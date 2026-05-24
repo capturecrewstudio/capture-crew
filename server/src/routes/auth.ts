@@ -3,6 +3,7 @@ import { Router } from 'express';
 import jwt from 'jsonwebtoken';
 import { z } from 'zod';
 import { env } from '../config/env.js';
+import { authLimiter } from '../middleware/rateLimit.js';
 import { prisma } from '../config/prisma.js';
 
 const router = Router();
@@ -12,7 +13,7 @@ const loginSchema = z.object({
   password: z.string().min(8)
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', authLimiter, async (req, res) => {
   const body = loginSchema.parse(req.body);
   const user = await prisma.user.findUnique({ where: { email: body.email } });
 
@@ -20,9 +21,11 @@ router.post('/login', async (req, res) => {
     return res.status(401).json({ message: 'Invalid email or password' });
   }
 
-  const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, env.JWT_SECRET, {
-    expiresIn: '7d'
-  });
+  const token = jwt.sign(
+    { id: user.id, email: user.email, role: user.role },
+    env.JWT_SECRET,
+    { expiresIn: '7d' }
+  );
 
   res.json({ token, user: { id: user.id, email: user.email, role: user.role } });
 });
