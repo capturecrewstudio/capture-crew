@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import { ZodError } from 'zod';
 import { env } from './config/env.js';
 import { prisma } from './config/prisma.js';
+import { hash } from 'bcryptjs';
 import { globalLimiter } from './middleware/rateLimit.js';
 import { authRouter } from './routes/auth.js';
 import { blogRouter } from './routes/blog.js';
@@ -52,8 +53,18 @@ app.use((error: unknown, _req: express.Request, res: express.Response, _next: ex
   res.status(500).json({ message: 'Unexpected server error' });
 });
 
+async function seedAdmin() {
+  if (!env.ADMIN_EMAIL || !env.ADMIN_PASSWORD) return;
+  const existing = await prisma.user.findUnique({ where: { email: env.ADMIN_EMAIL } });
+  if (existing) return;
+  const passwordHash = await hash(env.ADMIN_PASSWORD, 12);
+  await prisma.user.create({ data: { email: env.ADMIN_EMAIL, passwordHash, role: 'ADMIN' } });
+  console.log('[seed] Admin user created');
+}
+
 const server = app.listen(env.PORT, () => {
   console.log(`Capture Crew API listening on http://localhost:${env.PORT}`);
+  seedAdmin().catch(console.error);
 });
 
 // Graceful shutdown — close DB connections before process exits
