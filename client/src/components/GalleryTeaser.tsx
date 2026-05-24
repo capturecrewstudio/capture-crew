@@ -67,7 +67,7 @@ function GalleryTile({
 }) {
   const [activeIdx, setActiveIdx] = useState(0);
   const [fadingIdx, setFadingIdx] = useState<number | null>(null);
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   useEffect(() => {
     if (tile.images.length < 2) return;
