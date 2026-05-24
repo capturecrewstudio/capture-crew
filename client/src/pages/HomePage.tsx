@@ -16,7 +16,6 @@ import { Reveal } from '../components/Reveal';
 import { ProcessTimeline } from '../components/ProcessTimeline';
 import { GalleryTeaser } from '../components/GalleryTeaser';
 import { scrollToSection } from '../App';
-import { BlurImage } from '../components/BlurImage';
 
 const REEL_SLIDES = [
   '/assets/media/commercial-hero.jpeg',
@@ -136,16 +135,18 @@ export function HomePage({ onNavigate, onSelectCategory }: Props) {
         id="hero-section"
         className="relative min-h-[90vh] sm:min-h-screen flex flex-col justify-center items-center text-center px-4 sm:px-6 overflow-hidden"
       >
-        {/* Background Image with blur-up */}
+        {/* Background Image — plain img for hero, no lazy load, no opacity delay */}
         <div className="absolute inset-0 z-0">
-          <BlurImage
+          <img
             src="/assets/media/hero-bg-2.jpeg"
             alt="Capture Crew luxury architecture shoot"
             fetchPriority="high"
-            wrapperClassName="absolute inset-0"
-            className="opacity-35 scale-105"
+            loading="eager"
+            decoding="sync"
+            className="absolute inset-0 w-full h-full object-cover scale-105"
+            style={{ opacity: 0.45 }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-bg/80 to-bg" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-bg" />
         </div>
 
         {/* Blue Radial Glow behind heading (floats) */}
@@ -544,7 +545,7 @@ export function HomePage({ onNavigate, onSelectCategory }: Props) {
                   className="absolute -inset-px rounded-3xl pointer-events-none opacity-20 -z-10"
                   style={{ background: 'var(--accent-glow)' }}
                 />
-                <h3 className="text-ivory mb-6" style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300, fontSize: 'clamp(1.4rem, 3vw, 2rem)' }}>Commission a Visual Campaign</h3>
+                <h3 className="text-ivory mb-6" style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300, fontSize: 'clamp(1.4rem, 3vw, 2rem)' }}>Let's Create Together</h3>
                 <LeadForm selectedPackage={selectedPackage} />
               </div>
             </Reveal>
