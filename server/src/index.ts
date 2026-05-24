@@ -2,7 +2,9 @@ import 'express-async-errors';
 import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
+import { ZodError } from 'zod';
 import { env } from './config/env.js';
+import { prisma } from './config/prisma.js';
 import { globalLimiter } from './middleware/rateLimit.js';
 import { authRouter } from './routes/auth.js';
 import { blogRouter } from './routes/blog.js';
@@ -17,9 +19,9 @@ import { testimonialsRouter } from './routes/testimonials.js';
 const app = express();
 
 app.use(helmet());
-app.use(cors({ origin: env.CLIENT_ORIGIN }));
+app.use(cors({ origin: env.CLIENT_ORIGIN, credentials: true }));
 app.use(globalLimiter);
-app.use(express.json({ limit: '1mb' }));
+app.use(express.json({ limit: '10mb' }));
 
 app.get('/api/health', (_req, res) => {
   res.json({ ok: true, service: 'capture-crew-api' });
@@ -35,11 +37,30 @@ app.use('/api/projects', projectsRouter);
 app.use('/api/seo', seoRouter);
 app.use('/api/testimonials', testimonialsRouter);
 
+// 404 for unmatched API routes
+app.use('/api/*', (_req, res) => {
+  res.status(404).json({ message: 'Not found' });
+});
+
+// Global error handler — ZodError → 400, everything else → 500
 app.use((error: unknown, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
-  console.error(error);
+  if (error instanceof ZodError) {
+    return res.status(400).json({ message: 'Validation error', errors: error.flatten().fieldErrors });
+  }
+  // Log non-validation errors server-side only
+  console.error('[error]', error instanceof Error ? error.message : error);
   res.status(500).json({ message: 'Unexpected server error' });
 });
 
-app.listen(env.PORT, () => {
+const server = app.listen(env.PORT, () => {
   console.log(`Capture Crew API listening on http://localhost:${env.PORT}`);
 });
+
+// Graceful shutdown — close DB connections before process exits
+async function shutdown() {
+  server.close();
+  await prisma.$disconnect();
+  process.exit(0);
+}
+process.on('SIGTERM', shutdown);
+process.on('SIGINT', shutdown);

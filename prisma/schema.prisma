@@ -49,6 +49,9 @@ model Project {
   images      ProjectImage[]
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
+
+  @@index([categoryId])
+  @@index([featured])
 }
 
 model ProjectImage {
@@ -62,6 +65,8 @@ model ProjectImage {
   sortOrder   Int      @default(0)
   altText     String?
   createdAt   DateTime @default(now())
+
+  @@index([projectId])
 }
 
 model Media {
@@ -71,6 +76,9 @@ model Media {
   variants     Json
   blurDataUrl  String
   createdAt    DateTime @default(now())
+
+  @@index([folder])
+  @@index([createdAt(sort: Desc)])
 }
 
 model Testimonial {
@@ -81,6 +89,8 @@ model Testimonial {
   image       String?
   featured    Boolean  @default(false)
   createdAt   DateTime @default(now())
+
+  @@index([featured])
 }
 
 model Lead {
@@ -93,6 +103,9 @@ model Lead {
   status    LeadStatus @default(NEW)
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+
+  @@index([status])
+  @@index([createdAt(sort: Desc)])
 }
 
 model BlogPost {

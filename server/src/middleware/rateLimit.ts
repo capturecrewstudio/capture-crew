@@ -23,3 +23,11 @@ export const leadsLimiter = rateLimit({
   legacyHeaders: false,
   message: { message: 'Too many enquiries submitted. Please wait before trying again.' },
 });
+
+export const uploadLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: 30,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: 'Too many uploads. Please wait before uploading more.' },
+});

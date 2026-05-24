@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import multer from 'multer';
 import { requireAdmin } from '../middleware/auth.js';
+import { uploadLimiter } from '../middleware/rateLimit.js';
 import { uploadOptimizedImage } from '../services/s3.js';
 import { prisma } from '../config/prisma.js';
 
@@ -20,7 +21,7 @@ const upload = multer({
   },
 });
 
-router.post('/upload', requireAdmin, upload.array('images', 12), async (req, res) => {
+router.post('/upload', requireAdmin, uploadLimiter, upload.array('images', 12), async (req, res) => {
   const files = req.files as Express.Multer.File[] | undefined;
 
   if (!files?.length) {
