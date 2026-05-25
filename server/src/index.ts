@@ -19,6 +19,9 @@ import { testimonialsRouter } from './routes/testimonials.js';
 
 const app = express();
 
+// Trust Render/proxy's X-Forwarded-For header for accurate rate limiting
+app.set('trust proxy', 1);
+
 // Build allowed origins list from comma-separated CLIENT_ORIGIN env var
 const allowedOrigins = env.CLIENT_ORIGIN.split(',').map(o => o.trim()).filter(Boolean);
 
