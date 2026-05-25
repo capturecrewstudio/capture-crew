@@ -75,18 +75,6 @@ export const categories: Category[] = [
     description: 'Still-life systems for objects, textures, packaging, campaigns, and ecommerce hero assets.',
     heroImage: media.product
   },
-  {
-    name: 'Food',
-    slug: 'food',
-    description: 'Atmospheric food, beverage, restaurant, and menu stories that feel intimate and premium.',
-    heroImage: media.food
-  },
-  {
-    name: 'Weddings',
-    slug: 'weddings',
-    description: 'Cinematic wedding storytelling with quiet luxury, movement, intimacy, and editorial texture.',
-    heroImage: media.wedding
-  }
 ];
 
 export const projects: Project[] = [
@@ -154,27 +142,6 @@ export const projects: Project[] = [
     featured: true
   },
   {
-    title: 'Atlas Table',
-    slug: 'atlas-table',
-    category: 'Food',
-    categorySlug: 'food',
-    location: 'Goa',
-    year: '2025',
-    client: 'Atlas Table',
-    services: ['Restaurant photography', 'Menu films', 'Founder portraits'],
-    image: media.food,
-    gallery: [
-      media.foodDetail1,
-      media.blogHero,
-      media.productDetail1,
-      media.interiorsDetail2
-    ],
-    summary: 'A coastal dining story built around flame, ceramic texture, produce, and a slower evening rhythm.',
-    narrative:
-      'The project needed to feel sensory without looking crowded. We designed the image set around negative space, tableside gestures, and amber highlights that gave the restaurant a signature mood.',
-    featured: false
-  },
-  {
     title: 'Object 07',
     slug: 'object-07',
     category: 'Product',
@@ -193,27 +160,6 @@ export const projects: Project[] = [
     summary: 'A tactile product system for objects that needed to feel collectible, minimal, and rare.',
     narrative:
       'We created a modular product language that can scale across hero banners, thumbnails, product detail pages, and campaign placements without losing the luxury character.',
-    featured: false
-  },
-  {
-    title: 'Veda Union',
-    slug: 'veda-union',
-    category: 'Weddings',
-    categorySlug: 'weddings',
-    location: 'Udaipur',
-    year: '2025',
-    client: 'Private Client',
-    services: ['Wedding film', 'Editorial photography', 'Family archive'],
-    image: media.wedding,
-    gallery: [
-      media.weddingDetail1,
-      media.weddingDetail2,
-      media.blogHero,
-      media.detail
-    ],
-    summary: 'An intimate destination wedding photographed like a private editorial commission.',
-    narrative:
-      'The coverage balanced family presence with cinematic scale: architecture, rituals, wardrobe, emotion, and the soft transitions between formal moments.',
     featured: false
   }
 ];

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 const luxuryBrands = [
   'Raymond', 'Prada', 'Bluestone', 'ORRA', 'Malabar Gold and Diamonds',
-  'National Geographic', 'Zara', 'Gillette', 'Nike', 'Mini Soo'
+  'National Geographic', 'Zara', 'Gillette', 'Nike', 'Mini So'
 ];
 
 const architectureStudios = [

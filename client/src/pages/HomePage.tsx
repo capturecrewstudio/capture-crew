@@ -138,7 +138,7 @@ export function HomePage({ onNavigate, onSelectCategory }: Props) {
         {/* Background Image — plain img for hero, no lazy load, no opacity delay */}
         <div className="absolute inset-0 z-0">
           <img
-            src="/assets/media/hero-bg-2.jpeg"
+            src="/assets/media/dsc-ccs-1-2.jpeg"
             alt="Capture Crew luxury architecture shoot"
             fetchPriority="high"
             loading="eager"
@@ -223,10 +223,10 @@ export function HomePage({ onNavigate, onSelectCategory }: Props) {
               <GradientButton
                 label={content.heroCta1}
                 size="md"
-                onClick={() => scrollToSection('contact-us')}
+                onClick={() => onNavigate('portfolio')}
               />
               <button
-                onClick={() => onNavigate('portfolio')}
+                onClick={() => scrollToSection('contact-us')}
                 className="h-[40px] md:h-[48px] px-6 border border-linemid bg-transparent text-stone hover:text-ivory hover:border-linemid active:scale-95 transition-all duration-300 flex items-center justify-center gap-3"
                 style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300, fontSize: '0.65rem', letterSpacing: '0.16em', textTransform: 'uppercase', borderRadius: '6px' }}
               >
@@ -288,6 +288,75 @@ export function HomePage({ onNavigate, onSelectCategory }: Props) {
                 </div>
               </Reveal>
             ))}
+          </div>
+        </section>
+      </LazySection>
+
+
+      {/* About Us — Agency Story + Team */}
+      <LazySection height="900px">
+        <section
+          id="about-section"
+          className="mt-[60px] sm:mt-[80px] md:mt-[100px] lg:mt-[120px] xl:mt-[150px] px-4 sm:px-6 relative z-10"
+        >
+          <div className="max-w-7xl mx-auto">
+
+            {/* Agency intro text */}
+            <Reveal>
+              <div className="text-center max-w-2xl mx-auto mb-16 sm:mb-20">
+                <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-accent">
+                  Who We Are
+                </span>
+                <h2
+                  className="text-ivory mt-4 mb-5"
+                  style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300, fontSize: 'clamp(2.2rem, 4.5vw, 4.2rem)', lineHeight: 1.08 }}
+                >
+                  Where Vision Meets&nbsp;Craft
+                </h2>
+                <p className="text-stone/70 text-sm sm:text-base leading-relaxed mb-3">
+                  8 years forged alongside National Geographic in the UK. Since 2018, a presence across India — partnering with top architects, luxury brands, and spaces that demand to be seen.
+                </p>
+                <p className="text-stone/55 text-sm leading-relaxed mb-5">
+                  <span className="text-accent font-semibold" style={{ fontFamily: "'Cormorant Garant', serif", fontSize: '1.05em' }}>160+ architects. 68+ prestigious brands.</span>{' '}Brands like Raymond, Prada, Bluestone &amp; Versace. Studios like Studio 261, Co.Lab Design Studio &amp; STJ Groups. From London to India — bridging global luxury with Indian elegance.
+                </p>
+                <p style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 700, color: 'var(--accent)' }} className="text-lg sm:text-xl italic">
+                  "Every frame is a decision. Every campaign, a conversation."
+                </p>
+              </div>
+            </Reveal>
+
+            {/* Team grid */}
+            <Reveal delay={80}>
+              <div className="mb-10 text-center">
+                <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-accent">
+                  The Crew
+                </span>
+              </div>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
+                {[
+                  { name: 'Kartik Kanda', role: 'Founder · DOP', sub: 'Director of Photography', img: '/assets/team/kartik-kanda.jpeg', pos: '50% 15%', scale: '1.8' },
+                  { name: 'Amrita Sharma', role: 'Art Director', sub: 'Script Writer · Social Media', img: '/assets/team/amrita-sharma.jpeg', pos: '50% top', scale: '1' },
+                  { name: 'Parvin Kumar', role: 'Head Colorist & Editor', sub: 'Sound Designer', img: '/assets/team/parvin-kumar.jpeg', pos: '50% top', scale: '1' },
+                  { name: 'Pukhraj Singh', role: 'Cinematographer', sub: 'Videographer · Cinematographer', img: '/assets/team/pukhraj-singh.jpeg', pos: '50% top', scale: '1' },
+                ].map((member) => (
+                  <div key={member.name} className="group flex flex-col items-center text-center gap-4">
+                    <div
+                      className="relative rounded-full overflow-hidden transition-transform duration-500 group-hover:scale-105"
+                      style={{ width: 'clamp(120px, 18vw, 180px)', height: 'clamp(120px, 18vw, 180px)', border: '2px solid var(--line-mid)', boxShadow: '0 0 0 4px var(--bg), 0 0 0 5px var(--line-mid)', flexShrink: 0 }}
+                    >
+                      <img src={member.img} alt={member.name} className="w-full h-full object-cover" style={{ objectPosition: member.pos, transform: `scale(${member.scale})`, transformOrigin: 'center 20%' }} />
+                      <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-30 transition-opacity duration-500" style={{ background: 'var(--accent-glow)' }} />
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <span className="text-ivory" style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 500, fontSize: 'clamp(1rem, 2vw, 1.15rem)' }}>{member.name}</span>
+                      <span className="text-accent text-[0.6rem] uppercase tracking-widest font-mono">{member.role}</span>
+                      {member.sub && <span className="text-stone/45 text-[0.55rem] uppercase tracking-wider font-mono leading-snug">{member.sub}</span>}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+
           </div>
         </section>
       </LazySection>
@@ -445,10 +514,9 @@ export function HomePage({ onNavigate, onSelectCategory }: Props) {
         </div>
       </LazySection>
 
-      {/* 14. About Us + Contact Form + Footer */}
+      {/* Contact Form + Footer */}
       <LazySection height="750px">
         <section
-          id="about-section"
           className="mt-[60px] sm:mt-[80px] md:mt-[100px] lg:mt-[120px] xl:mt-[150px] border-t border-line bg-bg/40 py-16 sm:py-24 px-4 sm:px-6 relative z-10"
         >
           <div id="contact-us" className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start lg:gap-12">

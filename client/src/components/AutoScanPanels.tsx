@@ -7,7 +7,7 @@ const panels = [
     icon: Building2,
     subtitle: 'Your work is extraordinary. Show it that way.',
     description: 'Great spaces go unnoticed when the content doesn\'t match the craft. We document your projects with the precision they deserve — cinematic walkthroughs, editorial stills, and reels that stop the scroll. You design. We make the world see it.',
-    image: '/assets/media/architecture-panel.jpeg',
+    image: '/assets/media/dsc-ccs-7.jpeg',
     tags: ['Site Shoots', 'Cinematic Reels', 'Walkthroughs', 'Social Content']
   },
   {

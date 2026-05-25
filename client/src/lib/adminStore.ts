@@ -129,7 +129,7 @@ const DEFAULT_CONTENT: SiteContent = {
   statYears: 8,
   statYears_suffix: '+ yrs',
   statYears_label: 'Studio Heritage',
-  partners: ['Raymond', 'Mini Soo', 'Prada', 'Bluestone', 'ORRA', 'Malabar Gold and Diamonds', 'National Geographic', 'Zara', 'Gillette', 'Nike'],
+  partners: ['Raymond', 'Mini So', 'Prada', 'Bluestone', 'ORRA', 'Malabar Gold and Diamonds', 'National Geographic', 'Zara', 'Gillette', 'Nike'],
   socialProofEyebrow: 'Our Clients',
   socialProofHeadline: 'Brands That Trust Our Lens',
   faq: [

@@ -16,7 +16,7 @@ const timelineItems = [
   {
     title: 'Fashion Editorials',
     description: 'Campaign imagery, lookbooks, motion portraits, and studio portfolios with international polish.',
-    image: '/assets/media/fashion-editorials-hero.jpeg',
+    image: '/assets/media/cc-studio4.jpeg',
     location: 'Lookbook · Campaign · Portrait · Studio · Reels'
   },
   {
