@@ -19,8 +19,20 @@ import { testimonialsRouter } from './routes/testimonials.js';
 
 const app = express();
 
+// Build allowed origins list from comma-separated CLIENT_ORIGIN env var
+const allowedOrigins = env.CLIENT_ORIGIN.split(',').map(o => o.trim()).filter(Boolean);
+
 app.use(helmet());
-app.use(cors({ origin: env.CLIENT_ORIGIN, credentials: true }));
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    callback(null, false);
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 app.use(globalLimiter);
 app.use(express.json({ limit: '10mb' }));
 
