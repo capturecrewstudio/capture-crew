@@ -1,5 +1,6 @@
 import { Zap, Flame, Sparkles } from 'lucide-react';
 import { GradientButton } from './GradientButton';
+import { scrollToSection } from '../App';
 
 const packages = [
   {
@@ -164,8 +165,7 @@ export function FeatureGrid({ onSelectPackage }: Props) {
                   className="w-full"
                   onClick={() => {
                     onSelectPackage?.(pkg.title);
-                    const el = document.getElementById('contact-us');
-                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    scrollToSection('contact-us');
                   }}
                 />
               </div>
