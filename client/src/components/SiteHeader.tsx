@@ -36,10 +36,10 @@ export function SiteHeader({ activeRoute, onNavigate, isDark, onToggleTheme }: P
   // Smoky/translucent when scrolled AND not hovered
   const isCompact = useGlass && !isHovered;
 
-  // Track viewport-derived full width — cap at 960px so pill isn't edge-to-edge
+  // Track viewport-derived full width — cap at 960px, leave 32px each side on mobile
   useEffect(() => {
     const update = () => {
-      setFullWidth(Math.min(window.innerWidth - 64, 960));
+      setFullWidth(Math.min(window.innerWidth - 32, 960));
     };
     update();
     window.addEventListener('resize', update);
@@ -248,13 +248,12 @@ export function SiteHeader({ activeRoute, onNavigate, isDark, onToggleTheme }: P
   return (
     <>
       <header
-        className="fixed left-1/2 -translate-x-1/2 top-3 sm:top-5 z-40 pointer-events-none"
-        style={{ width: 'calc(100vw - 32px)', maxWidth: '960px' }}
+        className="fixed left-0 right-0 top-3 sm:top-5 z-40 pointer-events-none flex justify-center px-4"
       >
         <div
           ref={pillRef}
-          className="pointer-events-auto transition-[width] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] w-full"
-          style={{ width: `${fullWidth}px`, maxWidth: '100%', willChange: 'width' }}
+          className="pointer-events-auto transition-[width] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+          style={{ width: `${Math.min(fullWidth, window.innerWidth - 32)}px`, maxWidth: 'calc(100vw - 32px)', willChange: 'width' }}
           onMouseEnter={() => {
             hoveredRef.current = true;
             setIsHovered(true);
