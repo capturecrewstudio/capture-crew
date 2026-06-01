@@ -1,7 +1,7 @@
 import { Check, Minus } from 'lucide-react';
 
 const features = [
-  { name: 'Price',                        meta: '₹30,000 / shoot',   premium: '₹45,000 / shoot',  smm: '₹30,000 / month'   },
+  { name: 'Price',                        meta: '₹35,000 / shoot',   premium: '₹50,000 / shoot',  smm: '₹30,000 / month'   },
   { name: 'High-Res Edited Images',       meta: '20 × 4K Images',    premium: '35 × 4K Images',   smm: 'Graphics & Creatives' },
   { name: 'Instagram Reels',              meta: '4 Reels',            premium: '3 Reels',          smm: '2 Reels / month'    },
   { name: 'YouTube / Long-Form Video',    meta: null,                 premium: '1 Film (up to 5 mins)', smm: null             },
@@ -16,7 +16,7 @@ const features = [
 ];
 
 function Cell({ value }: { value: string | boolean | null }) {
-  if (value === null) return <div className="flex justify-center"><Minus size={14} className="text-stone/30" /></div>;
+  if (value === null) return <div className="flex justify-center"><Minus size={14} className="text-stone/50" /></div>;
   if (value === true) return <div className="flex justify-center"><Check size={16} className="text-accent" /></div>;
   return <span>{value}</span>;
 }
@@ -43,17 +43,17 @@ export function ComparisonTable() {
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="border-b border-line bg-bg/60">
-              <th className="p-4 sm:p-5 text-[0.65rem] uppercase tracking-[0.2em] font-mono text-stone/50 w-[34%]">What You Get</th>
+              <th className="p-4 sm:p-5 text-[0.65rem] uppercase tracking-[0.16em] font-mono text-stone font-semibold w-[34%]">What You Get</th>
               <th className="p-4 sm:p-5 text-center">
-                <div className="text-[0.6rem] uppercase tracking-[0.2em] font-mono text-stone/50 mb-1">Starter</div>
+                <div className="text-[0.65rem] uppercase tracking-[0.16em] font-mono text-stone font-semibold mb-1">Starter</div>
                 <div className="text-sm font-bold text-ivory" style={{ fontFamily: "'Cormorant Garant', serif" }}>Meta Package</div>
               </th>
               <th className="p-4 sm:p-5 text-center" style={{ background: 'color-mix(in srgb, var(--accent) 6%, transparent)' }}>
-                <div className="text-[0.6rem] uppercase tracking-[0.2em] font-mono text-accent/70 mb-1">Most Popular</div>
+                <div className="text-[0.65rem] uppercase tracking-[0.16em] font-mono text-accent font-semibold mb-1">Most Popular</div>
                 <div className="text-sm font-bold text-ivory" style={{ fontFamily: "'Cormorant Garant', serif" }}>Premium Package</div>
               </th>
               <th className="p-4 sm:p-5 text-center">
-                <div className="text-[0.6rem] uppercase tracking-[0.2em] font-mono text-stone/50 mb-1">Retainer</div>
+                <div className="text-[0.65rem] uppercase tracking-[0.16em] font-mono text-stone font-semibold mb-1">Retainer</div>
                 <div className="text-sm font-bold text-ivory" style={{ fontFamily: "'Cormorant Garant', serif" }}>Social Media Mgmt</div>
               </th>
             </tr>

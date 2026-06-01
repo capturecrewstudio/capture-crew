@@ -39,10 +39,19 @@ export function PortfolioPage({ selectedCategory, onSelectCategory, onSelectProj
 
   return (
     <main className="portfolio-page">
-      <section className="portfolio-intro">
+      <section className="portfolio-intro" style={{ textAlign: 'center' }}>
         <p className="eyebrow">{activeCategory ? activeCategory.name : 'Portfolio'}</p>
-        <h1>{activeCategory ? (activeCategory as ApiCategory & { description?: string }).description ?? activeCategory.name : 'Images built to make premium brands feel inevitable.'}</h1>
-        <div className="filter-row">
+        <h1 style={{ marginLeft: 'auto', marginRight: 'auto' }}>
+          {activeCategory
+            ? (activeCategory as ApiCategory & { description?: string }).description ?? activeCategory.name
+            : 'Crafted for brands\nthat refuse to\nbe ordinary.'}
+        </h1>
+        <p style={{ color: 'var(--stone)', fontSize: '1rem', marginTop: '1rem', maxWidth: '540px', marginLeft: 'auto', marginRight: 'auto', lineHeight: 1.7 }}>
+          {activeCategory
+            ? `Explore our ${activeCategory.name.toLowerCase()} work — crafted to position, persuade, and endure.`
+            : 'Every frame is intentional, every edit deliberate. This is what premium looks like — and it could be yours.'}
+        </p>
+        <div className="filter-row" style={{ justifyContent: 'center' }}>
           <button className={!selectedCategory ? 'is-active' : ''} type="button" onClick={() => onSelectCategory('')}>
             All
           </button>

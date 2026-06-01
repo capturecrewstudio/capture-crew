@@ -101,27 +101,111 @@ const PORTFOLIO_PROJECTS = [
   },
 ];
 
+const CAPABILITIES = [
+  {
+    title: 'Architecture',
+    subtitle: 'Your work is extraordinary. Show it that way.',
+    description: "Great spaces go unnoticed when the content doesn't match the craft. We document your projects with the precision they deserve — cinematic walkthroughs, editorial stills, and reels that stop the scroll. You design. We make the world see it.",
+    image: '/assets/media/dsc-ccs-7.jpeg',
+    tags: ['Site Shoots', 'Cinematic Reels', 'Walkthroughs', 'Social Content'],
+    sortOrder: 0,
+  },
+  {
+    title: 'Real Estate',
+    subtitle: 'Buyers decide online. Make it count.',
+    description: 'Premium properties deserve visuals that sell before a single site visit. Drone aerials, luxury walkthroughs, construction stories, and launch films — we craft content that makes buyers feel the space before they step inside. Presentation sells faster than price.',
+    image: '/assets/media/real-estate-hero.jpeg',
+    tags: ['Drone Shoots', 'Luxury Films', 'Progress Videos', 'Photography'],
+    sortOrder: 1,
+  },
+  {
+    title: 'Luxury Brands',
+    subtitle: 'World-class brands deserve world-class visuals.',
+    description: 'Behind every frame is a full team obsessed with making your brand impossible to ignore. Directing, color grading, storytelling — all engineered to position you at the top. Trusted by 160+ architects and 65+ premium brands across India.',
+    image: '/assets/media/commercial-hero.jpeg',
+    tags: ['Brand Visuals', 'Color Grading', 'Storytelling', 'Directing'],
+    sortOrder: 2,
+  },
+  {
+    title: 'Fashion',
+    subtitle: 'Style that speaks before a word is said.',
+    description: 'From editorial lookbooks to campaign films, we bring the full force of cinematic production to fashion. Every frame is styled, lit, and directed with intent — built to stop the feed, land the campaign, and make the label unforgettable.',
+    image: '/assets/media/fashion-editorials-hero.jpeg',
+    tags: ['Lookbooks', 'Campaign Films', 'Editorial Shoots', 'Brand Reels'],
+    sortOrder: 3,
+  },
+];
+
 const TESTIMONIALS = [
   {
     name: 'Aarav Mehta',
-    designation: 'Principal Architect, AM Studio',
-    message: 'Capture Crew understood the silence of the building. Every image felt deliberate, premium, and deeply human.',
-    image: '',
+    designation: 'Principal Architect, AM Studio — Bengaluru',
+    message: 'Capture Crew understood the silence of the building. Every image felt deliberate, premium, and deeply human. We have used their work in every client pitch since.',
+    image: 'https://ui-avatars.com/api/?name=Aarav+Mehta&size=200&background=2C2C2C&color=C8A96B&bold=true&font-size=0.45',
     featured: true,
   },
   {
     name: 'Ira Kapoor',
-    designation: 'Brand Director, Solenne',
-    message: 'The team turned our campaign into a visual world. We used the assets across web, print, press, and investor presentations.',
-    image: '',
+    designation: 'Brand Director, Solenne — New Delhi',
+    message: 'The team turned our campaign into a visual world. Every asset — web, print, press, investor decks — all came from one single shoot. The ROI was unlike anything we had seen before.',
+    image: 'https://ui-avatars.com/api/?name=Ira+Kapoor&size=200&background=2C2C2C&color=C8A96B&bold=true&font-size=0.45',
     featured: true,
   },
   {
     name: 'Rohan Sethi',
-    designation: 'Founder, Atlas Table',
-    message: 'The launch film gave our restaurant an identity before guests had even stepped through the door.',
-    image: '',
+    designation: 'Founder, Atlas Table — Chandigarh',
+    message: 'The launch film gave our restaurant an identity before guests had even stepped through the door. Bookings doubled in the first week of going live with the content.',
+    image: 'https://ui-avatars.com/api/?name=Rohan+Sethi&size=200&background=2C2C2C&color=C8A96B&bold=true&font-size=0.45',
     featured: true,
+  },
+  {
+    name: 'Priya Nair',
+    designation: 'Creative Head, Velvette Couture — Mumbai',
+    message: 'Our lookbook was shot in a single day and it looked like a week-long Paris editorial. Capture Crew brought styling, direction, and post-production under one roof. Truly effortless.',
+    image: 'https://ui-avatars.com/api/?name=Priya+Nair&size=200&background=2C2C2C&color=C8A96B&bold=true&font-size=0.45',
+    featured: true,
+  },
+  {
+    name: 'Vikram Anand',
+    designation: 'Director, Anand Realty Group — Mohali',
+    message: 'We needed content that could sell luxury flats before the towers were even complete. The drone aerials and walkthrough films did exactly that — our pre-launch sold out in 3 weeks.',
+    image: 'https://ui-avatars.com/api/?name=Vikram+Anand&size=200&background=2C2C2C&color=C8A96B&bold=true&font-size=0.45',
+    featured: true,
+  },
+  {
+    name: 'Deepika Rajan',
+    designation: 'Co-Founder, Maison DR Jewels — Surat',
+    message: 'We had tried three studios before Capture Crew. None of them made our jewellery look the way it deserved. The product stills they delivered are now our website hero, our campaign, and our packaging — all from a single session.',
+    image: 'https://ui-avatars.com/api/?name=Deepika+Rajan&size=200&background=2C2C2C&color=C8A96B&bold=true&font-size=0.45',
+    featured: true,
+  },
+  {
+    name: 'Arjun Bhardwaj',
+    designation: 'Principal, Studio Bhardwaj Architects — Chandigarh',
+    message: 'Working with Capture Crew felt like a true creative collaboration. They read the project brief, visited the site at dusk, and came back with a shot list we would never have thought of ourselves. The final images won us a national architecture award.',
+    image: 'https://ui-avatars.com/api/?name=Arjun+Bhardwaj&size=200&background=2C2C2C&color=C8A96B&bold=true&font-size=0.45',
+    featured: true,
+  },
+  {
+    name: 'Meera Iyer',
+    designation: 'Director of Marketing, Kalpa Hotels — Pune',
+    message: 'Our property needed a complete visual overhaul for the relaunch. Capture Crew handled everything — interiors, food, rooftop aerials, and a 4-minute brand film. The booking rate from our new website is up 60% compared to the same period last year.',
+    image: 'https://ui-avatars.com/api/?name=Meera+Iyer&size=200&background=2C2C2C&color=C8A96B&bold=true&font-size=0.45',
+    featured: true,
+  },
+  {
+    name: 'Sahil Chadha',
+    designation: 'Founder, Chadha Menswear — Ludhiana',
+    message: 'I was sceptical about investing this much in a shoot. After seeing the reels go live, our DMs did not stop for three days. Capture Crew does not just take pictures — they build hype.',
+    image: 'https://ui-avatars.com/api/?name=Sahil+Chadha&size=200&background=2C2C2C&color=C8A96B&bold=true&font-size=0.45',
+    featured: false,
+  },
+  {
+    name: 'Nisha Tomar',
+    designation: 'Creative Director, Bloom Weddings — Delhi NCR',
+    message: 'Every wedding planner needs a visual partner they can trust. Capture Crew is ours. The films they produce make every couple feel like they are in a feature film. Our inquiry rate from Instagram has tripled since we started sharing their work.',
+    image: 'https://ui-avatars.com/api/?name=Nisha+Tomar&size=200&background=2C2C2C&color=C8A96B&bold=true&font-size=0.45',
+    featured: false,
   },
 ];
 
@@ -289,6 +373,16 @@ async function main() {
   } else {
     console.log(`· Projects already exist (${existingProjects}), skipping`);
   }
+
+  // ── Capabilities ────────────────────────────────────────────────────────────
+  for (const cap of CAPABILITIES) {
+    await prisma.capability.upsert({
+      where: { title: cap.title } as never,
+      update: { subtitle: cap.subtitle, description: cap.description, image: cap.image, tags: cap.tags, sortOrder: cap.sortOrder },
+      create: { title: cap.title, subtitle: cap.subtitle, description: cap.description, image: cap.image, tags: cap.tags, sortOrder: cap.sortOrder },
+    });
+  }
+  console.log(`✓ ${CAPABILITIES.length} capabilities seeded`);
 
   // ── Testimonials ────────────────────────────────────────────────────────────
   const existingTestimonials = await prisma.testimonial.count();

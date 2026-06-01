@@ -103,7 +103,7 @@ function IPhoneMockup() {
                 />
               ))}
             </div>
-            <div className="flex justify-between text-[8px] text-stone/70 font-mono mt-1">
+            <div className="flex justify-between text-[10px] text-stone font-mono mt-1">
               <span>Week 1</span>
               <span>Week 4</span>
             </div>
@@ -121,9 +121,22 @@ type Props = {
   onSelectProject: (slug: string) => void;
 };
 
+function useIsDark() {
+  const [isDark, setIsDark] = useState(() => document.documentElement.getAttribute('data-theme') !== 'light');
+  useEffect(() => {
+    const obs = new MutationObserver(() => {
+      setIsDark(document.documentElement.getAttribute('data-theme') !== 'light');
+    });
+    obs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => obs.disconnect();
+  }, []);
+  return isDark;
+}
+
 export function HomePage({ onNavigate, onSelectCategory }: Props) {
   const [selectedPackage, setSelectedPackage] = useState<string | undefined>();
   const { content } = useSiteData();
+  const isDark = useIsDark();
 
   return (
     <main
@@ -227,11 +240,26 @@ export function HomePage({ onNavigate, onSelectCategory }: Props) {
               />
               <button
                 onClick={() => scrollToSection('contact-us')}
-                className="h-[40px] md:h-[48px] px-6 border border-linemid bg-transparent text-stone hover:text-ivory hover:border-linemid active:scale-95 transition-all duration-300 flex items-center justify-center gap-3"
-                style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300, fontSize: '0.65rem', letterSpacing: '0.16em', textTransform: 'uppercase', borderRadius: '6px' }}
+                className="relative h-[40px] md:h-[48px] px-7 overflow-hidden group/cta active:scale-95 transition-transform duration-200 flex items-center justify-center gap-2.5"
+                style={{
+                  background: 'var(--accent)',
+                  borderRadius: '6px',
+                  fontFamily: "'DM Mono', monospace",
+                  fontWeight: 500,
+                  fontSize: '0.65rem',
+                  letterSpacing: '0.16em',
+                  textTransform: 'uppercase',
+                  color: 'var(--ink)',
+                  boxShadow: '0 0 18px var(--accent-dim), 0 2px 8px rgba(0,0,0,0.3)',
+                }}
               >
-                {content.heroCta2}
-                <ArrowRight size={14} />
+                {/* shimmer sweep */}
+                <span
+                  className="absolute inset-0 -translate-x-full group-hover/cta:translate-x-full transition-transform duration-700 ease-in-out pointer-events-none"
+                  style={{ background: 'linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.22) 50%, transparent 60%)' }}
+                />
+                <span className="relative z-10">{content.heroCta2}</span>
+                <ArrowRight size={13} className="relative z-10 transition-transform duration-300 group-hover/cta:translate-x-0.5" />
               </button>
             </div>
           </Reveal>
@@ -316,7 +344,7 @@ export function HomePage({ onNavigate, onSelectCategory }: Props) {
                 <p className="text-stone/70 text-sm sm:text-base leading-relaxed mb-3">
                   8 years forged alongside National Geographic in the UK. Since 2018, a presence across India — partnering with top architects, luxury brands, and spaces that demand to be seen.
                 </p>
-                <p className="text-stone/55 text-sm leading-relaxed mb-5">
+                <p className="text-stone text-sm leading-relaxed mb-5">
                   <span className="text-accent font-semibold" style={{ fontFamily: "'Cormorant Garant', serif", fontSize: '1.05em' }}>160+ architects. 68+ prestigious brands.</span>{' '}Brands like Raymond, Prada, Bluestone &amp; Versace. Studios like Studio 261, Co.Lab Design Studio &amp; STJ Groups. From London to India — bridging global luxury with Indian elegance.
                 </p>
                 <p style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 700, color: 'var(--accent)' }} className="text-lg sm:text-xl italic">
@@ -336,7 +364,7 @@ export function HomePage({ onNavigate, onSelectCategory }: Props) {
                 {[
                   { name: 'Kartik Kanda', role: 'Founder · DOP', sub: 'Director of Photography', img: '/assets/team/kartik-kanda.jpeg', pos: '50% 15%', scale: '1.8', origin: 'center 20%', offsetY: '0px', fit: 'cover' },
                   { name: 'Amrita Sharma', role: 'Art Director', sub: 'Script Writer · Social Media', img: '/assets/team/amrita-sharma.jpeg', pos: '50% top', scale: '1', origin: 'center 20%', offsetY: '0px', fit: 'cover' },
-                  { name: 'Sourav Kashyap', role: 'Mobile App Developer', sub: 'Apps · Web Development', img: '/assets/team/sourav-kashyap.jpeg', pos: '50% 50%', scale: '1.3', origin: 'center center', offsetY: '0px', fit: 'contain' },
+                  { name: 'Sourav Kashyap', role: 'Website Developer', sub: 'Websites · Mobile Apps', img: '/assets/team/sourav-kashyap.jpeg', pos: '50% 50%', scale: '1.3', origin: 'center center', offsetY: '0px', fit: 'contain' },
                   { name: 'Pukhraj Singh', role: 'Cinematographer', sub: 'Videographer · Cinematographer', img: '/assets/team/pukhraj-singh.jpeg', pos: '50% top', scale: '1', origin: 'center 20%', offsetY: '0px', fit: 'cover' },
                 ].map((member) => (
                   <div key={member.name} className="group flex flex-col items-center text-center gap-4">
@@ -349,8 +377,8 @@ export function HomePage({ onNavigate, onSelectCategory }: Props) {
                     </div>
                     <div className="flex flex-col gap-1">
                       <span className="text-ivory" style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 500, fontSize: 'clamp(1rem, 2vw, 1.15rem)' }}>{member.name}</span>
-                      <span className="text-accent text-[0.6rem] uppercase tracking-widest font-mono">{member.role}</span>
-                      {member.sub && <span className="text-stone/45 text-[0.55rem] uppercase tracking-wider font-mono leading-snug">{member.sub}</span>}
+                      <span className="text-accent text-[0.65rem] uppercase tracking-widest font-mono font-medium">{member.role}</span>
+                      {member.sub && <span className="text-stone text-[0.62rem] uppercase tracking-wider font-mono leading-snug font-semibold">{member.sub}</span>}
                     </div>
                   </div>
                 ))}
@@ -545,7 +573,7 @@ export function HomePage({ onNavigate, onSelectCategory }: Props) {
                       <Phone size={18} />
                     </span>
                     <div>
-                      <h4 className="text-xs font-mono uppercase tracking-wider text-stone/70">Founder Hotline</h4>
+                      <h4 className="text-xs font-mono uppercase tracking-wider text-stone font-semibold">Founder Hotline</h4>
                       <a href={`tel:${content.footerPhone.replace(/\s/g, '')}`} className="text-sm sm:text-base font-bold">{content.footerPhone}</a>
                     </div>
                   </div>
@@ -555,7 +583,7 @@ export function HomePage({ onNavigate, onSelectCategory }: Props) {
                       <Mail size={18} />
                     </span>
                     <div>
-                      <h4 className="text-xs font-mono uppercase tracking-wider text-stone/70">Email Studio</h4>
+                      <h4 className="text-xs font-mono uppercase tracking-wider text-stone font-semibold">Email Studio</h4>
                       <a href={`mailto:${content.footerEmail}`} className="text-sm sm:text-base font-bold">{content.footerEmail}</a>
                     </div>
                   </div>
@@ -565,7 +593,7 @@ export function HomePage({ onNavigate, onSelectCategory }: Props) {
                       <MapPin size={18} />
                     </span>
                     <div>
-                      <h4 className="text-xs font-mono uppercase tracking-wider text-stone/70">Locations</h4>
+                      <h4 className="text-xs font-mono uppercase tracking-wider text-stone font-semibold">Locations</h4>
                       <span className="text-sm sm:text-base font-bold">{content.footerCities}</span>
                     </div>
                   </div>
@@ -574,7 +602,7 @@ export function HomePage({ onNavigate, onSelectCategory }: Props) {
 
                 {/* Social Media Link Icons */}
                 <div className="flex gap-4 mt-6 items-center">
-                  <span className="text-xs uppercase tracking-widest font-mono text-stone/60">Follow Us:</span>
+                  <span className="text-xs uppercase tracking-widest font-mono text-stone font-semibold">Follow Us:</span>
                   <a
                     href="https://instagram.com/officialcapturecrewstudios"
                     target="_blank"
@@ -630,7 +658,9 @@ export function HomePage({ onNavigate, onSelectCategory }: Props) {
                 height="100%"
                 style={{
                   border: 0,
-                  filter: 'invert(90%) hue-rotate(180deg) saturate(0.55) brightness(0.82) contrast(1.1)',
+                  filter: isDark
+                    ? 'invert(90%) hue-rotate(180deg) saturate(0.55) brightness(0.82) contrast(1.1)'
+                    : 'saturate(0.8) brightness(1.02)',
                 }}
                 allowFullScreen
                 loading="lazy"
@@ -648,7 +678,7 @@ export function HomePage({ onNavigate, onSelectCategory }: Props) {
                 </div>
                 <div
                   className="mt-3 px-4 py-2 rounded-xl text-[0.65rem] font-mono uppercase tracking-[0.18em] text-ivory shadow-2xl whitespace-nowrap"
-                  style={{ background: 'rgba(8,8,8,0.88)', border: '1px solid color-mix(in srgb, var(--accent) 45%, transparent)', backdropFilter: 'blur(10px)' }}
+                  style={{ background: isDark ? 'rgba(8,8,8,0.88)' : 'rgba(255,255,255,0.92)', border: '1px solid color-mix(in srgb, var(--accent) 45%, transparent)', backdropFilter: 'blur(10px)', color: 'var(--ivory)' }}
                 >
                   CaptureCrew Studio · Chandigarh
                 </div>
@@ -666,7 +696,7 @@ export function HomePage({ onNavigate, onSelectCategory }: Props) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="absolute bottom-5 right-5 pointer-events-auto flex items-center gap-1.5 text-[0.6rem] uppercase tracking-widest font-mono px-3 py-2 rounded-lg transition-all duration-300 hover:opacity-100 opacity-75"
-                style={{ background: 'rgba(8,8,8,0.85)', border: '1px solid color-mix(in srgb, var(--accent) 35%, transparent)', color: 'var(--accent)', backdropFilter: 'blur(10px)' }}
+                style={{ background: isDark ? 'rgba(8,8,8,0.85)' : 'rgba(255,255,255,0.92)', border: '1px solid color-mix(in srgb, var(--accent) 35%, transparent)', color: 'var(--accent)', backdropFilter: 'blur(10px)' }}
               >
                 Open in Maps ↗
               </a>

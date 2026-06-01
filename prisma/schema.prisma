@@ -138,6 +138,20 @@ model SeoSetting {
   updatedAt   DateTime @updatedAt
 }
 
+model Capability {
+  id          String   @id @default(uuid())
+  title       String   @unique
+  subtitle    String   @default("")
+  description String   @default("")
+  image       String   @default("")
+  tags        Json     @default("[]")
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([sortOrder])
+}
+
 model SiteContent {
   id                  String   @id @default(uuid())
   heroHeadline        String   @default("Where Craft\nMeets Legacy")

@@ -147,8 +147,8 @@ export function SiteHeader({ activeRoute, onNavigate, isDark, onToggleTheme }: P
           alt="Capture Crew"
           className="object-contain"
           style={isDark
-            ? { height: '60px', width: 'auto', minWidth: '200px', maxWidth: '260px' }
-            : { height: '72px', width: 'auto', minWidth: '240px', maxWidth: '300px' }}
+            ? { height: '44px', width: 'auto', minWidth: '120px', maxWidth: '200px' }
+            : { height: '52px', width: 'auto', minWidth: '120px', maxWidth: '220px' }}
         />
       </button>
 
@@ -182,13 +182,19 @@ export function SiteHeader({ activeRoute, onNavigate, isDark, onToggleTheme }: P
 
       {/* Mobile toggle */}
       <button
-        className="md:hidden flex items-center justify-center p-2 focus:outline-none shrink-0"
-        style={{ color: 'var(--stone)' }}
+        className="md:hidden flex items-center justify-center rounded-xl focus:outline-none shrink-0 transition-colors duration-200"
+        style={{
+          width: 40, height: 40,
+          color: menuOpen ? 'var(--ink)' : 'var(--accent)',
+          background: menuOpen ? 'var(--accent)' : 'var(--surface-2)',
+          border: '1.5px solid var(--accent)',
+          boxShadow: '0 0 10px var(--accent-dim)',
+        }}
         type="button"
         aria-label="Toggle navigation"
         onClick={() => setMenuOpen((open) => !open)}
       >
-        {menuOpen ? <X size={20} /> : <Menu size={20} />}
+        {menuOpen ? <X size={20} strokeWidth={2.5} /> : <Menu size={20} strokeWidth={2.5} />}
       </button>
     </>
   );

@@ -9,6 +9,7 @@ import { prisma } from './config/prisma.js';
 import { globalLimiter } from './middleware/rateLimit.js';
 import { authRouter } from './routes/auth.js';
 import { blogRouter } from './routes/blog.js';
+import { capabilitiesRouter } from './routes/capabilities.js';
 import { categoriesRouter } from './routes/categories.js';
 import { contentRouter } from './routes/content.js';
 import { leadsRouter } from './routes/leads.js';
@@ -46,6 +47,7 @@ app.get('/api/health', (_req, res) => {
 
 app.use('/api/auth', authRouter);
 app.use('/api/blog', blogRouter);
+app.use('/api/capabilities', capabilitiesRouter);
 app.use('/api/categories', categoriesRouter);
 app.use('/api/content', contentRouter);
 app.use('/api/leads', leadsRouter);

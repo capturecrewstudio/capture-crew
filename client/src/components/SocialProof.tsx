@@ -91,7 +91,7 @@ export function SocialProof() {
         style={{ background: 'var(--accent)' }}
       />
       <span
-        className="text-sm sm:text-lg md:text-xl uppercase tracking-[0.3em] text-stone/40 hover:text-ivory transition-colors duration-500 cursor-default select-none"
+        className="text-sm sm:text-lg md:text-xl uppercase tracking-[0.22em] text-stone/70 hover:text-ivory transition-colors duration-500 cursor-default select-none"
         style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }}
       >
         {name}
@@ -127,7 +127,7 @@ export function SocialProof() {
       <div className="mb-8">
         <div className="flex items-center gap-4 mb-4 px-1">
           <span className="h-px flex-1" style={{ background: 'var(--line)' }} />
-          <span className="text-[0.6rem] uppercase tracking-[0.25em] text-stone/40 font-mono shrink-0" style={{ fontFamily: "'DM Mono', monospace" }}>Architecture Studios</span>
+          <span className="text-[0.65rem] uppercase tracking-[0.2em] text-stone font-semibold font-mono shrink-0" style={{ fontFamily: "'DM Mono', monospace" }}>Architecture Studios</span>
           <span className="h-px flex-1" style={{ background: 'var(--line)' }} />
         </div>
         <div className="relative border-y border-line py-5 overflow-hidden">
@@ -138,7 +138,7 @@ export function SocialProof() {
               {architectureStudios.map((name, i) => (
                 <span key={i} className="flex items-center shrink-0">
                   <span className="inline-block w-1 h-1 rounded-full mx-8 sm:mx-12 md:mx-16 opacity-35 shrink-0" style={{ background: 'var(--accent)' }} />
-                  <span className="text-sm sm:text-lg md:text-xl uppercase tracking-[0.3em] text-stone/40 hover:text-ivory transition-colors duration-500 cursor-default select-none" style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }}>{name}</span>
+                  <span className="text-sm sm:text-lg md:text-xl uppercase tracking-[0.22em] text-stone/70 hover:text-ivory transition-colors duration-500 cursor-default select-none" style={{ fontFamily: "'DM Mono', monospace", fontWeight: 400 }}>{name}</span>
                 </span>
               ))}
             </div>
@@ -146,7 +146,7 @@ export function SocialProof() {
               {architectureStudios.map((name, i) => (
                 <span key={i} className="flex items-center shrink-0">
                   <span className="inline-block w-1 h-1 rounded-full mx-8 sm:mx-12 md:mx-16 opacity-35 shrink-0" style={{ background: 'var(--accent)' }} />
-                  <span className="text-sm sm:text-lg md:text-xl uppercase tracking-[0.3em] text-stone/40 hover:text-ivory transition-colors duration-500 cursor-default select-none" style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }}>{name}</span>
+                  <span className="text-sm sm:text-lg md:text-xl uppercase tracking-[0.22em] text-stone/70 hover:text-ivory transition-colors duration-500 cursor-default select-none" style={{ fontFamily: "'DM Mono', monospace", fontWeight: 400 }}>{name}</span>
                 </span>
               ))}
             </div>
@@ -165,7 +165,7 @@ export function SocialProof() {
       <div>
         <div className="flex items-center gap-4 mb-4 px-1">
           <span className="h-px flex-1" style={{ background: 'var(--line)' }} />
-          <span className="text-[0.6rem] uppercase tracking-[0.25em] text-stone/40 font-mono shrink-0" style={{ fontFamily: "'DM Mono', monospace" }}>Luxury Brands</span>
+          <span className="text-[0.65rem] uppercase tracking-[0.2em] text-stone font-semibold font-mono shrink-0" style={{ fontFamily: "'DM Mono', monospace" }}>Luxury Brands</span>
           <span className="h-px flex-1" style={{ background: 'var(--line)' }} />
         </div>
         <div className="relative border-y border-line py-5 overflow-hidden">

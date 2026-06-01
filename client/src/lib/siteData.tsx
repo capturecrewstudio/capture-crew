@@ -61,7 +61,37 @@ export function SiteDataProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     Promise.all([apiGetContent(), apiGetTestimonials()])
       .then(([c, t]) => {
-        setContent(c);
+        const str = (v: string | null | undefined, fallback: string) =>
+          v && v.trim() !== '' ? v : fallback;
+        const arr = <T,>(v: T[] | null | undefined, fallback: T[]) =>
+          Array.isArray(v) && v.length > 0 ? v : fallback;
+        const obj = <T extends Record<string, unknown>>(v: T | null | undefined, fallback: T) =>
+          v && Object.keys(v).length > 0 ? v : fallback;
+
+        setContent({
+          id: c.id || DEFAULT_CONTENT.id,
+          heroHeadline:        str(c.heroHeadline,        DEFAULT_CONTENT.heroHeadline),
+          heroSubheadline:     str(c.heroSubheadline,     DEFAULT_CONTENT.heroSubheadline),
+          heroCta1:            str(c.heroCta1,            DEFAULT_CONTENT.heroCta1),
+          heroCta2:            str(c.heroCta2,            DEFAULT_CONTENT.heroCta2),
+          socialProofEyebrow:  str(c.socialProofEyebrow,  DEFAULT_CONTENT.socialProofEyebrow),
+          socialProofHeadline: str(c.socialProofHeadline, DEFAULT_CONTENT.socialProofHeadline),
+          footerTagline:       str(c.footerTagline,       DEFAULT_CONTENT.footerTagline),
+          footerPhone:         str(c.footerPhone,         DEFAULT_CONTENT.footerPhone),
+          footerEmail:         str(c.footerEmail,         DEFAULT_CONTENT.footerEmail),
+          footerCities:        str(c.footerCities,        DEFAULT_CONTENT.footerCities),
+          contactHeadline:     str(c.contactHeadline,     DEFAULT_CONTENT.contactHeadline),
+          contactSubheadline:  str(c.contactSubheadline,  DEFAULT_CONTENT.contactSubheadline),
+          partners: arr(c.partners as string[], DEFAULT_CONTENT.partners),
+          faq:      arr(c.faq as { q: string; a: string }[], DEFAULT_CONTENT.faq),
+          packages: arr(c.packages as Record<string, unknown>[], DEFAULT_CONTENT.packages),
+          stats:    obj(c.stats as Record<string, unknown>, DEFAULT_CONTENT.stats as Record<string, unknown>),
+          // Merge socialDock so individual missing keys fall back per-key
+          socialDock: {
+            ...DEFAULT_CONTENT.socialDock,
+            ...obj(c.socialDock as Record<string, string>, {} as Record<string, string>),
+          },
+        });
         setTestimonials(t);
       })
       .catch(() => { /* keep defaults on error */ })

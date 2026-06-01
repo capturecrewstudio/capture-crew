@@ -5,7 +5,7 @@ const packages = [
   {
     icon: Zap,
     title: 'Meta Package',
-    price: '₹30,000',
+    price: '₹35,000',
     period: '/ per shoot',
     tag: 'Starter',
     summary: 'Stop scrolling. Start stopping thumbs. One shoot that fills your feed with content worth watching.',
@@ -24,7 +24,7 @@ const packages = [
   {
     icon: Flame,
     title: 'Premium Package',
-    price: '₹45,000',
+    price: '₹50,000',
     period: '/ per shoot',
     tag: 'Most Popular',
     summary: 'Your brand, fully visualised. Hero images, a campaign film, and a strategy to make every asset work for months.',

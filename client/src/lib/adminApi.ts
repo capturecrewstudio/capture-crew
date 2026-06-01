@@ -40,6 +40,35 @@ export async function apiLogin(email: string, password: string) {
   );
 }
 
+// ─── Capabilities ─────────────────────────────────────────────────────────────
+
+export type ApiCapability = {
+  id: string; title: string; subtitle: string; description: string;
+  image: string; tags: string[]; sortOrder: number;
+  createdAt: string; updatedAt: string;
+};
+
+export type CapabilityPayload = {
+  title: string; subtitle?: string; description?: string;
+  image?: string; tags?: string[]; sortOrder?: number;
+};
+
+export async function apiGetCapabilities(): Promise<ApiCapability[]> {
+  return apiFetch('/capabilities');
+}
+
+export async function apiCreateCapability(data: CapabilityPayload): Promise<ApiCapability> {
+  return apiFetch('/capabilities', { method: 'POST', body: JSON.stringify(data) });
+}
+
+export async function apiUpdateCapability(id: string, data: CapabilityPayload): Promise<ApiCapability> {
+  return apiFetch(`/capabilities/${id}`, { method: 'PUT', body: JSON.stringify(data) });
+}
+
+export async function apiDeleteCapability(id: string): Promise<void> {
+  return apiFetch(`/capabilities/${id}`, { method: 'DELETE' });
+}
+
 // ─── Leads ───────────────────────────────────────────────────────────────────
 
 export type ApiLead = {

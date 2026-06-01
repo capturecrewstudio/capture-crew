@@ -4,6 +4,7 @@ import { useSiteData } from '../lib/siteData';
 
 type Props = {
   onNavigate: (route: RouteName) => void;
+  isDark: boolean;
 };
 
 // Inline SVGs — lucide-react brand icons are deprecated
@@ -76,7 +77,7 @@ const SOCIALS = [
   { label: 'Facebook', href: 'https://www.facebook.com/officialcapturecrew', Icon: FbIcon },
 ];
 
-export function SiteFooter({ onNavigate }: Props) {
+export function SiteFooter({ onNavigate, isDark }: Props) {
   const { content } = useSiteData();
 
   return (
@@ -91,7 +92,7 @@ export function SiteFooter({ onNavigate }: Props) {
         <div className="lg:col-span-2 flex flex-col gap-5">
           <div className="flex items-center gap-3">
             <img
-              src="/assets/logo/capture-crew-logo-gold.png"
+              src={isDark ? '/assets/logo/capture-crew-logo-gold.png' : '/assets/logo/capture-crew-logo-light.png'}
               alt="Capture Crew"
               className="h-16 w-auto object-contain"
             />
@@ -129,7 +130,7 @@ export function SiteFooter({ onNavigate }: Props) {
         {/* Navigation column */}
         <div className="flex flex-col gap-4">
           <h4
-            className="text-[0.6rem] uppercase tracking-[0.22em] text-stone/60"
+            className="text-[0.65rem] uppercase tracking-[0.18em] text-stone font-semibold"
             style={{ fontFamily: "'DM Mono', monospace" }}
           >
             Navigation
@@ -152,7 +153,7 @@ export function SiteFooter({ onNavigate }: Props) {
         {/* Contact column */}
         <div className="flex flex-col gap-4">
           <h4
-            className="text-[0.6rem] uppercase tracking-[0.22em] text-stone/60"
+            className="text-[0.65rem] uppercase tracking-[0.18em] text-stone font-semibold"
             style={{ fontFamily: "'DM Mono', monospace" }}
           >
             Studio
@@ -186,7 +187,7 @@ export function SiteFooter({ onNavigate }: Props) {
       {/* Bottom bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         <p
-          className="text-[0.65rem] text-stone/50"
+          className="text-[0.7rem] text-stone"
           style={{ fontFamily: "'DM Mono', monospace" }}
         >
           © {new Date().getFullYear()} <span style={{ color: 'var(--accent)' }}>Capture Crew</span>. All rights reserved.

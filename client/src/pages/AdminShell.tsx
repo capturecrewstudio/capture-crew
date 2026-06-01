@@ -11,19 +11,21 @@ import {
   apiLogin,
   apiGetLeads, apiPatchLeadStatus,
   apiGetCategories, apiCreateCategory, apiDeleteCategory,
+  apiGetCapabilities, apiCreateCapability, apiUpdateCapability, apiDeleteCapability,
   apiGetTestimonials, apiCreateTestimonial, apiUpdateTestimonial, apiDeleteTestimonial,
   apiGetMedia, apiUploadMedia, apiDeleteMedia,
   apiGetContent, apiUpdateContent,
   apiGetProjects, apiCreateProject, apiUpdateProject, apiDeleteProject,
   apiAddProjectImage, apiDeleteProjectImage,
-  type ApiLead, type ApiCategory, type ApiTestimonial, type ApiMedia, type ApiContent,
+  type ApiLead, type ApiCategory, type ApiCapability, type CapabilityPayload,
+  type ApiTestimonial, type ApiMedia, type ApiContent,
   type ApiProject, type ProjectPayload,
   type TestimonialPayload,
 } from '../lib/adminApi';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-type Panel = 'dashboard' | 'media' | 'projects' | 'categories' | 'testimonials' | 'leads' | 'content' | 'settings';
+type Panel = 'dashboard' | 'media' | 'projects' | 'categories' | 'capabilities' | 'testimonials' | 'leads' | 'content' | 'settings';
 
 // ─── Shared UI components ────────────────────────────────────────────────────
 
@@ -268,6 +270,234 @@ function Dashboard({ setPanel }: { setPanel: (p: Panel) => void }) {
 
 // ─── Categories Manager ───────────────────────────────────────────────────────
 
+// ─── Capabilities Panel ───────────────────────────────────────────────────────
+
+function CapabilitiesPanel() {
+  const EMPTY: CapabilityPayload = { title: '', subtitle: '', description: '', image: '', tags: [], sortOrder: 0 };
+  const [caps, setCaps] = useState<ApiCapability[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [editing, setEditing] = useState<ApiCapability | null>(null);
+  const [adding, setAdding] = useState(false);
+  const [form, setForm] = useState<CapabilityPayload>(EMPTY);
+  const [saving, setSaving] = useState(false);
+  const [mediaLib, setMediaLib] = useState<ApiMedia[]>([]);
+  const [showPicker, setShowPicker] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const uploadRef = useRef<HTMLInputElement>(null);
+
+  function getLibUrl(m: ApiMedia): string {
+    const v = m.variants as Array<{ url: string; format: string; width: number }> | null;
+    if (!Array.isArray(v) || v.length === 0) return '';
+    return (v.find(x => x.format === 'webp' && x.width === 720) ?? v[0])?.url ?? '';
+  }
+
+  async function load() {
+    try { setCaps(await apiGetCapabilities()); }
+    catch (err) { alert(err instanceof Error ? err.message : 'Failed to load'); }
+    finally { setLoading(false); }
+  }
+
+  async function loadMedia() {
+    try { setMediaLib(await apiGetMedia()); }
+    catch { /* silent */ }
+  }
+
+  useEffect(() => { load(); loadMedia(); }, []);
+
+  function openAdd() { setForm(EMPTY); setEditing(null); setAdding(true); setShowPicker(false); }
+  function openEdit(cap: ApiCapability) {
+    setForm({ title: cap.title, subtitle: cap.subtitle, description: cap.description, image: cap.image, tags: cap.tags as string[], sortOrder: cap.sortOrder });
+    setEditing(cap); setAdding(true); setShowPicker(false);
+  }
+
+  async function handleSave() {
+    if (!form.title.trim()) return;
+    setSaving(true);
+    try {
+      if (editing) await apiUpdateCapability(editing.id, form);
+      else await apiCreateCapability(form);
+      setAdding(false); setEditing(null); setForm(EMPTY);
+      await load();
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Failed to save');
+    } finally { setSaving(false); }
+  }
+
+  async function handleDelete(id: string) {
+    if (!confirm('Delete this capability panel?')) return;
+    try { await apiDeleteCapability(id); await load(); }
+    catch (err) { alert(err instanceof Error ? err.message : 'Failed to delete'); }
+  }
+
+  async function handleUpload(files: FileList | null) {
+    if (!files || files.length === 0) return;
+    setUploading(true);
+    try {
+      const { uploads } = await apiUploadMedia(files);
+      await loadMedia();
+      if (uploads[0]) setForm(f => ({ ...f, image: getLibUrl(uploads[0]) }));
+      setShowPicker(false);
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Upload failed');
+    } finally { setUploading(false); }
+  }
+
+  const tagsStr = (form.tags ?? []).join('\n');
+
+  return (
+    <div className="flex flex-col gap-6">
+      <div className="flex items-center justify-between">
+        <p className="text-stone text-sm">{caps.length} capability panels · shown in &ldquo;Core Capabilities&rdquo; section</p>
+        <Btn onClick={openAdd} disabled={adding}><Plus size={14} /> Add Panel</Btn>
+      </div>
+
+      {adding && (
+        <Card className="p-5 border-accent/30">
+          <h3 className="text-ivory font-medium mb-4">{editing ? 'Edit Capability' : 'New Capability'}</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Field label="Title"><Input value={form.title} onChange={v => setForm(f => ({ ...f, title: v }))} placeholder="e.g. Fashion" /></Field>
+            <Field label="Sort Order" hint="Lower = shown first"><Input value={String(form.sortOrder ?? 0)} onChange={v => setForm(f => ({ ...f, sortOrder: parseInt(v) || 0 }))} placeholder="0" /></Field>
+            <div className="sm:col-span-2">
+              <Field label="Subtitle"><Input value={form.subtitle ?? ''} onChange={v => setForm(f => ({ ...f, subtitle: v }))} placeholder="One-line hook shown under the title" /></Field>
+            </div>
+            <div className="sm:col-span-2">
+              <Field label="Description">
+                <textarea
+                  value={form.description ?? ''}
+                  onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
+                  rows={3}
+                  placeholder="2–3 sentence description of this capability"
+                  className="w-full bg-surface-2 border border-line rounded-lg px-3 py-2.5 text-ivory text-sm outline-none focus:border-accent/50 resize-none"
+                />
+              </Field>
+            </div>
+
+            {/* ── Image picker ── */}
+            <div className="sm:col-span-2">
+              <p className="text-xs font-medium text-stone uppercase tracking-wider mb-2">Background Image</p>
+              {form.image ? (
+                <div className="relative rounded-xl overflow-hidden border border-line h-40 mb-3 group">
+                  <img src={form.image} alt="selected" className="w-full h-full object-cover" />
+                  <button
+                    onClick={() => setForm(f => ({ ...f, image: '' }))}
+                    className="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/70 text-ivory flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                  ><X size={13} /></button>
+                  <div className="absolute bottom-2 left-2">
+                    <Btn size="sm" variant="ghost" onClick={() => setShowPicker(p => !p)}>
+                      <Edit2 size={12} /> Change image
+                    </Btn>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex gap-2 mb-3">
+                  <Btn variant="ghost" size="sm" onClick={() => setShowPicker(p => !p)}>
+                    <ImageUp size={13} /> Choose from Media
+                  </Btn>
+                  <label className="cursor-pointer">
+                    <input ref={uploadRef} type="file" accept="image/*" className="hidden" onChange={e => handleUpload(e.target.files)} />
+                    <Btn variant="ghost" size="sm" onClick={() => uploadRef.current?.click()} disabled={uploading}>
+                      <Plus size={13} /> {uploading ? 'Uploading…' : 'Upload New'}
+                    </Btn>
+                  </label>
+                </div>
+              )}
+
+              {showPicker && (
+                <div className="border border-line rounded-xl p-3 bg-surface-2">
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-xs text-stone">Click an image to select it</p>
+                    <label className="cursor-pointer">
+                      <input type="file" accept="image/*" className="hidden" onChange={e => handleUpload(e.target.files)} />
+                      <Btn size="sm" variant="ghost" onClick={() => uploadRef.current?.click()} disabled={uploading}>
+                        <Plus size={12} /> {uploading ? 'Uploading…' : 'Upload New'}
+                      </Btn>
+                    </label>
+                  </div>
+                  {mediaLib.length === 0 ? (
+                    <p className="text-stone/50 text-xs py-4 text-center">No images in media library yet. Upload one above.</p>
+                  ) : (
+                    <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-2 max-h-56 overflow-y-auto pr-1">
+                      {mediaLib.map(m => {
+                        const url = getLibUrl(m);
+                        if (!url) return null;
+                        return (
+                          <button key={m.id} onClick={() => { setForm(f => ({ ...f, image: url })); setShowPicker(false); }}
+                            className={`relative rounded-lg overflow-hidden border-2 transition-colors ${form.image === url ? 'border-accent' : 'border-transparent hover:border-accent/50'}`}>
+                            <img src={url} alt={m.originalName} className="w-full aspect-square object-cover" />
+                            {form.image === url && (
+                              <div className="absolute inset-0 bg-accent/20 flex items-center justify-center">
+                                <Check size={18} className="text-accent" />
+                              </div>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            <div className="sm:col-span-2">
+              <Field label="Tags" hint="One tag per line">
+                <textarea
+                  value={tagsStr}
+                  onChange={e => setForm(f => ({ ...f, tags: e.target.value.split('\n').map(t => t.trim()).filter(Boolean) }))}
+                  rows={3}
+                  placeholder={"Lookbooks\nCampaign Films\nEditorial Shoots"}
+                  className="w-full bg-surface-2 border border-line rounded-lg px-3 py-2.5 text-ivory text-sm outline-none focus:border-accent/50 resize-none font-mono"
+                />
+              </Field>
+            </div>
+          </div>
+          <div className="flex gap-2 mt-5">
+            <Btn onClick={handleSave} disabled={saving}><Save size={13} /> {saving ? 'Saving…' : editing ? 'Update' : 'Save'}</Btn>
+            <Btn variant="ghost" onClick={() => { setAdding(false); setEditing(null); setForm(EMPTY); setShowPicker(false); }}><X size={13} /> Cancel</Btn>
+          </div>
+        </Card>
+      )}
+
+      {loading ? <PanelLoader /> : (
+        <div className="flex flex-col gap-3">
+          {caps.map((cap) => (
+            <Card key={cap.id} className="flex gap-4 p-4">
+              {cap.image ? (
+                <div className="w-20 h-14 rounded-lg overflow-hidden border border-line shrink-0">
+                  <img src={cap.image} alt={cap.title} className="w-full h-full object-cover" />
+                </div>
+              ) : (
+                <div className="w-20 h-14 rounded-lg border border-line bg-surface-2 flex items-center justify-center shrink-0">
+                  <ImageUp size={16} className="text-stone/30" />
+                </div>
+              )}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2">
+                  <p className="text-ivory font-medium text-sm">{cap.title}</p>
+                  <span className="text-stone/40 text-xs font-mono">#{cap.sortOrder}</span>
+                </div>
+                <p className="text-stone text-xs mt-0.5 truncate">{cap.subtitle}</p>
+                <div className="flex flex-wrap gap-1 mt-2">
+                  {(cap.tags as string[]).map(tag => (
+                    <span key={tag} className="text-xs px-2 py-0.5 rounded-full border border-line text-stone/60 font-mono">{tag}</span>
+                  ))}
+                </div>
+              </div>
+              <div className="flex items-start gap-1 shrink-0">
+                <Btn variant="ghost" size="sm" onClick={() => openEdit(cap)}><Edit2 size={13} /></Btn>
+                <Btn variant="danger" size="sm" onClick={() => handleDelete(cap.id)}><Trash2 size={13} /></Btn>
+              </div>
+            </Card>
+          ))}
+        </div>
+      )}
+
+      {!loading && caps.length === 0 && !adding && (
+        <EmptyState icon={PackageOpen} title="No capabilities yet" body="Add your first capability panel to populate the Core Capabilities section." />
+      )}
+    </div>
+  );
+}
+
 function CategoriesPanel() {
   const [cats, setCats] = useState<ApiCategory[]>([]);
   const [loading, setLoading] = useState(true);
@@ -487,6 +717,33 @@ function TestimonialsPanel() {
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState<EditingTestimonial | null>(null);
   const [saving, setSaving] = useState(false);
+  const [mediaLib, setMediaLib] = useState<ApiMedia[]>([]);
+  const [showPicker, setShowPicker] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const uploadRef = useRef<HTMLInputElement>(null);
+
+  function getLibUrl(m: ApiMedia): string {
+    const v = m.variants as Array<{ url: string; format: string; width: number }> | null;
+    if (!Array.isArray(v) || v.length === 0) return '';
+    return (v.find(x => x.format === 'webp' && x.width === 720) ?? v[0])?.url ?? '';
+  }
+
+  async function loadMedia() {
+    try { setMediaLib(await apiGetMedia()); } catch { /* silent */ }
+  }
+
+  async function handlePhotoUpload(files: FileList | null) {
+    if (!files?.length) return;
+    setUploading(true);
+    try {
+      const { uploads } = await apiUploadMedia(files);
+      await loadMedia();
+      if (uploads[0]) setEditing(p => p ? { ...p, image: getLibUrl(uploads[0]) } : p);
+      setShowPicker(false);
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Upload failed');
+    } finally { setUploading(false); }
+  }
 
   const blank: EditingTestimonial = { id: '', name: '', designation: '', message: '', image: '', featured: false };
 
@@ -501,7 +758,7 @@ function TestimonialsPanel() {
     }
   }
 
-  useEffect(() => { loadItems(); }, []);
+  useEffect(() => { loadItems(); loadMedia(); }, []);
 
   async function handleSave() {
     if (!editing || !editing.name.trim() || !editing.message.trim()) return;
@@ -585,12 +842,57 @@ function TestimonialsPanel() {
             <Field label="Quote">
               <Textarea value={editing.message} onChange={v => setEditing(p => p ? { ...p, message: v } : p)} placeholder="What did they say?" rows={3} />
             </Field>
-            <Field label="Photo URL" hint="Paste a direct image URL">
-              <Input value={editing.image} onChange={v => setEditing(p => p ? { ...p, image: v } : p)} placeholder="https://example.com/photo.jpg" />
-              {editing.image && (
-                <img src={editing.image} alt="" className="mt-2 w-16 h-16 object-cover rounded-full border border-line" />
+            <div>
+              <p className="text-xs font-medium text-stone uppercase tracking-wider mb-2">Client Photo</p>
+              {editing.image ? (
+                <div className="flex items-center gap-3">
+                  <img src={editing.image} alt="" className="w-14 h-14 object-cover rounded-full border border-line shrink-0" />
+                  <div className="flex gap-2">
+                    <Btn size="sm" variant="ghost" onClick={() => setShowPicker(p => !p)}><Edit2 size={12} /> Change</Btn>
+                    <Btn size="sm" variant="danger" onClick={() => setEditing(p => p ? { ...p, image: '' } : p)}><X size={12} /></Btn>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex gap-2">
+                  <Btn size="sm" variant="ghost" onClick={() => setShowPicker(p => !p)}><ImageUp size={12} /> Choose from Media</Btn>
+                  <label className="cursor-pointer">
+                    <input ref={uploadRef} type="file" accept="image/*" className="hidden" onChange={e => handlePhotoUpload(e.target.files)} />
+                    <Btn size="sm" variant="ghost" onClick={() => uploadRef.current?.click()} disabled={uploading}>
+                      <Plus size={12} /> {uploading ? 'Uploading…' : 'Upload New'}
+                    </Btn>
+                  </label>
+                </div>
               )}
-            </Field>
+              {showPicker && (
+                <div className="mt-3 border border-line rounded-xl p-3 bg-surface-2">
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-xs text-stone">Click a photo to select</p>
+                    <label className="cursor-pointer">
+                      <input type="file" accept="image/*" className="hidden" onChange={e => handlePhotoUpload(e.target.files)} />
+                      <Btn size="sm" variant="ghost" onClick={() => uploadRef.current?.click()} disabled={uploading}>
+                        <Plus size={12} /> {uploading ? 'Uploading…' : 'Upload New'}
+                      </Btn>
+                    </label>
+                  </div>
+                  {mediaLib.length === 0 ? (
+                    <p className="text-stone/50 text-xs py-4 text-center">No images uploaded yet.</p>
+                  ) : (
+                    <div className="grid grid-cols-4 sm:grid-cols-5 lg:grid-cols-6 gap-2 max-h-48 overflow-y-auto pr-1">
+                      {mediaLib.map(m => {
+                        const url = getLibUrl(m);
+                        if (!url) return null;
+                        return (
+                          <button key={m.id} onClick={() => { setEditing(p => p ? { ...p, image: url } : p); setShowPicker(false); }}
+                            className={`relative rounded-full overflow-hidden border-2 aspect-square transition-colors ${editing.image === url ? 'border-accent' : 'border-transparent hover:border-accent/50'}`}>
+                            <img src={url} alt={m.originalName} className="w-full h-full object-cover" />
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
           <div className="flex items-center gap-2 mt-4">
             <input type="checkbox" id="feat" checked={editing.featured}
@@ -600,7 +902,7 @@ function TestimonialsPanel() {
           </div>
           <div className="flex gap-2 mt-5">
             <Btn onClick={handleSave} disabled={saving}><Save size={13} /> {saving ? 'Saving…' : 'Save'}</Btn>
-            <Btn variant="ghost" onClick={() => setEditing(null)}><X size={13} /> Cancel</Btn>
+            <Btn variant="ghost" onClick={() => { setEditing(null); setShowPicker(false); }}><X size={13} /> Cancel</Btn>
           </div>
         </Card>
       )}
@@ -1534,12 +1836,13 @@ const NAV_ITEMS: Array<{ id: Panel; label: string; icon: React.ElementType }> = 
   { id: 'media',        label: 'Media',        icon: ImageUp },
   { id: 'projects',     label: 'Projects',     icon: Grid },
   { id: 'categories',   label: 'Categories',   icon: FolderOpen },
+  { id: 'capabilities', label: 'Capabilities', icon: PackageOpen },
   { id: 'testimonials', label: 'Testimonials', icon: Star },
   { id: 'leads',        label: 'Leads',        icon: Inbox },
   { id: 'content',      label: 'Site Content', icon: Type },
 ];
 
-const VALID_PANELS = new Set<Panel>(['dashboard', 'media', 'projects', 'categories', 'testimonials', 'leads', 'content', 'settings']);
+const VALID_PANELS = new Set<Panel>(['dashboard', 'media', 'projects', 'categories', 'capabilities', 'testimonials', 'leads', 'content', 'settings']);
 
 function getPanelFromHash(): Panel {
   const hash = window.location.hash.slice(1) as Panel;
@@ -1593,7 +1896,8 @@ export function AdminShell() {
   }
 
   function navigatePanel(p: Panel) {
-    window.history.replaceState(null, '', `/admin#${p}`);
+    // Use location.hash assignment — doesn't trigger popstate, doesn't affect main app routing
+    window.location.hash = p;
     setPanel(p);
     setMobileOpen(false);
   }
@@ -1603,6 +1907,7 @@ export function AdminShell() {
     media:        'Media Library',
     projects:     'Projects',
     categories:   'Categories',
+    capabilities: 'Capabilities',
     testimonials: 'Testimonials',
     leads:        'Leads Inbox',
     content:      'Site Content',
@@ -1669,6 +1974,7 @@ export function AdminShell() {
           {panel === 'media' && <MediaPanel />}
           {panel === 'projects' && <ProjectsPanel />}
           {panel === 'categories' && <CategoriesPanel />}
+          {panel === 'capabilities' && <CapabilitiesPanel />}
           {panel === 'testimonials' && <TestimonialsPanel />}
           {panel === 'leads' && <LeadsPanel />}
           {panel === 'content' && <ContentPanel />}
