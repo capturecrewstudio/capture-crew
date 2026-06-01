@@ -1,17 +1,19 @@
-import { clearSession } from './adminAuth';
+import { clearSession, getToken } from './adminAuth';
 
 const BASE = import.meta.env.VITE_API_BASE_URL ?? '/api';
 
 async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
+  const token = getToken();
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
     ...(init?.headers as Record<string, string> ?? {}),
   };
 
   const res = await fetch(`${BASE}${path}`, {
     ...init,
     headers,
-    credentials: 'include', // sends httpOnly cookie automatically
+    credentials: 'include', // sends httpOnly cookie + works with Bearer fallback
   });
 
   if (res.status === 401) {
@@ -170,9 +172,11 @@ export async function apiUploadMedia(files: FileList): Promise<{ uploads: ApiMed
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 120_000);
 
+  const token = getToken();
   const res = await fetch(`${BASE}/media/upload`, {
     method: 'POST',
     credentials: 'include',
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
     body: formData,
     signal: controller.signal,
   }).finally(() => clearTimeout(timer));

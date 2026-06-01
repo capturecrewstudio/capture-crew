@@ -38,7 +38,8 @@ router.post('/login', authLimiter, async (req, res) => {
     path: '/',
   });
 
-  res.json({ user: { id: user.id, email: user.email, role: user.role } });
+  // Return token in body as fallback for cross-domain cookie issues
+  res.json({ token, user: { id: user.id, email: user.email, role: user.role } });
 });
 
 router.post('/logout', (_req, res) => {

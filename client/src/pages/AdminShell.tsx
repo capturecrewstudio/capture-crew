@@ -5,7 +5,7 @@ import {
   Plus, Save, Star, Trash2, Type, X
 } from 'lucide-react';
 import {
-  isLoggedIn, getAdminUser, saveSession, clearSession, type AdminUser,
+  isLoggedIn, getAdminUser, getToken, saveSession, clearSession, type AdminUser,
 } from '../lib/adminAuth';
 import {
   apiLogin,
@@ -1551,18 +1551,27 @@ export function AdminShell() {
   const [panel, setPanel] = useState<Panel>(getPanelFromHash);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // Verify session with server on every mount — catches expired cookies
+  // Verify session with server on every mount
   useEffect(() => {
-    fetch('/api/auth/me', { credentials: 'include' })
+    const token = getToken();
+    fetch('/api/auth/me', {
+      credentials: 'include',
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+    })
       .then(r => {
         if (r.ok) return r.json().then((d: { user: AdminUser }) => {
           saveSession('', d.user);
           setLoggedIn(true);
         });
-        clearSession();
-        setLoggedIn(false);
+        // Only clear session on explicit 401 — not network errors or CORS
+        if (r.status === 401) { clearSession(); setLoggedIn(false); return; }
+        // Any other error — trust localStorage state
+        setLoggedIn(isLoggedIn());
       })
-      .catch(() => setLoggedIn(isLoggedIn()));
+      .catch(() => {
+        // Network error — trust localStorage state rather than log out
+        setLoggedIn(isLoggedIn());
+      });
   }, []);
 
   if (loggedIn === null) {

@@ -6,7 +6,7 @@ export const globalLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   message: { message: 'Too many requests, please try again later.' },
-  skip: (req) => !!req.cookies?.cc_admin_token,
+  skip: (req) => !!req.cookies?.cc_admin_token || !!req.headers.authorization?.startsWith('Bearer '),
 });
 
 export const authLimiter = rateLimit({
