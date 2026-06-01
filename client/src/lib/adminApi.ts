@@ -110,11 +110,15 @@ export async function apiUploadMedia(files: FileList): Promise<{ uploads: ApiMed
   const formData = new FormData();
   Array.from(files).forEach((f) => formData.append('images', f));
 
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 120_000);
+
   const res = await fetch(`${BASE}/media/upload`, {
     method: 'POST',
     headers: token ? { Authorization: `Bearer ${token}` } : {},
     body: formData,
-  });
+    signal: controller.signal,
+  }).finally(() => clearTimeout(timer));
 
   if (res.status === 401) { clearSession(); window.location.reload(); throw new Error('Session expired'); }
   if (!res.ok) { const e = await res.json().catch(() => ({ message: 'Upload failed' })); throw new Error((e as {message?:string}).message ?? 'Upload failed'); }

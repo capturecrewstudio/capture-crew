@@ -35,27 +35,25 @@ export async function uploadOptimizedImage(file: UploadFile, folder = 'portfolio
 
   const safeName = file.originalname.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   const stamp = Date.now();
-  const widths = [720, 1280, 1920];
+  const widths = [720, 1280];
   const variants: UploadVariant[] = [];
 
   for (const width of widths) {
-    for (const format of ['webp', 'avif'] as const) {
-      const body = await sharp(file.buffer)
-        .resize({ width, withoutEnlargement: true })
-        .toFormat(format, { quality: format === 'avif' ? 58 : 78 })
-        .toBuffer();
-      const key = `${folder}/${stamp}-${width}-${safeName}.${format}`;
+    const body = await sharp(file.buffer)
+      .resize({ width, withoutEnlargement: true })
+      .webp({ quality: 78 })
+      .toBuffer();
+    const key = `${folder}/${stamp}-${width}-${safeName}.webp`;
 
-      await s3.send(new PutObjectCommand({
-        Bucket: env.R2_BUCKET,
-        Key: key,
-        Body: body,
-        ContentType: `image/${format}`,
-        CacheControl: 'public, max-age=31536000, immutable'
-      }));
+    await s3.send(new PutObjectCommand({
+      Bucket: env.R2_BUCKET,
+      Key: key,
+      Body: body,
+      ContentType: 'image/webp',
+      CacheControl: 'public, max-age=31536000, immutable'
+    }));
 
-      variants.push({ key, url: publicUrl(key), width, format });
-    }
+    variants.push({ key, url: publicUrl(key), width, format: 'webp' });
   }
 
   const placeholder = await sharp(file.buffer)

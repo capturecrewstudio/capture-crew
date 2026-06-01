@@ -9,7 +9,7 @@ const testimonialSchema = z.object({
   name: z.string().min(2),
   designation: z.string().optional(),
   message: z.string().min(10),
-  image: z.string().url().optional(),
+  image: z.string().optional(),
   featured: z.boolean().default(false),
 });
 

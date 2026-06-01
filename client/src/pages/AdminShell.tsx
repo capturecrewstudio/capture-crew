@@ -368,6 +368,7 @@ function MediaPanel() {
     }
   }
 
+
   useEffect(() => { loadMedia(); }, []);
 
   async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
@@ -386,8 +387,10 @@ function MediaPanel() {
   }
 
   function getImageUrl(m: ApiMedia): string {
-    const v = m.variants as Record<string, { url?: string }> | null;
-    return v?.webp?.url ?? v?.jpeg?.url ?? '';
+    const v = m.variants as Array<{ url: string; format: string; width: number }> | null;
+    if (!Array.isArray(v) || v.length === 0) return '';
+    const webp = v.find(x => x.format === 'webp' && x.width === 720) ?? v[0];
+    return webp?.url ?? '';
   }
 
   return (

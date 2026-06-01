@@ -334,17 +334,17 @@ export function HomePage({ onNavigate, onSelectCategory }: Props) {
               </div>
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
                 {[
-                  { name: 'Kartik Kanda', role: 'Founder · DOP', sub: 'Director of Photography', img: '/assets/team/kartik-kanda.jpeg', pos: '50% 15%', scale: '1.8' },
-                  { name: 'Amrita Sharma', role: 'Art Director', sub: 'Script Writer · Social Media', img: '/assets/team/amrita-sharma.jpeg', pos: '50% top', scale: '1' },
-                  { name: 'Parvin Kumar', role: 'Head Colorist & Editor', sub: 'Sound Designer', img: '/assets/team/parvin-kumar.jpeg', pos: '50% top', scale: '1' },
-                  { name: 'Pukhraj Singh', role: 'Cinematographer', sub: 'Videographer · Cinematographer', img: '/assets/team/pukhraj-singh.jpeg', pos: '50% top', scale: '1' },
+                  { name: 'Kartik Kanda', role: 'Founder · DOP', sub: 'Director of Photography', img: '/assets/team/kartik-kanda.jpeg', pos: '50% 15%', scale: '1.8', origin: 'center 20%', offsetY: '0px', fit: 'cover' },
+                  { name: 'Amrita Sharma', role: 'Art Director', sub: 'Script Writer · Social Media', img: '/assets/team/amrita-sharma.jpeg', pos: '50% top', scale: '1', origin: 'center 20%', offsetY: '0px', fit: 'cover' },
+                  { name: 'Sourav Kashyap', role: 'Mobile App Developer', sub: 'Apps · Web Development', img: '/assets/team/sourav-kashyap.jpeg', pos: '50% 50%', scale: '1.3', origin: 'center center', offsetY: '0px', fit: 'contain' },
+                  { name: 'Pukhraj Singh', role: 'Cinematographer', sub: 'Videographer · Cinematographer', img: '/assets/team/pukhraj-singh.jpeg', pos: '50% top', scale: '1', origin: 'center 20%', offsetY: '0px', fit: 'cover' },
                 ].map((member) => (
                   <div key={member.name} className="group flex flex-col items-center text-center gap-4">
                     <div
                       className="relative rounded-full overflow-hidden transition-transform duration-500 group-hover:scale-105"
                       style={{ width: 'clamp(120px, 18vw, 180px)', height: 'clamp(120px, 18vw, 180px)', border: '2px solid var(--line-mid)', boxShadow: '0 0 0 4px var(--bg), 0 0 0 5px var(--line-mid)', flexShrink: 0 }}
                     >
-                      <img src={member.img} alt={member.name} className="w-full h-full object-cover" style={{ objectPosition: member.pos, transform: `scale(${member.scale})`, transformOrigin: 'center 20%' }} />
+                      <img src={member.img} alt={member.name} className="w-full h-full" style={{ objectFit: member.fit as 'cover' | 'contain', objectPosition: member.pos, transform: `scale(${member.scale}) translateY(${member.offsetY ?? '0px'})`, transformOrigin: member.origin }} />
                       <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-30 transition-opacity duration-500" style={{ background: 'var(--accent-glow)' }} />
                     </div>
                     <div className="flex flex-col gap-1">
