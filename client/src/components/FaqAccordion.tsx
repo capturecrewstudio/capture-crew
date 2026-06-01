@@ -1,6 +1,6 @@
-import { useRef, useState, useSyncExternalStore } from 'react';
+import { useRef, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-import { getSiteContent, subscribeAdminStore } from '../lib/adminStore';
+import { useSiteData } from '../lib/siteData';
 
 function AccordionItem({ faq, isOpen, onToggle }: { faq: { q: string; a: string }; isOpen: boolean; onToggle: () => void }) {
   const bodyRef = useRef<HTMLDivElement>(null);
@@ -55,7 +55,7 @@ function AccordionItem({ faq, isOpen, onToggle }: { faq: { q: string; a: string 
 
 export function FaqAccordion() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
-  const content = useSyncExternalStore(subscribeAdminStore, getSiteContent);
+  const { content } = useSiteData();
 
   return (
     <section className="my-20 xl:my-28 relative z-10 px-4 sm:px-6 max-w-4xl mx-auto">

@@ -15,6 +15,92 @@ const CATEGORIES = [
   { name: 'Weddings',         slug: 'weddings',      description: 'Cinematic wedding films and editorial portraits for luxury ceremonies.' },
 ];
 
+// Base URL for local public assets (served from Vite in dev, or as static files)
+const BASE = '';
+
+const PORTFOLIO_PROJECTS = [
+  {
+    title: 'Maison Aster',
+    slug: 'maison-aster',
+    categorySlug: 'architecture',
+    location: 'Bengaluru',
+    year: '2026',
+    client: 'AM Studio',
+    services: ['Architecture photography', 'Launch film', 'Website image library'],
+    coverImage: `${BASE}/assets/media/architecture-hero.jpeg`,
+    summary: 'A restrained residential story told through stone, shadow, glass, and late-afternoon light.',
+    narrative: 'The brief was to make a private residence feel architectural without becoming cold. We built the shoot around threshold moments, warm interior spill, and exterior lines that give the project a quiet cinematic gravity.',
+    featured: true,
+    gallery: [
+      '/assets/media/architecture-hero.jpeg',
+      '/assets/media/architecture-detail-1.jpeg',
+      '/assets/media/architecture-detail-2.jpeg',
+      '/assets/media/interiors-hero.jpeg',
+      '/assets/media/commercial-hero.jpeg',
+    ],
+  },
+  {
+    title: 'The Gilded Room',
+    slug: 'the-gilded-room',
+    categorySlug: 'interiors',
+    location: 'Mumbai',
+    year: '2025',
+    client: 'Solenne Hospitality',
+    services: ['Interior photography', 'Brand imagery', 'Social cutdowns'],
+    coverImage: `${BASE}/assets/media/interiors-hero.jpeg`,
+    summary: 'Editorial interiors crafted for a private hospitality concept and its launch campaign.',
+    narrative: 'A layered shoot balancing texture, service rituals, and intimate corners. The final library supported the launch website, press features, booking campaigns, and investor material.',
+    featured: true,
+    gallery: [
+      '/assets/media/interiors-hero.jpeg',
+      '/assets/media/interiors-detail-1.jpeg',
+      '/assets/media/interiors-detail-2.jpeg',
+      '/assets/media/architecture-hero.jpeg',
+      '/assets/media/product-hero.jpeg',
+    ],
+  },
+  {
+    title: 'Noir Atelier',
+    slug: 'noir-atelier',
+    categorySlug: 'fashion',
+    location: 'Paris',
+    year: '2025',
+    client: 'Noir Atelier',
+    services: ['Campaign photography', 'Motion portraits', 'Lookbook'],
+    coverImage: `${BASE}/assets/media/fashion-hero.jpeg`,
+    summary: 'A campaign system balancing cinematic portraiture, movement, and sculptural negative space.',
+    narrative: 'The wardrobe had a strong graphic silhouette, so the image language leaned into controlled motion, architectural backgrounds, and skin-toned warmth against black styling.',
+    featured: true,
+    gallery: [
+      '/assets/media/fashion-hero.jpeg',
+      '/assets/media/fashion-detail-1.jpeg',
+      '/assets/media/fashion-detail-2.jpeg',
+      '/assets/media/gallery-detail.jpeg',
+      '/assets/media/product-hero.jpeg',
+    ],
+  },
+  {
+    title: 'Object 07',
+    slug: 'object-07',
+    categorySlug: 'product',
+    location: 'Delhi',
+    year: '2026',
+    client: 'Kanso Objects',
+    services: ['Product photography', 'Packaging imagery', 'Web assets'],
+    coverImage: `${BASE}/assets/media/product-hero.jpeg`,
+    summary: 'A tactile product system for objects that needed to feel collectible, minimal, and rare.',
+    narrative: 'We created a modular product language that can scale across hero banners, thumbnails, product detail pages, and campaign placements without losing the luxury character.',
+    featured: false,
+    gallery: [
+      '/assets/media/product-hero.jpeg',
+      '/assets/media/product-detail-1.jpeg',
+      '/assets/media/product-detail-2.jpeg',
+      '/assets/media/food-hero.jpeg',
+      '/assets/media/gallery-detail.jpeg',
+    ],
+  },
+];
+
 const TESTIMONIALS = [
   {
     name: 'Aarav Mehta',
@@ -164,6 +250,45 @@ async function main() {
     });
   }
   console.log(`✓ ${CATEGORIES.length} categories seeded`);
+
+  // ── Portfolio projects ───────────────────────────────────────────────────────
+  const existingProjects = await prisma.project.count();
+  if (existingProjects === 0) {
+    for (const p of PORTFOLIO_PROJECTS) {
+      const category = await prisma.category.findUnique({ where: { slug: p.categorySlug } });
+      if (!category) { console.warn(`  ⚠ Category not found: ${p.categorySlug}`); continue; }
+
+      const project = await prisma.project.create({
+        data: {
+          title: p.title,
+          slug: p.slug,
+          categoryId: category.id,
+          coverImage: p.coverImage,
+          summary: p.summary,
+          narrative: p.narrative,
+          location: p.location,
+          year: p.year,
+          client: p.client,
+          services: p.services,
+          featured: p.featured,
+        },
+      });
+
+      for (let i = 0; i < p.gallery.length; i++) {
+        await prisma.projectImage.create({
+          data: {
+            projectId: project.id,
+            imageUrl: p.gallery[i],
+            sortOrder: i,
+          },
+        });
+      }
+      console.log(`  ✓ Project seeded: ${p.title}`);
+    }
+    console.log(`✓ ${PORTFOLIO_PROJECTS.length} projects seeded`);
+  } else {
+    console.log(`· Projects already exist (${existingProjects}), skipping`);
+  }
 
   // ── Testimonials ────────────────────────────────────────────────────────────
   const existingTestimonials = await prisma.testimonial.count();

@@ -1,5 +1,5 @@
-import React, { useSyncExternalStore } from 'react';
-import { getSiteContent, subscribeAdminStore } from '../lib/adminStore';
+import React from 'react';
+import { useSiteData } from '../lib/siteData';
 
 
 type SocialLink = {
@@ -87,7 +87,7 @@ const LINK_DEFS: Omit<SocialLink, 'href'>[] = [
 ];
 
 export function SocialDock() {
-  const content = useSyncExternalStore(subscribeAdminStore, getSiteContent);
+  const { content } = useSiteData();
   const dock = content.socialDock;
 
   const LINKS: SocialLink[] = LINK_DEFS.map(def => ({

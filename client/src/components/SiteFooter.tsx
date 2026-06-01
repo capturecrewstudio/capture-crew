@@ -1,7 +1,6 @@
-import { useSyncExternalStore } from 'react';
 import { ArrowUpRight, Mail, Phone, MapPin } from 'lucide-react';
 import type { RouteName } from '../App';
-import { getSiteContent, subscribeAdminStore } from '../lib/adminStore';
+import { useSiteData } from '../lib/siteData';
 
 type Props = {
   onNavigate: (route: RouteName) => void;
@@ -78,7 +77,7 @@ const SOCIALS = [
 ];
 
 export function SiteFooter({ onNavigate }: Props) {
-  const content = useSyncExternalStore(subscribeAdminStore, getSiteContent);
+  const { content } = useSiteData();
 
   return (
     <footer

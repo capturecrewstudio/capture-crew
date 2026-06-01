@@ -1,4 +1,4 @@
-import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { PutObjectCommand, DeleteObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
 import { env } from '../config/env.js';
 
@@ -67,4 +67,13 @@ export async function uploadOptimizedImage(file: UploadFile, folder = 'portfolio
     variants,
     blurDataUrl: `data:image/webp;base64,${placeholder.toString('base64')}`
   };
+}
+
+export async function deleteImages(keys: string[]) {
+  if (!env.R2_BUCKET || !keys.length) return;
+  await Promise.all(
+    keys.map(key =>
+      s3.send(new DeleteObjectCommand({ Bucket: env.R2_BUCKET!, Key: key }))
+    )
+  );
 }

@@ -1,7 +1,7 @@
 
 import { ArrowRight, Award, Users, ShieldCheck, Phone, Mail, MapPin } from 'lucide-react';
-import { useEffect, useState, useSyncExternalStore } from 'react';
-import { getSiteContent, subscribeAdminStore } from '../lib/adminStore';
+import { useEffect, useState } from 'react';
+import { useSiteData } from '../lib/siteData';
 import type { RouteName } from '../App';
 import { LeadForm } from '../components/LeadForm';
 import { GradientButton } from '../components/GradientButton';
@@ -123,7 +123,7 @@ type Props = {
 
 export function HomePage({ onNavigate, onSelectCategory }: Props) {
   const [selectedPackage, setSelectedPackage] = useState<string | undefined>();
-  const content = useSyncExternalStore(subscribeAdminStore, getSiteContent);
+  const { content } = useSiteData();
 
   return (
     <main

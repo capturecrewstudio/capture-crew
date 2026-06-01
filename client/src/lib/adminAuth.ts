@@ -1,28 +1,32 @@
-const TOKEN_KEY = 'cc-admin-token';
 const USER_KEY = 'cc-admin-user';
 
 export type AdminUser = { id: string; email: string; role: string };
 
+// Token is stored in httpOnly cookie by the server — never accessible here.
+// We only store the non-sensitive user profile in localStorage for display.
+
 export function getToken(): string | null {
-  return sessionStorage.getItem(TOKEN_KEY);
+  // Token is in httpOnly cookie — not readable by JS.
+  // Return a placeholder so apiFetch includes credentials.
+  return 'cookie';
 }
 
 export function getAdminUser(): AdminUser | null {
-  const raw = sessionStorage.getItem(USER_KEY);
+  const raw = localStorage.getItem(USER_KEY);
   if (!raw) return null;
   try { return JSON.parse(raw) as AdminUser; } catch { return null; }
 }
 
-export function saveSession(token: string, user: AdminUser): void {
-  sessionStorage.setItem(TOKEN_KEY, token);
-  sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+export function saveSession(_token: string, user: AdminUser): void {
+  // Token is set as httpOnly cookie by server — we only store display info
+  localStorage.setItem(USER_KEY, JSON.stringify(user));
 }
 
 export function clearSession(): void {
-  sessionStorage.removeItem(TOKEN_KEY);
-  sessionStorage.removeItem(USER_KEY);
+  localStorage.removeItem(USER_KEY);
 }
 
 export function isLoggedIn(): boolean {
-  return !!getToken();
+  // Can't read httpOnly cookie — check if we have stored user info
+  return !!getAdminUser();
 }

@@ -1,67 +1,18 @@
 import { ArrowUpRight } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-
-// Each tile has multiple images that crossfade automatically
-const tiles = [
-  {
-    label: 'Architecture',
-    slug: 'architecture',
-    images: [
-      '/assets/media/architecture-hero.jpeg',
-      '/assets/media/architecture-night.png',
-    ],
-  },
-  {
-    label: 'Fashion',
-    slug: 'fashion',
-    images: [
-      '/assets/media/fashion-hero.jpeg',
-      '/assets/media/fashion-editorials-hero.jpeg',
-    ],
-  },
-  {
-    label: 'Interiors',
-    slug: 'interiors',
-    images: [
-      '/assets/media/interiors-hero.jpeg',
-      '/assets/media/interiors-panel.jpeg',
-    ],
-  },
-  {
-    label: 'Commercial',
-    slug: 'commercial',
-    images: [
-      '/assets/media/commercial-hero.jpeg',
-      '/assets/media/luxury-brands-hero.jpeg',
-    ],
-  },
-  {
-    label: 'Product',
-    slug: 'product',
-    images: [
-      '/assets/media/product-hero.jpeg',
-      '/assets/media/product-shoots-hero.jpeg',
-    ],
-  },
-  {
-    label: 'Real Estate',
-    slug: 'real-estate',
-    images: [
-      '/assets/media/real-estate-hero.jpeg',
-      '/assets/media/real-estate-panel.jpeg',
-    ],
-  },
-];
+import { apiGetProjects, apiGetCategories, type ApiCategory, type ApiProject } from '../lib/adminApi';
 
 const CYCLE_MS = 3200;
 const FADE_MS = 900;
 
-function GalleryTile({
-  tile,
-  onSelectCategory,
-  staggerMs,
-}: {
-  tile: (typeof tiles)[number];
+type Tile = {
+  label: string;
+  slug: string;
+  images: string[];
+};
+
+function GalleryTile({ tile, onSelectCategory, staggerMs }: {
+  tile: Tile;
   onSelectCategory?: (slug: string) => void;
   staggerMs: number;
 }) {
@@ -73,7 +24,7 @@ function GalleryTile({
     if (tile.images.length < 2) return;
     const start = () => {
       timerRef.current = setTimeout(() => {
-        setActiveIdx((prev) => {
+        setActiveIdx(prev => {
           const next = (prev + 1) % tile.images.length;
           setFadingIdx(next);
           setTimeout(() => setFadingIdx(null), FADE_MS);
@@ -82,7 +33,6 @@ function GalleryTile({
         start();
       }, CYCLE_MS);
     };
-    // Stagger each tile so they don't all switch at the same time
     const init = setTimeout(start, staggerMs);
     return () => { clearTimeout(init); clearTimeout(timerRef.current); };
   }, [tile.images.length, staggerMs]);
@@ -94,7 +44,6 @@ function GalleryTile({
       role={onSelectCategory ? 'button' : undefined}
       aria-label={onSelectCategory ? `View ${tile.label} portfolio` : undefined}
     >
-      {/* All images stacked — active one on top */}
       {tile.images.map((src, i) => (
         <img
           key={src}
@@ -110,29 +59,18 @@ function GalleryTile({
         />
       ))}
 
-      {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent z-10 opacity-70 group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="absolute inset-0 z-10 opacity-0 group-hover:opacity-[0.08] transition-opacity duration-500" style={{ background: 'var(--accent)' }} />
 
-      {/* Accent tint on hover */}
-      <div
-        className="absolute inset-0 z-10 opacity-0 group-hover:opacity-[0.08] transition-opacity duration-500"
-        style={{ background: 'var(--accent)' }}
-      />
-
-      {/* Image counter dots */}
       {tile.images.length > 1 && (
         <div className="absolute top-3 right-3 z-20 flex gap-1">
           {tile.images.map((_, i) => (
-            <span
-              key={i}
-              className="w-1.5 h-1.5 rounded-full transition-all duration-500"
-              style={{ background: i === activeIdx ? 'var(--accent)' : 'rgba(255,255,255,0.3)' }}
-            />
+            <span key={i} className="w-1.5 h-1.5 rounded-full transition-all duration-500"
+              style={{ background: i === activeIdx ? 'var(--accent)' : 'rgba(255,255,255,0.3)' }} />
           ))}
         </div>
       )}
 
-      {/* Caption */}
       <figcaption className="absolute left-4 bottom-4 right-4 z-20 flex items-center justify-between">
         <span className="text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-ivory drop-shadow-sm">
           {tile.label}
@@ -151,39 +89,56 @@ type Props = {
 };
 
 export function GalleryTeaser({ onSeeAll, onSelectCategory }: Props) {
+  const [tiles, setTiles] = useState<Tile[]>([]);
+
+  useEffect(() => {
+    Promise.all([apiGetCategories(), apiGetProjects()])
+      .then(([cats, projects]) => {
+        // Build tiles from categories — use project images for each category
+        const built: Tile[] = cats.map((cat: ApiCategory) => {
+          const catProjects = projects.filter((p: ApiProject) => p.category.slug === cat.slug);
+          // Collect up to 2 images: cover images from projects in this category
+          const images = catProjects
+            .filter(p => p.coverImage)
+            .map(p => p.coverImage as string)
+            .slice(0, 2);
+          return { label: cat.name, slug: cat.slug, images };
+        }).filter((t: Tile) => t.images.length > 0); // only show categories that have images
+        setTiles(built);
+      })
+      .catch(console.error);
+  }, []);
+
   return (
     <section className="relative z-10 px-4 sm:px-6 max-w-7xl mx-auto">
-      {/* Header — centered */}
       <div className="flex flex-col items-center text-center gap-5 mb-12">
         <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 300 }} className="text-[0.65rem] uppercase tracking-[0.26em] text-accent">
           Recent Frames
         </span>
-        <h2
-          className="text-ivory"
-          style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300, fontSize: 'clamp(2.4rem, 5vw, 5rem)', lineHeight: 1.05 }}
-        >
+        <h2 className="text-ivory" style={{ fontFamily: "'Cormorant Garant', serif", fontWeight: 300, fontSize: 'clamp(2.4rem, 5vw, 5rem)', lineHeight: 1.05 }}>
           A peek inside the archive.
         </h2>
         <button
           onClick={onSeeAll}
           className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-semibold text-ivory/70 hover:text-ivory border border-linemid hover:border-accent/40 rounded-full px-5 py-3 transition-all duration-300 hover:-translate-y-0.5"
         >
-          See full portfolio
-          <ArrowUpRight size={14} />
+          See full portfolio <ArrowUpRight size={14} />
         </button>
       </div>
 
-      {/* Uniform 3-col grid — all cards same size */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
-        {tiles.map((tile, i) => (
-          <GalleryTile
-            key={tile.slug}
-            tile={tile}
-            onSelectCategory={onSelectCategory}
-            staggerMs={i * 800}
-          />
-        ))}
-      </div>
+      {tiles.length > 0 ? (
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+          {tiles.map((tile, i) => (
+            <GalleryTile key={tile.slug} tile={tile} onSelectCategory={onSelectCategory} staggerMs={i * 800} />
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 opacity-40">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="aspect-square rounded-2xl border border-line bg-surface animate-pulse" />
+          ))}
+        </div>
+      )}
     </section>
   );
 }

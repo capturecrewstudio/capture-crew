@@ -17,7 +17,9 @@ declare global {
 }
 
 export function requireAdmin(req: Request, res: Response, next: NextFunction) {
-  const token = req.header('authorization')?.replace('Bearer ', '');
+  // Check httpOnly cookie first, fall back to Authorization header
+  const token = req.cookies?.cc_admin_token
+    ?? req.header('authorization')?.replace('Bearer ', '');
 
   if (!token) {
     return res.status(401).json({ message: 'Authentication required' });
@@ -31,6 +33,6 @@ export function requireAdmin(req: Request, res: Response, next: NextFunction) {
     req.user = payload;
     next();
   } catch {
-    res.status(401).json({ message: 'Invalid token' });
+    res.status(401).json({ message: 'Invalid or expired token' });
   }
 }

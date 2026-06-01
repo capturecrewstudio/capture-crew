@@ -43,6 +43,12 @@ model Project {
   title       String
   slug        String         @unique
   description String?
+  summary     String?
+  narrative   String?
+  location    String?
+  year        String?
+  client      String?
+  services    Json           @default("[]")
   categoryId  String
   category    Category       @relation(fields: [categoryId], references: [id])
   coverImage  String?

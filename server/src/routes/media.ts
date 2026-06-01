@@ -2,7 +2,7 @@ import { Router } from 'express';
 import multer from 'multer';
 import { requireAdmin } from '../middleware/auth.js';
 import { uploadLimiter } from '../middleware/rateLimit.js';
-import { uploadOptimizedImage } from '../services/s3.js';
+import { uploadOptimizedImage, deleteImages } from '../services/s3.js';
 import { prisma } from '../config/prisma.js';
 
 const router = Router();
@@ -60,6 +60,25 @@ router.get('/', requireAdmin, async (_req, res) => {
     res.json(media);
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Failed to fetch media';
+    res.status(500).json({ message });
+  }
+});
+
+router.delete('/:id', requireAdmin, async (req, res) => {
+  try {
+    const record = await prisma.media.findUnique({ where: { id: req.params.id as string } });
+    if (!record) return res.status(404).json({ message: 'Media not found' });
+
+    // Delete all variant files from R2
+    const variants = record.variants as Array<{ key: string }> | null;
+    if (Array.isArray(variants)) {
+      await deleteImages(variants.map(v => v.key).filter(Boolean));
+    }
+
+    await prisma.media.delete({ where: { id: record.id } });
+    res.status(204).end();
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Failed to delete media';
     res.status(500).json({ message });
   }
 });

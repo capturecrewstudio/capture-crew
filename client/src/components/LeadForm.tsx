@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { Send, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
-import { submitLead } from '../lib/api';
-import { addLead } from '../lib/adminStore';
 
 const SERVICES = [
   'Architecture',
@@ -40,17 +38,21 @@ export function LeadForm({ selectedPackage }: Props) {
     setStatus('sending');
     setErrorMsg('');
 
-    // Always save to local admin store so leads appear in the admin panel
-    addLead(payload);
-
     try {
-      await submitLead(payload);
+      const res = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ message: 'Submission failed' }));
+        throw new Error(err.message ?? 'Submission failed');
+      }
       form.reset();
       setStatus('sent');
-    } catch {
-      // Server not running is fine — lead is saved locally
-      form.reset();
-      setStatus('sent');
+    } catch (err) {
+      setErrorMsg(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+      setStatus('error');
     }
   }
 

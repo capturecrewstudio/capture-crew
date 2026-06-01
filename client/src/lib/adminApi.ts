@@ -1,16 +1,18 @@
-import { getToken, clearSession } from './adminAuth';
+import { clearSession } from './adminAuth';
 
 const BASE = import.meta.env.VITE_API_BASE_URL ?? '/api';
 
 async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
-  const token = getToken();
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
-    ...(token ? { Authorization: `Bearer ${token}` } : {}),
     ...(init?.headers as Record<string, string> ?? {}),
   };
 
-  const res = await fetch(`${BASE}${path}`, { ...init, headers });
+  const res = await fetch(`${BASE}${path}`, {
+    ...init,
+    headers,
+    credentials: 'include', // sends httpOnly cookie automatically
+  });
 
   if (res.status === 401) {
     clearSession();
@@ -52,6 +54,58 @@ export async function apiPatchLeadStatus(id: string, status: string): Promise<Ap
 }
 
 // ─── Categories ──────────────────────────────────────────────────────────────
+
+// ─── Projects ─────────────────────────────────────────────────────────────────
+
+export type ApiProjectImage = {
+  id: string; projectId: string; imageUrl: string;
+  avifUrl: string | null; webpUrl: string | null; blurDataUrl: string | null;
+  sortOrder: number; altText: string | null; createdAt: string;
+};
+
+export type ApiProject = {
+  id: string; title: string; slug: string; description: string | null;
+  summary: string | null; narrative: string | null;
+  location: string | null; year: string | null; client: string | null;
+  services: string[];
+  categoryId: string; category: { id: string; name: string; slug: string };
+  coverImage: string | null; featured: boolean;
+  images: ApiProjectImage[]; createdAt: string; updatedAt: string;
+};
+
+export type ProjectPayload = {
+  title: string; description?: string; summary?: string; narrative?: string;
+  location?: string; year?: string; client?: string; services?: string[];
+  categoryId: string; coverImage?: string; featured: boolean;
+};
+
+export async function apiGetProjects(): Promise<ApiProject[]> {
+  return apiFetch('/projects');
+}
+
+export async function apiCreateProject(data: ProjectPayload): Promise<ApiProject> {
+  return apiFetch('/projects', { method: 'POST', body: JSON.stringify(data) });
+}
+
+export async function apiUpdateProject(id: string, data: ProjectPayload): Promise<ApiProject> {
+  return apiFetch(`/projects/${id}`, { method: 'PUT', body: JSON.stringify(data) });
+}
+
+export async function apiDeleteProject(id: string): Promise<void> {
+  return apiFetch(`/projects/${id}`, { method: 'DELETE' });
+}
+
+export async function apiAddProjectImage(projectId: string, data: {
+  imageUrl: string; webpUrl?: string; blurDataUrl?: string; sortOrder?: number; altText?: string;
+}): Promise<ApiProjectImage> {
+  return apiFetch(`/projects/${projectId}/images`, { method: 'POST', body: JSON.stringify(data) });
+}
+
+export async function apiDeleteProjectImage(projectId: string, imageId: string): Promise<void> {
+  return apiFetch(`/projects/${projectId}/images/${imageId}`, { method: 'DELETE' });
+}
+
+// ─── Categories ───────────────────────────────────────────────────────────────
 
 export type ApiCategory = { id: string; name: string; slug: string; createdAt: string };
 
@@ -105,8 +159,11 @@ export async function apiGetMedia(): Promise<ApiMedia[]> {
   return apiFetch('/media');
 }
 
+export async function apiDeleteMedia(id: string): Promise<void> {
+  return apiFetch(`/media/${id}`, { method: 'DELETE' });
+}
+
 export async function apiUploadMedia(files: FileList): Promise<{ uploads: ApiMedia[] }> {
-  const token = getToken();
   const formData = new FormData();
   Array.from(files).forEach((f) => formData.append('images', f));
 
@@ -115,7 +172,7 @@ export async function apiUploadMedia(files: FileList): Promise<{ uploads: ApiMed
 
   const res = await fetch(`${BASE}/media/upload`, {
     method: 'POST',
-    headers: token ? { Authorization: `Bearer ${token}` } : {},
+    credentials: 'include',
     body: formData,
     signal: controller.signal,
   }).finally(() => clearTimeout(timer));

@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Sparkles, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Pause, Play } from 'lucide-react';
-import { getTestimonials, subscribeAdminStore } from '../lib/adminStore';
+import { useSiteData } from '../lib/siteData';
 
 export function TestimonialCarousel() {
-  const allTestimonials = useSyncExternalStore(subscribeAdminStore, getTestimonials);
+  const { testimonials: allTestimonials } = useSiteData();
   // Only show featured ones; fall back to all if none are featured
   const featured = allTestimonials.filter(t => t.featured);
   const testimonials = featured.length > 0 ? featured : allTestimonials;
@@ -133,7 +133,7 @@ export function TestimonialCarousel() {
                     <div className="flex items-center justify-between border-b border-line pb-4 mb-4">
                       <div className="flex items-center gap-3">
                         <img
-                          src={item.image}
+                          src={item.image ?? undefined}
                           alt={item.name}
                           className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border border-line"
                         />

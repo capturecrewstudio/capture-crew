@@ -5,22 +5,25 @@ import {
   Plus, Save, Star, Trash2, Type, X
 } from 'lucide-react';
 import {
-  isLoggedIn, getAdminUser, saveSession, clearSession,
+  isLoggedIn, getAdminUser, saveSession, clearSession, type AdminUser,
 } from '../lib/adminAuth';
 import {
   apiLogin,
   apiGetLeads, apiPatchLeadStatus,
   apiGetCategories, apiCreateCategory, apiDeleteCategory,
   apiGetTestimonials, apiCreateTestimonial, apiUpdateTestimonial, apiDeleteTestimonial,
-  apiGetMedia, apiUploadMedia,
+  apiGetMedia, apiUploadMedia, apiDeleteMedia,
   apiGetContent, apiUpdateContent,
+  apiGetProjects, apiCreateProject, apiUpdateProject, apiDeleteProject,
+  apiAddProjectImage, apiDeleteProjectImage,
   type ApiLead, type ApiCategory, type ApiTestimonial, type ApiMedia, type ApiContent,
+  type ApiProject, type ProjectPayload,
   type TestimonialPayload,
 } from '../lib/adminApi';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-type Panel = 'dashboard' | 'media' | 'categories' | 'testimonials' | 'leads' | 'content' | 'settings';
+type Panel = 'dashboard' | 'media' | 'projects' | 'categories' | 'testimonials' | 'leads' | 'content' | 'settings';
 
 // ─── Shared UI components ────────────────────────────────────────────────────
 
@@ -97,6 +100,14 @@ function Badge({ children, color = 'stone' }: { children: React.ReactNode; color
 function Card({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
     <div className={`bg-surface border border-line rounded-xl ${className}`}>{children}</div>
+  );
+}
+
+function PanelLoader() {
+  return (
+    <div className="flex flex-col gap-3 animate-pulse">
+      {[1,2,3].map(i => <div key={i} className="h-14 rounded-xl bg-surface-2 border border-line" />)}
+    </div>
   );
 }
 
@@ -259,6 +270,7 @@ function Dashboard({ setPanel }: { setPanel: (p: Panel) => void }) {
 
 function CategoriesPanel() {
   const [cats, setCats] = useState<ApiCategory[]>([]);
+  const [loading, setLoading] = useState(true);
   const [newName, setNewName] = useState('');
   const [newSlug, setNewSlug] = useState('');
   const [adding, setAdding] = useState(false);
@@ -270,6 +282,8 @@ function CategoriesPanel() {
       setCats(data);
     } catch (err) {
       alert(err instanceof Error ? err.message : 'Failed to load categories');
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -327,7 +341,7 @@ function CategoriesPanel() {
         </Card>
       )}
 
-      <div className="flex flex-col gap-2">
+      {loading ? <PanelLoader /> : <div className="flex flex-col gap-2">
         {cats.map((cat) => (
           <Card key={cat.id} className="flex items-center gap-4 p-4">
             <div className="w-16 h-12 rounded-lg border border-line bg-surface-2 flex items-center justify-center shrink-0">
@@ -343,9 +357,9 @@ function CategoriesPanel() {
             </div>
           </Card>
         ))}
-      </div>
+      </div>}
 
-      {cats.length === 0 && !adding && (
+      {!loading && cats.length === 0 && !adding && (
         <EmptyState icon={FolderOpen} title="No categories yet" body="Add your first category to start organising your portfolio." />
       )}
     </div>
@@ -356,8 +370,10 @@ function CategoriesPanel() {
 
 function MediaPanel() {
   const [media, setMedia] = useState<ApiMedia[]>([]);
+  const [loading, setLoading] = useState(true);
   const fileRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
+  const [deleting, setDeleting] = useState<string | null>(null);
 
   async function loadMedia() {
     try {
@@ -365,9 +381,10 @@ function MediaPanel() {
       setMedia(data);
     } catch (err) {
       alert(err instanceof Error ? err.message : 'Failed to load media');
+    } finally {
+      setLoading(false);
     }
   }
-
 
   useEffect(() => { loadMedia(); }, []);
 
@@ -383,6 +400,19 @@ function MediaPanel() {
     } finally {
       setUploading(false);
       e.target.value = '';
+    }
+  }
+
+  async function handleDelete(id: string) {
+    if (!confirm('Delete this image from R2 and the media library? This cannot be undone.')) return;
+    setDeleting(id);
+    try {
+      await apiDeleteMedia(id);
+      setMedia(prev => prev.filter(m => m.id !== id));
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Delete failed');
+    } finally {
+      setDeleting(null);
     }
   }
 
@@ -405,7 +435,7 @@ function MediaPanel() {
         </div>
       </div>
 
-      {media.length === 0 && (
+      {loading ? <PanelLoader /> : media.length === 0 && (
         <EmptyState icon={ImageUp} title="No images here" body="Upload images using the button above." />
       )}
 
@@ -421,6 +451,15 @@ function MediaPanel() {
                   <ImageUp size={24} className="text-stone/30" />
                 </div>
               )}
+              {/* Delete button — appears on hover */}
+              <button
+                onClick={() => handleDelete(m.id)}
+                disabled={deleting === m.id}
+                className="absolute top-2 right-2 w-7 h-7 rounded-full bg-red-900/80 text-red-300 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-700 disabled:opacity-50"
+                title="Delete image"
+              >
+                <Trash2 size={13} />
+              </button>
               <div className="px-2 py-1.5 border-t border-line">
                 <p className="text-stone text-xs truncate">{m.originalName}</p>
               </div>
@@ -445,6 +484,7 @@ type EditingTestimonial = {
 
 function TestimonialsPanel() {
   const [items, setItems] = useState<ApiTestimonial[]>([]);
+  const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState<EditingTestimonial | null>(null);
   const [saving, setSaving] = useState(false);
 
@@ -456,6 +496,8 @@ function TestimonialsPanel() {
       setItems(data);
     } catch (err) {
       alert(err instanceof Error ? err.message : 'Failed to load testimonials');
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -593,7 +635,7 @@ function TestimonialsPanel() {
         ))}
       </div>
 
-      {items.length === 0 && (
+      {loading ? <PanelLoader /> : items.length === 0 && (
         <EmptyState icon={Star} title="No testimonials yet" body="Add client quotes to build trust with visitors." />
       )}
     </div>
@@ -611,6 +653,7 @@ const STATUS_COLORS: Record<LeadStatus, string> = {
 
 function LeadsPanel() {
   const [leads, setLeads] = useState<ApiLead[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<ApiLead | null>(null);
   const [filterStatus, setFilterStatus] = useState<LeadStatus | 'all'>('all');
 
@@ -620,6 +663,8 @@ function LeadsPanel() {
       setLeads(data);
     } catch (err) {
       alert(err instanceof Error ? err.message : 'Failed to load leads');
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -653,7 +698,7 @@ function LeadsPanel() {
           ))}
         </div>
 
-        {filtered.length === 0 && (
+        {loading ? <PanelLoader /> : filtered.length === 0 && (
           <EmptyState icon={Inbox} title="No leads" body="Enquiries submitted through your contact form appear here." />
         )}
 
@@ -1100,9 +1145,370 @@ function ContentPanel() {
   );
 }
 
+// ─── Projects Manager ─────────────────────────────────────────────────────────
+
+type EditingProject = {
+  id: string; title: string; description: string; summary: string; narrative: string;
+  location: string; year: string; client: string; services: string;
+  categoryId: string; coverImage: string; featured: boolean;
+};
+
+function ProjectsPanel() {
+  const [projects, setProjects] = useState<ApiProject[]>([]);
+  const [categories, setCategories] = useState<ApiCategory[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [editing, setEditing] = useState<EditingProject | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<ApiProject | null>(null);
+  const [media, setMedia] = useState<ApiMedia[]>([]);
+  const [addingImages, setAddingImages] = useState(false);
+  const fileRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+
+  const blank: EditingProject = { id: '', title: '', description: '', summary: '', narrative: '', location: '', year: '', client: '', services: '', categoryId: '', coverImage: '', featured: false };
+
+  function getImageUrl(m: ApiMedia): string {
+    const v = m.variants as Array<{ url: string; format: string; width: number }> | null;
+    if (!Array.isArray(v) || v.length === 0) return '';
+    return v.find(x => x.format === 'webp' && x.width === 720)?.url ?? v[0]?.url ?? '';
+  }
+
+  async function load() {
+    try {
+      const [p, c, m] = await Promise.all([apiGetProjects(), apiGetCategories(), apiGetMedia()]);
+      setProjects(p);
+      setCategories(c);
+      setMedia(m);
+      if (selectedProject) {
+        const updated = p.find(x => x.id === selectedProject.id);
+        if (updated) setSelectedProject(updated);
+      }
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Failed to load');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => { load(); }, []);
+
+  async function handleSave() {
+    if (!editing) return;
+    if (!editing.title.trim()) { alert('Title is required'); return; }
+    if (!editing.categoryId) { alert('Please select a category'); return; }
+    setSaving(true);
+    try {
+      const payload: ProjectPayload = {
+        title: editing.title, description: editing.description,
+        summary: editing.summary, narrative: editing.narrative,
+        location: editing.location, year: editing.year, client: editing.client,
+        services: editing.services.split('\n').map(s => s.trim()).filter(Boolean),
+        categoryId: editing.categoryId, coverImage: editing.coverImage || undefined,
+        featured: editing.featured,
+      };
+      if (editing.id) {
+        await apiUpdateProject(editing.id, payload);
+      } else {
+        await apiCreateProject(payload);
+      }
+      setEditing(null);
+      await load();
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Save failed');
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  async function handleDelete(id: string) {
+    if (!confirm('Delete this project and all its images?')) return;
+    try {
+      await apiDeleteProject(id);
+      if (selectedProject?.id === id) setSelectedProject(null);
+      await load();
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Delete failed');
+    }
+  }
+
+  async function handleAddMediaImage(m: ApiMedia) {
+    if (!selectedProject) return;
+    const url = getImageUrl(m);
+    if (!url) return;
+    setAddingImages(true);
+    try {
+      await apiAddProjectImage(selectedProject.id, {
+        imageUrl: url,
+        webpUrl: url,
+        blurDataUrl: m.blurDataUrl,
+        sortOrder: selectedProject.images.length,
+      });
+      await load();
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Failed to add image');
+    } finally {
+      setAddingImages(false);
+    }
+  }
+
+  async function handleRemoveImage(imageId: string) {
+    if (!selectedProject) return;
+    try {
+      await apiDeleteProjectImage(selectedProject.id, imageId);
+      await load();
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Failed to remove image');
+    }
+  }
+
+  async function handleUploadToProject(e: React.ChangeEvent<HTMLInputElement>) {
+    if (!selectedProject || !e.target.files?.length) return;
+    setUploading(true);
+    try {
+      const result = await apiUploadMedia(e.target.files);
+      for (const upload of result.uploads) {
+        const url = getImageUrl(upload);
+        if (url) {
+          await apiAddProjectImage(selectedProject.id, {
+            imageUrl: url, webpUrl: url,
+            blurDataUrl: upload.blurDataUrl,
+            sortOrder: selectedProject.images.length,
+          });
+        }
+      }
+      await load();
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Upload failed');
+    } finally {
+      setUploading(false);
+      e.target.value = '';
+    }
+  }
+
+  async function setCover(url: string) {
+    if (!selectedProject) return;
+    try {
+      const payload: ProjectPayload = {
+        title: selectedProject.title,
+        description: selectedProject.description ?? '',
+        categoryId: selectedProject.categoryId,
+        coverImage: url,
+        featured: selectedProject.featured,
+      };
+      await apiUpdateProject(selectedProject.id, payload);
+      await load();
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Failed to set cover');
+    }
+  }
+
+  // ── Image manager view ───────────────────────────────────────────────────────
+  if (selectedProject) {
+    const assignedIds = new Set(selectedProject.images.map(i => i.imageUrl));
+    const unassigned = media.filter(m => !assignedIds.has(getImageUrl(m)));
+
+    return (
+      <div className="flex flex-col gap-5">
+        <div className="flex items-center gap-3">
+          <button onClick={() => setSelectedProject(null)} className="text-stone hover:text-ivory transition-colors text-sm flex items-center gap-1">
+            <X size={14} /> Back to Projects
+          </button>
+          <span className="text-stone/40">·</span>
+          <h2 className="text-ivory font-medium">{selectedProject.title}</h2>
+          <Badge color="accent">{selectedProject.category.name}</Badge>
+          {selectedProject.featured && <Badge color="yellow">Featured</Badge>}
+        </div>
+
+        {/* Project images */}
+        <Card className="p-4">
+          <div className="flex items-center justify-between mb-1">
+            <h3 className="text-ivory text-sm font-medium">{selectedProject.images.length} Images in this project</h3>
+            <div className="flex gap-2">
+              <input ref={fileRef} type="file" accept="image/*" multiple className="hidden" onChange={handleUploadToProject} />
+              <Btn size="sm" onClick={() => fileRef.current?.click()} disabled={uploading}>
+                <ImageUp size={13} /> {uploading ? 'Uploading…' : 'Upload Images'}
+              </Btn>
+            </div>
+          </div>
+          <p className="text-stone text-xs mb-3">Hover an image and click <strong className="text-accent">★ Set Cover</strong> to use it as the project thumbnail on the website.</p>
+          {selectedProject.images.length === 0 ? (
+            <EmptyState icon={ImageUp} title="No images yet" body="Upload images using the button above, or pick from the Media Library below." />
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+              {selectedProject.images.map(img => (
+                <div key={img.id} className={`relative group rounded-xl overflow-hidden border-2 ${selectedProject.coverImage === img.imageUrl ? 'border-accent' : 'border-line'}`}>
+                  <img src={img.imageUrl} alt={img.altText ?? ''} className="w-full aspect-square object-cover" />
+                  {selectedProject.coverImage === img.imageUrl && (
+                    <span className="absolute top-2 left-2 bg-accent text-ink text-[0.6rem] font-bold px-2 py-0.5 rounded">Cover</span>
+                  )}
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2">
+                    {selectedProject.coverImage !== img.imageUrl && (
+                      <button onClick={() => setCover(img.imageUrl)}
+                        className="text-xs bg-accent text-ink px-3 py-1.5 rounded font-bold">
+                        ★ Set Cover
+                      </button>
+                    )}
+                    {selectedProject.coverImage === img.imageUrl && (
+                      <span className="text-xs bg-yellow-500/80 text-ink px-2 py-1 rounded font-medium">Cover</span>
+                    )}
+                    <button onClick={() => handleRemoveImage(img.id)}
+                      className="text-xs bg-red-900/80 text-red-300 px-2 py-1 rounded">
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </Card>
+
+        {/* Pick from media library */}
+        {unassigned.length > 0 && (
+          <Card className="p-4">
+            <h3 className="text-ivory text-sm font-medium mb-1">Add from Media Library</h3>
+            <p className="text-stone text-xs mb-3">Click any image below to add it to this project.</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+              {unassigned.map(m => {
+                const url = getImageUrl(m);
+                return (
+                  <button key={m.id} onClick={() => handleAddMediaImage(m)} disabled={addingImages}
+                    className="relative group rounded-xl overflow-hidden border border-line hover:border-accent transition-colors text-left">
+                    {url ? (
+                      <img src={url} alt={m.originalName} className="w-full aspect-square object-cover" />
+                    ) : (
+                      <div className="w-full aspect-square bg-surface-2 flex items-center justify-center">
+                        <ImageUp size={20} className="text-stone/30" />
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-accent/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <Plus size={24} className="text-accent" />
+                    </div>
+                    <div className="px-2 py-1.5 border-t border-line">
+                      <p className="text-stone text-xs truncate">{m.originalName}</p>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </Card>
+        )}
+      </div>
+    );
+  }
+
+  // ── Project list / form view ──────────────────────────────────────────────────
+  return (
+    <div className="flex flex-col gap-5">
+      <div className="flex flex-wrap items-center gap-3">
+        <p className="text-stone text-sm">{projects.length} projects</p>
+        <div className="ml-auto">
+          <Btn onClick={() => setEditing({ ...blank })}>
+            <Plus size={14} /> New Project
+          </Btn>
+        </div>
+      </div>
+
+      {/* Create / Edit form */}
+      {editing && (
+        <Card className="p-5">
+          <h3 className="text-ivory font-medium mb-4">{editing.id ? 'Edit Project' : 'New Project'}</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Field label="Title">
+              <Input value={editing.title} onChange={v => setEditing(e => e && ({ ...e, title: v }))} placeholder="e.g. Lotus Residency Shoot" />
+            </Field>
+            <Field label="Category">
+              <select value={editing.categoryId}
+                onChange={e => setEditing(ed => ed && ({ ...ed, categoryId: e.target.value }))}
+                className="w-full bg-surface border border-line rounded-lg px-3 py-2 text-ivory text-sm focus:outline-none focus:border-accent/50">
+                <option value="">Select category…</option>
+                {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+              </select>
+            </Field>
+            <Field label="Client">
+              <Input value={editing.client} onChange={v => setEditing(e => e && ({ ...e, client: v }))} placeholder="e.g. AM Studio" />
+            </Field>
+            <Field label="Location">
+              <Input value={editing.location} onChange={v => setEditing(e => e && ({ ...e, location: v }))} placeholder="e.g. Bengaluru" />
+            </Field>
+            <Field label="Year">
+              <Input value={editing.year} onChange={v => setEditing(e => e && ({ ...e, year: v }))} placeholder="e.g. 2026" />
+            </Field>
+            <Field label="Summary" hint="One-line story shown on project page">
+              <Textarea value={editing.summary} onChange={v => setEditing(e => e && ({ ...e, summary: v }))} placeholder="A restrained story told through…" rows={2} />
+            </Field>
+            <Field label="Services" hint="One service per line">
+              <Textarea value={editing.services} onChange={v => setEditing(e => e && ({ ...e, services: v }))} placeholder={"Architecture photography\nLaunch film\nWeb assets"} rows={3} />
+            </Field>
+            <Field label="Narrative" hint="Full project story shown on detail page">
+              <Textarea value={editing.narrative} onChange={v => setEditing(e => e && ({ ...e, narrative: v }))} placeholder="The brief was to…" rows={4} />
+            </Field>
+          </div>
+          <div className="flex items-center gap-3 mt-4">
+            <label className="flex items-center gap-2 cursor-pointer text-sm text-stone">
+              <input type="checkbox" checked={editing.featured}
+                onChange={e => setEditing(ed => ed && ({ ...ed, featured: e.target.checked }))}
+                className="accent-yellow-500" />
+              Featured on homepage
+            </label>
+          </div>
+          <div className="flex gap-2 mt-4">
+            <Btn onClick={handleSave} disabled={saving}>
+              <Save size={14} /> {saving ? 'Saving…' : 'Save Project'}
+            </Btn>
+            <Btn variant="ghost" onClick={() => setEditing(null)}>Cancel</Btn>
+          </div>
+        </Card>
+      )}
+
+      {loading ? <PanelLoader /> : projects.length === 0 && !editing && (
+        <EmptyState icon={Grid} title="No projects yet" body="Create your first project to start organising your portfolio." />
+      )}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {projects.map(p => (
+          <Card key={p.id} className="overflow-hidden">
+            <div className="aspect-video bg-surface-2 relative">
+              {p.coverImage ? (
+                <img src={p.coverImage} alt={p.title} className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center">
+                  <ImageUp size={28} className="text-stone/20" />
+                </div>
+              )}
+              {p.featured && (
+                <span className="absolute top-2 left-2 bg-yellow-500/90 text-ink text-[0.6rem] uppercase tracking-widest font-medium px-2 py-0.5 rounded">
+                  Featured
+                </span>
+              )}
+            </div>
+            <div className="p-4">
+              <div className="flex items-start justify-between gap-2 mb-1">
+                <h3 className="text-ivory text-sm font-medium leading-snug">{p.title}</h3>
+                <Badge color="accent">{p.category.name}</Badge>
+              </div>
+              <p className="text-stone text-xs mb-3">{p.images.length} image{p.images.length !== 1 ? 's' : ''}</p>
+              <div className="flex gap-2">
+                <Btn size="sm" variant="ghost" onClick={() => setSelectedProject(p)}>
+                  <ImageUp size={12} /> Images
+                </Btn>
+                <Btn size="sm" variant="ghost" onClick={() => setEditing({ id: p.id, title: p.title, description: p.description ?? '', summary: p.summary ?? '', narrative: p.narrative ?? '', location: p.location ?? '', year: p.year ?? '', client: p.client ?? '', services: (p.services ?? []).join('\n'), categoryId: p.categoryId, coverImage: p.coverImage ?? '', featured: p.featured })}>
+                  <Edit2 size={12} /> Edit
+                </Btn>
+                <Btn size="sm" variant="danger" onClick={() => handleDelete(p.id)}>
+                  <Trash2 size={12} />
+                </Btn>
+              </div>
+            </div>
+          </Card>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ─── Settings ─────────────────────────────────────────────────────────────────
 
-function SettingsPanel({ onLogout }: { onLogout: () => void }) {
+function SettingsPanel({ onLogout }: { onLogout: () => Promise<void> }) {
   const user = getAdminUser();
 
   return (
@@ -1126,13 +1532,14 @@ function SettingsPanel({ onLogout }: { onLogout: () => void }) {
 const NAV_ITEMS: Array<{ id: Panel; label: string; icon: React.ElementType }> = [
   { id: 'dashboard',    label: 'Dashboard',    icon: LayoutDashboard },
   { id: 'media',        label: 'Media',        icon: ImageUp },
+  { id: 'projects',     label: 'Projects',     icon: Grid },
   { id: 'categories',   label: 'Categories',   icon: FolderOpen },
   { id: 'testimonials', label: 'Testimonials', icon: Star },
   { id: 'leads',        label: 'Leads',        icon: Inbox },
   { id: 'content',      label: 'Site Content', icon: Type },
 ];
 
-const VALID_PANELS = new Set<Panel>(['dashboard', 'media', 'categories', 'testimonials', 'leads', 'content', 'settings']);
+const VALID_PANELS = new Set<Panel>(['dashboard', 'media', 'projects', 'categories', 'testimonials', 'leads', 'content', 'settings']);
 
 function getPanelFromHash(): Panel {
   const hash = window.location.hash.slice(1) as Panel;
@@ -1140,15 +1547,38 @@ function getPanelFromHash(): Panel {
 }
 
 export function AdminShell() {
-  const [loggedIn, setLoggedIn] = useState(isLoggedIn);
+  const [loggedIn, setLoggedIn] = useState<boolean | null>(null); // null = checking
   const [panel, setPanel] = useState<Panel>(getPanelFromHash);
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Verify session with server on every mount — catches expired cookies
+  useEffect(() => {
+    fetch('/api/auth/me', { credentials: 'include' })
+      .then(r => {
+        if (r.ok) return r.json().then((d: { user: AdminUser }) => {
+          saveSession('', d.user);
+          setLoggedIn(true);
+        });
+        clearSession();
+        setLoggedIn(false);
+      })
+      .catch(() => setLoggedIn(isLoggedIn()));
+  }, []);
+
+  if (loggedIn === null) {
+    return (
+      <div className="min-h-screen bg-bg flex items-center justify-center">
+        <div className="text-stone text-sm">Checking session…</div>
+      </div>
+    );
+  }
 
   if (!loggedIn) {
     return <LoginGate onLogin={() => setLoggedIn(true)} />;
   }
 
-  function handleLogout() {
+  async function handleLogout() {
+    await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' }).catch(() => {});
     clearSession();
     setLoggedIn(false);
   }
@@ -1162,6 +1592,7 @@ export function AdminShell() {
   const PANEL_TITLES: Record<Panel, string> = {
     dashboard:    'Dashboard',
     media:        'Media Library',
+    projects:     'Projects',
     categories:   'Categories',
     testimonials: 'Testimonials',
     leads:        'Leads Inbox',
@@ -1227,6 +1658,7 @@ export function AdminShell() {
         <main className="flex-1 p-5 lg:p-6">
           {panel === 'dashboard' && <Dashboard setPanel={navigatePanel} />}
           {panel === 'media' && <MediaPanel />}
+          {panel === 'projects' && <ProjectsPanel />}
           {panel === 'categories' && <CategoriesPanel />}
           {panel === 'testimonials' && <TestimonialsPanel />}
           {panel === 'leads' && <LeadsPanel />}

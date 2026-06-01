@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Camera, Building2, Award, Users } from 'lucide-react';
-import { getSiteContent, subscribeAdminStore } from '../lib/adminStore';
+import { useSiteData, extractStats } from '../lib/siteData';
 
 const architectureStudiosBase = [
   'Green Lotus', 'Genesis Heights', 'STJ Groups', 'Atulyam The Bliss',
@@ -62,13 +62,14 @@ function StatTile({ stat, start, index }: { stat: StatDef; start: boolean; index
 export function SocialProof() {
   const sectionRef = useRef<HTMLElement>(null);
   const [inView, setInView] = useState(false);
-  const content = useSyncExternalStore(subscribeAdminStore, getSiteContent);
+  const { content } = useSiteData();
+  const statsData = extractStats(content.stats as Record<string, unknown>);
 
   const stats: StatDef[] = [
-    { icon: ICONS[0], value: content.statShoots,     suffix: content.statShoots_suffix,     label: content.statShoots_label     },
-    { icon: ICONS[1], value: content.statArchitects,  suffix: content.statArchitects_suffix,  label: content.statArchitects_label  },
-    { icon: ICONS[2], value: content.statBrands,      suffix: content.statBrands_suffix,      label: content.statBrands_label      },
-    { icon: ICONS[3], value: content.statYears,       suffix: content.statYears_suffix,       label: content.statYears_label       },
+    { icon: ICONS[0], value: statsData.shoots.value,     suffix: statsData.shoots.suffix,     label: statsData.shoots.label     },
+    { icon: ICONS[1], value: statsData.architects.value, suffix: statsData.architects.suffix, label: statsData.architects.label },
+    { icon: ICONS[2], value: statsData.brands.value,     suffix: statsData.brands.suffix,     label: statsData.brands.label     },
+    { icon: ICONS[3], value: statsData.years.value,      suffix: statsData.years.suffix,      label: statsData.years.label      },
   ];
 
   useEffect(() => {
