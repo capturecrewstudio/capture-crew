@@ -1475,6 +1475,18 @@ function ProjectsPanel() {
     return v.find(x => x.format === 'webp' && x.width === 720)?.url ?? v[0]?.url ?? '';
   }
 
+  // Returns the highest-resolution variant — prefers original format, then largest webp
+  function getFullResUrl(m: ApiMedia): string {
+    const v = m.variants as Array<{ url: string; format: string; width: number }> | null;
+    if (!Array.isArray(v) || v.length === 0) return '';
+    const original = v.find(x => x.format === 'original');
+    if (original) return original.url;
+    // Fallback: largest webp variant
+    const webp = v.filter(x => x.format === 'webp');
+    if (webp.length === 0) return v[0]?.url ?? '';
+    return webp.reduce((best, x) => x.width > best.width ? x : best, webp[0]).url;
+  }
+
   async function load() {
     try {
       const [p, c, m] = await Promise.all([apiGetProjects(), apiGetCategories(), apiGetMedia()]);
@@ -1535,13 +1547,14 @@ function ProjectsPanel() {
 
   async function handleAddMediaImage(m: ApiMedia) {
     if (!selectedProject) return;
-    const url = getImageUrl(m);
-    if (!url) return;
+    const fullUrl = getFullResUrl(m);
+    const thumbUrl = getImageUrl(m);
+    if (!fullUrl) return;
     setAddingImages(true);
     try {
       await apiAddProjectImage(selectedProject.id, {
-        imageUrl: url,
-        webpUrl: url,
+        imageUrl: fullUrl,        // full-res for display
+        webpUrl: thumbUrl || fullUrl, // 720px for thumbnails
         blurDataUrl: m.blurDataUrl,
         sortOrder: selectedProject.images.length,
       });
@@ -1569,10 +1582,12 @@ function ProjectsPanel() {
     try {
       const result = await apiUploadMedia(e.target.files);
       for (const upload of result.uploads) {
-        const url = getImageUrl(upload);
-        if (url) {
+        const fullUrl = getFullResUrl(upload);
+        const thumbUrl = getImageUrl(upload);
+        if (fullUrl) {
           await apiAddProjectImage(selectedProject.id, {
-            imageUrl: url, webpUrl: url,
+            imageUrl: fullUrl,
+            webpUrl: thumbUrl || fullUrl,
             blurDataUrl: upload.blurDataUrl,
             sortOrder: selectedProject.images.length,
           });
@@ -1607,7 +1622,7 @@ function ProjectsPanel() {
   // ── Image manager view ───────────────────────────────────────────────────────
   if (selectedProject) {
     const assignedIds = new Set(selectedProject.images.map(i => i.imageUrl));
-    const unassigned = media.filter(m => !assignedIds.has(getImageUrl(m)));
+    const unassigned = media.filter(m => !assignedIds.has(getFullResUrl(m)));
 
     return (
       <div className="flex flex-col gap-5">
