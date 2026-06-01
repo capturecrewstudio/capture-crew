@@ -1,6 +1,5 @@
-import { ArrowLeft, Check, ChevronLeft, ChevronRight, Image, X, ZoomIn, ZoomOut } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
-import { TransformWrapper, TransformComponent, useControls } from 'react-zoom-pan-pinch';
+import { ArrowLeft, Check, ChevronLeft, ChevronRight, Image, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import type { RouteName } from '../App';
 import { apiGetProjects, type ApiProject } from '../lib/adminApi';
 
@@ -18,47 +17,11 @@ type LightboxProps = {
   onClose: () => void;
 };
 
-// Zoom buttons live inside TransformWrapper so they can access useControls()
-function ZoomControls({ onClose }: { onClose: () => void }) {
-  const { zoomIn, zoomOut, resetTransform } = useControls();
-  return (
-    <div className="flex items-center gap-2">
-      <button onClick={() => zoomOut()} aria-label="Zoom out"
-        className="flex items-center justify-center w-8 h-8 rounded-full transition-colors"
-        style={{ background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.7)' }}>
-        <ZoomOut size={15} />
-      </button>
-      <button onClick={() => zoomIn()} aria-label="Zoom in"
-        className="flex items-center justify-center w-8 h-8 rounded-full transition-colors"
-        style={{ background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.7)' }}>
-        <ZoomIn size={15} />
-      </button>
-      <button onClick={() => resetTransform()} aria-label="Reset zoom"
-        className="flex items-center justify-center px-2 h-8 rounded-full transition-colors"
-        style={{ background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.5)', fontFamily: "'DM Mono', monospace", fontSize: '0.55rem', letterSpacing: '0.1em' }}>
-        1:1
-      </button>
-      <div className="w-px h-5 mx-1" style={{ background: 'rgba(255,255,255,0.1)' }} />
-      <button onClick={onClose} aria-label="Close"
-        className="flex items-center justify-center w-8 h-8 rounded-full transition-colors"
-        style={{ background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.7)' }}>
-        <X size={16} />
-      </button>
-    </div>
-  );
-}
-
 function Lightbox({ images, startIndex, title, onClose }: LightboxProps) {
   const [current, setCurrent] = useState(startIndex);
-  // Keep a ref to call resetTransform when navigating
-  const resetRef = useRef<(() => void) | null>(null);
 
-  function goTo(idx: number) {
-    setCurrent(idx);
-    resetRef.current?.();
-  }
-  const prev = () => goTo((current - 1 + images.length) % images.length);
-  const next = () => goTo((current + 1) % images.length);
+  const prev = () => setCurrent(i => (i - 1 + images.length) % images.length);
+  const next = () => setCurrent(i => (i + 1) % images.length);
 
   // Keyboard navigation
   useEffect(() => {
@@ -77,86 +40,85 @@ function Lightbox({ images, startIndex, title, onClose }: LightboxProps) {
     return () => { document.body.style.overflow = ''; };
   }, []);
 
+  // Swipe support
+  let touchStartX = 0;
+  function onTouchStart(e: React.TouchEvent) { touchStartX = e.touches[0].clientX; }
+  function onTouchEnd(e: React.TouchEvent) {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 60) dx < 0 ? next() : prev();
+  }
+
   const img = images[current];
   if (!img) return null;
 
   return (
-    <div className="fixed inset-0 z-[1000] flex flex-col" style={{ background: 'rgba(0,0,0,0.97)' }}>
-      <TransformWrapper
-        initialScale={1}
-        minScale={0.5}
-        maxScale={8}
-        centerOnInit
-        doubleClick={{ mode: 'toggle' }}
-        onInit={ref => { resetRef.current = () => ref.resetTransform(); }}
-        wheel={{ step: 0.1 }}
-        pinch={{ step: 5 }}
-      >
-        {/* Top bar — inside TransformWrapper to access useControls() */}
-        <div className="flex items-center justify-between px-5 py-3 shrink-0"
-          style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
-          <span style={{ fontFamily: "'DM Mono', monospace", fontSize: '0.65rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)' }}>
-            {title}&nbsp;/&nbsp;{current + 1} of {images.length}
-          </span>
-          <ZoomControls onClose={onClose} />
-        </div>
+    <div
+      className="fixed inset-0 z-[1000] flex flex-col"
+      style={{ background: 'rgba(0,0,0,0.98)' }}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
+      {/* Top bar */}
+      <div className="flex items-center justify-between px-5 py-3 shrink-0"
+        style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+        <span style={{ fontFamily: "'DM Mono', monospace", fontSize: '0.65rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)' }}>
+          {title}&nbsp;/&nbsp;{current + 1} of {images.length}
+        </span>
+        <button onClick={onClose} aria-label="Close"
+          className="flex items-center justify-center w-8 h-8 rounded-full transition-colors"
+          style={{ background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.7)' }}>
+          <X size={16} />
+        </button>
+      </div>
 
-        {/* Image area */}
-        <div className="relative flex-1 min-h-0 overflow-hidden">
-          {/* Prev */}
-          <button onClick={prev} aria-label="Previous"
-            className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full transition-all duration-200 hover:scale-110"
-            style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.8)' }}>
-            <ChevronLeft size={22} />
+      {/* Main image — full width/height, no zoom */}
+      <div className="relative flex-1 min-h-0 flex items-center justify-center">
+        {/* Prev */}
+        <button onClick={prev} aria-label="Previous"
+          className="absolute left-3 sm:left-5 z-10 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full transition-all duration-200 hover:scale-110"
+          style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.8)' }}>
+          <ChevronLeft size={22} />
+        </button>
+
+        <img
+          key={img.id}
+          src={img.imageUrl}
+          alt={img.altText ?? `${title} frame ${current + 1}`}
+          draggable={false}
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'contain',
+            animation: 'lbFadeIn 0.2s ease-out',
+          }}
+        />
+
+        {/* Next */}
+        <button onClick={next} aria-label="Next"
+          className="absolute right-3 sm:right-5 z-10 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full transition-all duration-200 hover:scale-110"
+          style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.8)' }}>
+          <ChevronRight size={22} />
+        </button>
+
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 pointer-events-none"
+          style={{ fontFamily: "'DM Mono', monospace", fontSize: '0.52rem', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.2)' }}>
+          Swipe or use ← → to navigate
+        </div>
+      </div>
+
+      {/* Thumbnail strip */}
+      <div className="shrink-0 flex items-center gap-2 px-5 py-3 overflow-x-auto"
+        style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}>
+        {images.map((im, i) => (
+          <button key={im.id} onClick={() => setCurrent(i)} aria-label={`Frame ${i + 1}`}
+            className="shrink-0 rounded-md overflow-hidden transition-all duration-200"
+            style={{ width: 56, height: 40, border: i === current ? '2px solid var(--accent)' : '2px solid transparent', opacity: i === current ? 1 : 0.45 }}>
+            <img src={im.imageUrl} alt="" className="w-full h-full object-cover" />
           </button>
+        ))}
+      </div>
 
-          <TransformComponent
-            wrapperStyle={{ width: '100%', height: '100%' }}
-            contentStyle={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-          >
-            <img
-              key={img.id}
-              src={img.imageUrl}
-              alt={img.altText ?? `${title} frame ${current + 1}`}
-              draggable={false}
-              style={{
-                maxWidth: '85vw',
-                maxHeight: '75vh',
-                objectFit: 'contain',
-                borderRadius: 8,
-                userSelect: 'none',
-                animation: 'lbFadeIn 0.2s ease-out',
-              }}
-            />
-          </TransformComponent>
-
-          {/* Next */}
-          <button onClick={next} aria-label="Next"
-            className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full transition-all duration-200 hover:scale-110"
-            style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.8)' }}>
-            <ChevronRight size={22} />
-          </button>
-
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 pointer-events-none"
-            style={{ fontFamily: "'DM Mono', monospace", fontSize: '0.52rem', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.22)' }}>
-            Scroll / pinch to zoom · Double-click to reset · ← → navigate
-          </div>
-        </div>
-
-        {/* Thumbnail strip */}
-        <div className="shrink-0 flex items-center gap-2 px-5 py-3 overflow-x-auto"
-          style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}>
-          {images.map((im, i) => (
-            <button key={im.id} onClick={() => goTo(i)} aria-label={`Frame ${i + 1}`}
-              className="shrink-0 rounded-md overflow-hidden transition-all duration-200"
-              style={{ width: 56, height: 40, border: i === current ? '2px solid var(--accent)' : '2px solid transparent', opacity: i === current ? 1 : 0.45 }}>
-              <img src={im.imageUrl} alt="" className="w-full h-full object-cover" />
-            </button>
-          ))}
-        </div>
-      </TransformWrapper>
-
-      {/* Preload adjacent images */}
+      {/* Preload adjacent */}
       {images[(current + 1) % images.length]?.imageUrl && (
         <img src={images[(current + 1) % images.length].imageUrl} alt="" className="hidden" aria-hidden />
       )}
@@ -217,7 +179,14 @@ export function ProjectPage({ slug, onNavigate }: Props) {
 
       <main className="project-detail">
         <section className="project-hero-block">
-          {project.coverImage && <img className="project-hero" src={project.coverImage} alt={project.title} />}
+          {project.coverImage && (
+            <img
+              className="project-hero"
+              src={project.coverImage}
+              alt={project.title}
+              style={{ imageRendering: 'auto', objectFit: 'cover', objectPosition: 'center' }}
+            />
+          )}
           <div className="hero-scrim" />
           <div className="project-hero-copy">
             <button className="text-link" type="button" onClick={() => onNavigate('portfolio')}>
