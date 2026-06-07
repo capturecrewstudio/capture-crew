@@ -82,7 +82,7 @@ function Lightbox({ images, startIndex, title, onClose }: LightboxProps) {
 
         <img
           key={img.id}
-          src={img.imageUrl}
+          src={img.imageUrl ?? img.webpUrl ?? ''}
           alt={img.altText ?? `${title} frame ${current + 1}`}
           draggable={false}
           style={{
@@ -113,17 +113,17 @@ function Lightbox({ images, startIndex, title, onClose }: LightboxProps) {
           <button key={im.id} onClick={() => setCurrent(i)} aria-label={`Frame ${i + 1}`}
             className="shrink-0 rounded-md overflow-hidden transition-all duration-200"
             style={{ width: 56, height: 40, border: i === current ? '2px solid var(--accent)' : '2px solid transparent', opacity: i === current ? 1 : 0.45 }}>
-            <img src={im.imageUrl} alt="" className="w-full h-full object-cover" />
+            <img src={im.webpUrl ?? im.imageUrl} alt="" className="w-full h-full object-cover" />
           </button>
         ))}
       </div>
 
       {/* Preload adjacent */}
-      {images[(current + 1) % images.length]?.imageUrl && (
-        <img src={images[(current + 1) % images.length].imageUrl} alt="" className="hidden" aria-hidden />
+      {images[(current + 1) % images.length] && (
+        <img src={images[(current + 1) % images.length].imageUrl ?? images[(current + 1) % images.length].webpUrl ?? ''} alt="" className="hidden" aria-hidden />
       )}
-      {images[(current - 1 + images.length) % images.length]?.imageUrl && (
-        <img src={images[(current - 1 + images.length) % images.length].imageUrl} alt="" className="hidden" aria-hidden />
+      {images[(current - 1 + images.length) % images.length] && (
+        <img src={images[(current - 1 + images.length) % images.length].imageUrl ?? images[(current - 1 + images.length) % images.length].webpUrl ?? ''} alt="" className="hidden" aria-hidden />
       )}
 
       <style>{`@keyframes lbFadeIn { from { opacity: 0; } to { opacity: 1; } }`}</style>
@@ -223,11 +223,11 @@ export function ProjectPage({ slug, onNavigate }: Props) {
               <figure key={image.id} className="cursor-pointer group" onClick={() => setLightboxIndex(index)}>
                 <div className="relative overflow-hidden rounded-lg">
                   <img
-                    src={image.imageUrl}
+                    src={image.webpUrl ?? image.imageUrl}
                     alt={image.altText ?? `${project.title} frame ${index + 1}`}
                     loading="lazy"
                     className="w-full transition-transform duration-500 group-hover:scale-105"
-                    style={{ aspectRatio: '4/5', objectFit: 'cover', display: 'block' }}
+                    style={{ display: 'block' }}
                   />
                   <div
                     className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"

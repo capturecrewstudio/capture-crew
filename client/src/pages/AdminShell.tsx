@@ -286,9 +286,19 @@ function CapabilitiesPanel() {
   const uploadRef = useRef<HTMLInputElement>(null);
 
   function getLibUrl(m: ApiMedia): string {
+    // 720px for picker grid previews only
     const v = m.variants as Array<{ url: string; format: string; width: number }> | null;
     if (!Array.isArray(v) || v.length === 0) return '';
     return (v.find(x => x.format === 'webp' && x.width === 720) ?? v[0])?.url ?? '';
+  }
+
+  function getLibFullUrl(m: ApiMedia): string {
+    // Full-res original for storing — never 720px
+    const v = m.variants as Array<{ url: string; format: string; width: number }> | null;
+    if (!Array.isArray(v) || v.length === 0) return '';
+    return v.find(x => x.format === 'original')?.url
+      ?? v.filter(x => x.format === 'webp').sort((a, b) => b.width - a.width)[0]?.url
+      ?? v[0]?.url ?? '';
   }
 
   async function load() {
@@ -335,7 +345,7 @@ function CapabilitiesPanel() {
     try {
       const { uploads } = await apiUploadMedia(files);
       await loadMedia();
-      if (uploads[0]) setForm(f => ({ ...f, image: getLibUrl(uploads[0]) }));
+      if (uploads[0]) setForm(f => ({ ...f, image: getLibFullUrl(uploads[0]) }));
       setShowPicker(false);
     } catch (err) {
       alert(err instanceof Error ? err.message : 'Upload failed');
@@ -418,13 +428,15 @@ function CapabilitiesPanel() {
                   ) : (
                     <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-2 max-h-56 overflow-y-auto pr-1">
                       {mediaLib.map(m => {
-                        const url = getLibUrl(m);
-                        if (!url) return null;
+                        const thumbUrl = getLibUrl(m);      // 720px for preview
+                        const fullUrl = getLibFullUrl(m);   // original for storing
+                        if (!thumbUrl) return null;
+                        const isSelected = form.image === fullUrl;
                         return (
-                          <button key={m.id} onClick={() => { setForm(f => ({ ...f, image: url })); setShowPicker(false); }}
-                            className={`relative rounded-lg overflow-hidden border-2 transition-colors ${form.image === url ? 'border-accent' : 'border-transparent hover:border-accent/50'}`}>
-                            <img src={url} alt={m.originalName} className="w-full aspect-square object-cover" />
-                            {form.image === url && (
+                          <button key={m.id} onClick={() => { setForm(f => ({ ...f, image: fullUrl })); setShowPicker(false); }}
+                            className={`relative rounded-lg overflow-hidden border-2 transition-colors ${isSelected ? 'border-accent' : 'border-transparent hover:border-accent/50'}`}>
+                            <img src={thumbUrl} alt={m.originalName} className="w-full aspect-square object-cover" />
+                            {isSelected && (
                               <div className="absolute inset-0 bg-accent/20 flex items-center justify-center">
                                 <Check size={18} className="text-accent" />
                               </div>
@@ -723,9 +735,19 @@ function TestimonialsPanel() {
   const uploadRef = useRef<HTMLInputElement>(null);
 
   function getLibUrl(m: ApiMedia): string {
+    // 720px for picker grid previews only
     const v = m.variants as Array<{ url: string; format: string; width: number }> | null;
     if (!Array.isArray(v) || v.length === 0) return '';
     return (v.find(x => x.format === 'webp' && x.width === 720) ?? v[0])?.url ?? '';
+  }
+
+  function getLibFullUrl(m: ApiMedia): string {
+    // Full-res original for storing
+    const v = m.variants as Array<{ url: string; format: string; width: number }> | null;
+    if (!Array.isArray(v) || v.length === 0) return '';
+    return v.find(x => x.format === 'original')?.url
+      ?? v.filter(x => x.format === 'webp').sort((a, b) => b.width - a.width)[0]?.url
+      ?? v[0]?.url ?? '';
   }
 
   async function loadMedia() {
@@ -738,7 +760,7 @@ function TestimonialsPanel() {
     try {
       const { uploads } = await apiUploadMedia(files);
       await loadMedia();
-      if (uploads[0]) setEditing(p => p ? { ...p, image: getLibUrl(uploads[0]) } : p);
+      if (uploads[0]) setEditing(p => p ? { ...p, image: getLibFullUrl(uploads[0]) } : p);
       setShowPicker(false);
     } catch (err) {
       alert(err instanceof Error ? err.message : 'Upload failed');
@@ -879,12 +901,13 @@ function TestimonialsPanel() {
                   ) : (
                     <div className="grid grid-cols-4 sm:grid-cols-5 lg:grid-cols-6 gap-2 max-h-48 overflow-y-auto pr-1">
                       {mediaLib.map(m => {
-                        const url = getLibUrl(m);
-                        if (!url) return null;
+                        const thumbUrl = getLibUrl(m);
+                        const fullUrl = getLibFullUrl(m);
+                        if (!thumbUrl) return null;
                         return (
-                          <button key={m.id} onClick={() => { setEditing(p => p ? { ...p, image: url } : p); setShowPicker(false); }}
-                            className={`relative rounded-full overflow-hidden border-2 aspect-square transition-colors ${editing.image === url ? 'border-accent' : 'border-transparent hover:border-accent/50'}`}>
-                            <img src={url} alt={m.originalName} className="w-full h-full object-cover" />
+                          <button key={m.id} onClick={() => { setEditing(p => p ? { ...p, image: fullUrl } : p); setShowPicker(false); }}
+                            className={`relative rounded-full overflow-hidden border-2 aspect-square transition-colors ${editing.image === fullUrl ? 'border-accent' : 'border-transparent hover:border-accent/50'}`}>
+                            <img src={thumbUrl} alt={m.originalName} className="w-full h-full object-cover" />
                           </button>
                         );
                       })}
@@ -1481,10 +1504,18 @@ function ProjectsPanel() {
     if (!Array.isArray(v) || v.length === 0) return '';
     const original = v.find(x => x.format === 'original');
     if (original) return original.url;
-    // Fallback: largest webp variant
     const webp = v.filter(x => x.format === 'webp');
     if (webp.length === 0) return v[0]?.url ?? '';
     return webp.reduce((best, x) => x.width > best.width ? x : best, webp[0]).url;
+  }
+
+  // Returns the 1600px WebP display variant — fast load for lightbox/hero
+  function getDisplayUrl(m: ApiMedia): string {
+    const v = m.variants as Array<{ url: string; format: string; width: number }> | null;
+    if (!Array.isArray(v) || v.length === 0) return '';
+    return v.find(x => x.format === 'webp' && x.width === 1600)?.url
+      ?? v.find(x => x.format === 'webp' && x.width === 720)?.url
+      ?? getFullResUrl(m);
   }
 
   async function load() {
@@ -1553,7 +1584,7 @@ function ProjectsPanel() {
     setAddingImages(true);
     try {
       await apiAddProjectImage(selectedProject.id, {
-        imageUrl: fullUrl,        // full-res for display
+        imageUrl: getDisplayUrl(m), // 1600px WebP for lightbox display
         webpUrl: thumbUrl || fullUrl, // 720px for thumbnails
         blurDataUrl: m.blurDataUrl,
         sortOrder: selectedProject.images.length,
