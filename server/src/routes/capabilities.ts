@@ -19,6 +19,7 @@ router.get('/', async (_req, res) => {
   const capabilities = await prisma.capability.findMany({
     orderBy: { sortOrder: 'asc' },
   });
+  res.setHeader('Cache-Control', 'public, max-age=120, stale-while-revalidate=600');
   res.json(capabilities);
 });
 

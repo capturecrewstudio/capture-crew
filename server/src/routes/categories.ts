@@ -24,6 +24,7 @@ const categorySchema = z.object({
 router.get('/', async (_req, res) => {
   try {
     const categories = await prisma.category.findMany({ orderBy: { name: 'asc' } });
+    res.setHeader('Cache-Control', 'public, max-age=120, stale-while-revalidate=600');
     res.json(categories);
   } catch {
     res.json(fallbackCategories);

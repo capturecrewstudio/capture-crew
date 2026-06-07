@@ -110,6 +110,16 @@ export type ProjectPayload = {
   categoryId: string; coverImage?: string; featured: boolean;
 };
 
+export type ApiProjectSummary = {
+  id: string; title: string; slug: string;
+  coverImage: string | null; location: string | null; featured: boolean;
+  category: { id: string; name: string; slug: string };
+};
+
+export async function apiGetProjectsSummary(): Promise<ApiProjectSummary[]> {
+  return apiFetch('/projects/summary');
+}
+
 export async function apiGetProjects(): Promise<ApiProject[]> {
   return apiFetch('/projects');
 }

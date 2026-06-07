@@ -4,7 +4,7 @@ const timelineItems = [
   {
     title: 'Architecture',
     description: 'Elevation, light, and leading lines — we capture the vision behind every structure with minimal composition and cinematic precision.',
-    image: '/assets/media/architecture-night.png',
+    image: '/assets/media/architecture-night.jpeg',
     location: 'Façade · Elevation · Structural · Aerial · Walkthrough'
   },
   {

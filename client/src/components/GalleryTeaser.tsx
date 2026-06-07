@@ -1,6 +1,6 @@
 import { ArrowUpRight } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { apiGetProjects, apiGetCategories, type ApiCategory, type ApiProject } from '../lib/adminApi';
+import { apiGetProjectsSummary, apiGetCategories, type ApiCategory, type ApiProjectSummary } from '../lib/adminApi';
 
 const CYCLE_MS = 3200;
 const FADE_MS = 900;
@@ -92,18 +92,16 @@ export function GalleryTeaser({ onSeeAll, onSelectCategory }: Props) {
   const [tiles, setTiles] = useState<Tile[]>([]);
 
   useEffect(() => {
-    Promise.all([apiGetCategories(), apiGetProjects()])
+    Promise.all([apiGetCategories(), apiGetProjectsSummary()])
       .then(([cats, projects]) => {
-        // Build tiles from categories — use project images for each category
         const built: Tile[] = cats.map((cat: ApiCategory) => {
-          const catProjects = projects.filter((p: ApiProject) => p.category.slug === cat.slug);
-          // Collect up to 2 images: cover images from projects in this category
+          const catProjects = projects.filter((p: ApiProjectSummary) => p.category.slug === cat.slug);
           const images = catProjects
             .filter(p => p.coverImage)
             .map(p => p.coverImage as string)
             .slice(0, 2);
           return { label: cat.name, slug: cat.slug, images };
-        }).filter((t: Tile) => t.images.length > 0); // only show categories that have images
+        }).filter((t: Tile) => t.images.length > 0);
         setTiles(built);
       })
       .catch(console.error);

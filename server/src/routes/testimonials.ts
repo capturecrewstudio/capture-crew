@@ -18,6 +18,7 @@ router.get('/', async (_req, res) => {
     const testimonials = await prisma.testimonial.findMany({
       orderBy: [{ featured: 'desc' }, { createdAt: 'desc' }],
     });
+    res.setHeader('Cache-Control', 'public, max-age=120, stale-while-revalidate=600');
     res.json(testimonials);
   } catch {
     res.json([]);

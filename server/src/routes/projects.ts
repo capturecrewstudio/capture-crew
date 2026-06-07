@@ -29,12 +29,32 @@ const imageSchema = z.object({
   altText: z.string().optional(),
 });
 
+// Lightweight summary for portfolio grid and home page gallery teaser —
+// returns only fields needed for cover tiles (no images array, no blurDataUrls).
+router.get('/summary', async (_req, res) => {
+  try {
+    const projects = await prisma.project.findMany({
+      select: {
+        id: true, title: true, slug: true, coverImage: true,
+        location: true, featured: true,
+        category: { select: { id: true, name: true, slug: true } },
+      },
+      orderBy: [{ featured: 'desc' }, { createdAt: 'desc' }],
+    });
+    res.setHeader('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
+    res.json(projects);
+  } catch {
+    res.json([]);
+  }
+});
+
 router.get('/', async (_req, res) => {
   try {
     const projects = await prisma.project.findMany({
       include: { category: true, images: { orderBy: { sortOrder: 'asc' } } },
       orderBy: [{ featured: 'desc' }, { createdAt: 'desc' }],
     });
+    res.setHeader('Cache-Control', 'public, max-age=30, stale-while-revalidate=120');
     res.json(projects);
   } catch {
     res.json([]);
@@ -47,6 +67,7 @@ router.get('/:slug', async (req, res) => {
     include: { category: true, images: { orderBy: { sortOrder: 'asc' } } },
   });
   if (!project) return res.status(404).json({ message: 'Project not found' });
+  res.setHeader('Cache-Control', 'public, max-age=30, stale-while-revalidate=120');
   res.json(project);
 });
 

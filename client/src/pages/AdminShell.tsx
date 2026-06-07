@@ -1613,12 +1613,12 @@ function ProjectsPanel() {
     try {
       const result = await apiUploadMedia(e.target.files);
       for (const upload of result.uploads) {
-        const fullUrl = getFullResUrl(upload);
-        const thumbUrl = getImageUrl(upload);
-        if (fullUrl) {
+        const displayUrl = getDisplayUrl(upload); // 1600px WebP for lightbox
+        const thumbUrl = getImageUrl(upload);     // 720px for thumbnails
+        if (displayUrl) {
           await apiAddProjectImage(selectedProject.id, {
-            imageUrl: fullUrl,
-            webpUrl: thumbUrl || fullUrl,
+            imageUrl: displayUrl,
+            webpUrl: thumbUrl || displayUrl,
             blurDataUrl: upload.blurDataUrl,
             sortOrder: selectedProject.images.length,
           });
@@ -1633,14 +1633,16 @@ function ProjectsPanel() {
     }
   }
 
-  async function setCover(url: string) {
+  async function setCover(img: ApiProject['images'][0]) {
     if (!selectedProject) return;
+    // Use 720px thumbnail as cover — portfolio tiles are small, no need for 1280px
+    const coverUrl = img.webpUrl ?? img.imageUrl;
     try {
       const payload: ProjectPayload = {
         title: selectedProject.title,
         description: selectedProject.description ?? '',
         categoryId: selectedProject.categoryId,
-        coverImage: url,
+        coverImage: coverUrl,
         featured: selectedProject.featured,
       };
       await apiUpdateProject(selectedProject.id, payload);
@@ -1683,20 +1685,23 @@ function ProjectsPanel() {
             <EmptyState icon={ImageUp} title="No images yet" body="Upload images using the button above, or pick from the Media Library below." />
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-              {selectedProject.images.map(img => (
-                <div key={img.id} className={`relative group rounded-xl overflow-hidden border-2 ${selectedProject.coverImage === img.imageUrl ? 'border-accent' : 'border-line'}`}>
-                  <img src={img.imageUrl} alt={img.altText ?? ''} className="w-full aspect-square object-cover" />
-                  {selectedProject.coverImage === img.imageUrl && (
+              {selectedProject.images.map(img => {
+                const thumbUrl = img.webpUrl ?? img.imageUrl;
+                const isCover = selectedProject.coverImage === thumbUrl;
+                return (
+                <div key={img.id} className={`relative group rounded-xl overflow-hidden border-2 ${isCover ? 'border-accent' : 'border-line'}`}>
+                  <img src={thumbUrl} alt={img.altText ?? ''} className="w-full aspect-square object-cover" />
+                  {isCover && (
                     <span className="absolute top-2 left-2 bg-accent text-ink text-[0.6rem] font-bold px-2 py-0.5 rounded">Cover</span>
                   )}
                   <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2">
-                    {selectedProject.coverImage !== img.imageUrl && (
-                      <button onClick={() => setCover(img.imageUrl)}
+                    {!isCover && (
+                      <button onClick={() => setCover(img)}
                         className="text-xs bg-accent text-ink px-3 py-1.5 rounded font-bold">
                         ★ Set Cover
                       </button>
                     )}
-                    {selectedProject.coverImage === img.imageUrl && (
+                    {isCover && (
                       <span className="text-xs bg-yellow-500/80 text-ink px-2 py-1 rounded font-medium">Cover</span>
                     )}
                     <button onClick={() => handleRemoveImage(img.id)}
@@ -1705,7 +1710,8 @@ function ProjectsPanel() {
                     </button>
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </Card>

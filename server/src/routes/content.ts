@@ -33,6 +33,7 @@ async function getOrCreateContent() {
 
 router.get('/', async (_req, res) => {
   const content = await getOrCreateContent();
+  res.setHeader('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
   res.json(content);
 });
 

@@ -1,7 +1,7 @@
 import { ArrowUpRight } from 'lucide-react';
 import type { CSSProperties } from 'react';
 import { useEffect, useState } from 'react';
-import { apiGetProjects, apiGetCategories, type ApiProject, type ApiCategory } from '../lib/adminApi';
+import { apiGetProjectsSummary, apiGetCategories, type ApiProjectSummary, type ApiCategory } from '../lib/adminApi';
 
 type Props = {
   selectedCategory?: string;
@@ -10,12 +10,12 @@ type Props = {
 };
 
 export function PortfolioPage({ selectedCategory, onSelectCategory, onSelectProject }: Props) {
-  const [projects, setProjects] = useState<ApiProject[]>([]);
+  const [projects, setProjects] = useState<ApiProjectSummary[]>([]);
   const [categories, setCategories] = useState<ApiCategory[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    Promise.all([apiGetProjects(), apiGetCategories()])
+    Promise.all([apiGetProjectsSummary(), apiGetCategories()])
       .then(([p, c]) => { setProjects(p); setCategories(c); })
       .catch(console.error)
       .finally(() => setLoading(false));
@@ -76,7 +76,7 @@ export function PortfolioPage({ selectedCategory, onSelectCategory, onSelectProj
             onClick={() => onSelectProject(project.slug)}
             style={{ '--tile-span': index % 3 === 1 ? '560px' : '420px' } as CSSProperties}
           >
-            {project.coverImage && <img src={project.coverImage} alt={project.title} />}
+            {project.coverImage && <img src={project.coverImage} alt={project.title} loading="lazy" decoding="async" />}
             <span>
               <strong>{project.title}</strong>
               <small>{project.category.name}{project.location ? ` / ${project.location}` : ''}</small>
