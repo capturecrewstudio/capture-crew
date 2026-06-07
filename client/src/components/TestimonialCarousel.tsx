@@ -9,9 +9,11 @@ export function TestimonialCarousel() {
   const featured = allTestimonials.filter(t => t.featured);
   const testimonials = featured.length > 0 ? featured : allTestimonials;
   const N = testimonials.length;
-  // Looped array: last, all, first, second
-  const loopedItems = [testimonials[N - 1], ...testimonials, testimonials[0], testimonials[1]];
-  
+  // Looped array: last, all, first, second — only valid when there are at least 2 items
+  const loopedItems = N >= 2
+    ? [testimonials[N - 1], ...testimonials, testimonials[0], testimonials[1]]
+    : testimonials;
+
   // Real activeIndex refers to index in original testimonials array (0 to N-1)
   // Track state represents index in loopedItems (which starts at 1, corresponding to original index 0)
   const [trackIndex, setTrackIndex] = useState(1);
@@ -27,17 +29,19 @@ export function TestimonialCarousel() {
   }, []);
 
   const handleNext = () => {
-    if (!isTransitioning) return;
+    if (!isTransitioning || N < 2) return;
     setTrackIndex((prev) => prev + 1);
   };
 
   const handlePrev = () => {
-    if (!isTransitioning) return;
+    if (!isTransitioning || N < 2) return;
     setTrackIndex((prev) => prev - 1);
   };
 
-  // Handle jumpback when hitting cloned boundaries
+  // Handle jumpback when hitting cloned boundaries (only meaningful when looping with 2+ items)
   useEffect(() => {
+    if (N < 2) return;
+
     if (trackIndex === N + 1) {
       // Reached the clone of 'first'
       const timer = setTimeout(() => {
@@ -61,7 +65,7 @@ export function TestimonialCarousel() {
 
   // Autoplay — pauses on hover or manual pause toggle
   useEffect(() => {
-    if (reducedMotion) return;
+    if (reducedMotion || N < 2) return;
 
     const interval = setInterval(() => {
       if (!pausedRef.current) handleNext();
@@ -75,7 +79,12 @@ export function TestimonialCarousel() {
     pausedRef.current = next;
   }
 
-  const activeOriginalIndex = (trackIndex - 1 + N) % N;
+  const activeOriginalIndex = N > 0 ? (trackIndex - 1 + N) % N : 0;
+  // With fewer than 2 items there's no loop clones — loopedItems is just `testimonials`,
+  // so the track must sit at index 0 regardless of trackIndex's looped-array convention.
+  const effectiveTrackIndex = N < 2 ? 0 : trackIndex;
+
+  if (N === 0) return null;
 
   return (
     <section className="my-20 xl:my-28 relative z-10 px-4 overflow-hidden">
@@ -105,7 +114,7 @@ export function TestimonialCarousel() {
           <div
             className="flex gap-6 transition-all duration-500 ease-in-out"
             style={{
-              transform: `translateX(calc(-${trackIndex * 100}% - ${trackIndex * 24}px + 50vw - 12px - 50%))`,
+              transform: `translateX(calc(-${effectiveTrackIndex * 100}% - ${effectiveTrackIndex * 24}px + 50vw - 12px - 50%))`,
               transition: isTransitioning ? 'transform 500ms cubic-bezier(0.25, 1, 0.5, 1)' : 'none'
             }}
           >
@@ -154,55 +163,57 @@ export function TestimonialCarousel() {
           </div>
         </div>
 
-        {/* Navigation buttons */}
-        <div className="flex justify-center items-center gap-4 mt-10">
-          <button
-            onClick={handlePrev}
-            className="p-3 rounded-full border border-line bg-ivory/5 text-stone hover:text-ivory hover:border-accent hover:scale-105 active:scale-95 transition-all duration-300"
-            aria-label="Previous testimonial"
-          >
-            <ArrowLeft size={16} />
-          </button>
-
-          {/* Dot Indicators */}
-          <div className="flex items-center gap-2">
-            {testimonials.map((_, idx) => {
-              const active = idx === activeOriginalIndex;
-              return (
-                <button
-                  key={idx}
-                  onClick={() => {
-                    setIsTransitioning(true);
-                    setTrackIndex(idx + 1);
-                  }}
-                  className={`h-2 rounded-full transition-all duration-300 focus:outline-none ${
-                    active ? 'w-6 bg-accent' : 'w-2 bg-ivory/20 hover:bg-ivory/40'
-                  }`}
-                  aria-label={`Go to testimonial ${idx + 1}`}
-                />
-              );
-            })}
-          </div>
-
-          {/* Pause / Play toggle */}
-          {!reducedMotion && (
+        {/* Navigation buttons — only meaningful with 2+ testimonials to cycle through */}
+        {N >= 2 && (
+          <div className="flex justify-center items-center gap-4 mt-10">
             <button
-              onClick={togglePause}
+              onClick={handlePrev}
               className="p-3 rounded-full border border-line bg-ivory/5 text-stone hover:text-ivory hover:border-accent hover:scale-105 active:scale-95 transition-all duration-300"
-              aria-label={paused ? 'Resume autoplay' : 'Pause autoplay'}
+              aria-label="Previous testimonial"
             >
-              {paused ? <Play size={14} /> : <Pause size={14} />}
+              <ArrowLeft size={16} />
             </button>
-          )}
 
-          <button
-            onClick={handleNext}
-            className="p-3 rounded-full border border-line bg-ivory/5 text-stone hover:text-ivory hover:border-accent hover:scale-105 active:scale-95 transition-all duration-300"
-            aria-label="Next testimonial"
-          >
-            <ArrowRight size={16} />
-          </button>
-        </div>
+            {/* Dot Indicators */}
+            <div className="flex items-center gap-2">
+              {testimonials.map((_, idx) => {
+                const active = idx === activeOriginalIndex;
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => {
+                      setIsTransitioning(true);
+                      setTrackIndex(idx + 1);
+                    }}
+                    className={`h-2 rounded-full transition-all duration-300 focus:outline-none ${
+                      active ? 'w-6 bg-accent' : 'w-2 bg-ivory/20 hover:bg-ivory/40'
+                    }`}
+                    aria-label={`Go to testimonial ${idx + 1}`}
+                  />
+                );
+              })}
+            </div>
+
+            {/* Pause / Play toggle */}
+            {!reducedMotion && (
+              <button
+                onClick={togglePause}
+                className="p-3 rounded-full border border-line bg-ivory/5 text-stone hover:text-ivory hover:border-accent hover:scale-105 active:scale-95 transition-all duration-300"
+                aria-label={paused ? 'Resume autoplay' : 'Pause autoplay'}
+              >
+                {paused ? <Play size={14} /> : <Pause size={14} />}
+              </button>
+            )}
+
+            <button
+              onClick={handleNext}
+              className="p-3 rounded-full border border-line bg-ivory/5 text-stone hover:text-ivory hover:border-accent hover:scale-105 active:scale-95 transition-all duration-300"
+              aria-label="Next testimonial"
+            >
+              <ArrowRight size={16} />
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
