@@ -131,7 +131,9 @@ router.post('/:id/images', requireAdmin, async (req, res) => {
 
 router.delete('/:id/images/:imageId', requireAdmin, async (req, res) => {
   try {
-    await prisma.projectImage.delete({ where: { id: req.params.imageId as string } });
+    const existing = await prisma.projectImage.findUnique({ where: { id: req.params.imageId as string } });
+    if (!existing) return res.status(204).end();
+    await prisma.projectImage.delete({ where: { id: existing.id } });
     res.status(204).end();
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Failed to delete image';

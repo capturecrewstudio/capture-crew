@@ -69,8 +69,19 @@ router.delete('/:id', requireAdmin, async (req, res) => {
     const record = await prisma.media.findUnique({ where: { id: req.params.id as string } });
     if (!record) return res.status(404).json({ message: 'Media not found' });
 
+    const variants = record.variants as Array<{ key: string; url: string }> | null;
+
+    // Remove any ProjectImage records that reference this media's URLs
+    if (Array.isArray(variants)) {
+      const urls = variants.map(v => v.url).filter(Boolean);
+      if (urls.length) {
+        await prisma.projectImage.deleteMany({
+          where: { imageUrl: { in: urls } },
+        });
+      }
+    }
+
     // Delete all variant files from R2
-    const variants = record.variants as Array<{ key: string }> | null;
     if (Array.isArray(variants)) {
       await deleteImages(variants.map(v => v.key).filter(Boolean));
     }
