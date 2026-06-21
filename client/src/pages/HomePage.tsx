@@ -152,7 +152,7 @@ export function HomePage({ onNavigate, onSelectCategory }: Props) {
         <div className="absolute inset-0 z-0">
           <img
             src="/assets/media/dsc-ccs-1-2.jpeg"
-            alt="Capture Crew luxury architecture shoot"
+            alt="Capture Crew Studio — luxury architecture and real estate photography in Chandigarh Tricity"
             fetchPriority="high"
             loading="eager"
             decoding="sync"
@@ -205,6 +205,9 @@ export function HomePage({ onNavigate, onSelectCategory }: Props) {
             >
               {content.heroHeadline.replace(/\.$/, '')}
             </h1>
+            <span className="sr-only">
+              Premium photography and videography studio in Chandigarh, Mohali, Panchkula — serving the Tricity region
+            </span>
           </Reveal>
 
           {/* Subtitle */}

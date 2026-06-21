@@ -107,7 +107,7 @@ export function SiteFooter({ onNavigate, isDark }: Props) {
             className="text-stone text-sm leading-relaxed max-w-sm"
             style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300 }}
           >
-            Luxury visual stories for brands, spaces, and people with presence. National Geographic standard. Engineered for trust.
+            Luxury photography & cinematic videography studio in Chandigarh, Mohali & Panchkula. Architecture, fashion, weddings & brand content — crafted to National Geographic standard.
           </p>
 
           {/* Socials */}
